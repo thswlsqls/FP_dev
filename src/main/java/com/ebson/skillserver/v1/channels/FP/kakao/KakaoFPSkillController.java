@@ -1,9 +1,6 @@
 package com.ebson.skillserver.v1.channels.FP.kakao;
 
-import com.ebson.skillserver.common.SimpleText;
-import com.ebson.skillserver.common.SkillPayload;
-import com.ebson.skillserver.common.SkillResponse;
-import com.ebson.skillserver.common.Template;
+import com.ebson.skillserver.common.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +29,11 @@ public class KakaoFPSkillController {
         st.setText("KakaoFPSkillController.handleSkillRequest : 테스트 블럭을 호출하셨습니다.");
         List<Map<String, Object>> outputs = new ArrayList<>();
         Map<String, Object> component = new HashMap<String, Object>();
-        component.put("SimpleText", st);
+        component.put(ChatbotConstants.SIMPLE_TEXT, st);
         outputs.add(component);
         template.setOutputs(outputs);
         skillResponse.setTemplate(template);
-        skillResponse.setVersion("2.0");
+        skillResponse.setVersion(ChatbotConstants.VERSION);
 
         try {
             ObjectMapper mapper = new ObjectMapper();
