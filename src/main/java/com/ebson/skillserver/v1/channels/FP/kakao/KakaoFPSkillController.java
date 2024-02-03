@@ -62,7 +62,7 @@ public class KakaoFPSkillController {
         component3.put(ChatbotConstants.TEXT_CARD, textCard);
         outputs.add(component3);
 
-        // Component #3 BasicCard
+        // Component #4 BasicCard
         BasicCard basicCard = new BasicCard();
         basicCard.setTitle("베이직카드 제목");
         basicCard.setDescription("베이직카드 설명입니다.");
