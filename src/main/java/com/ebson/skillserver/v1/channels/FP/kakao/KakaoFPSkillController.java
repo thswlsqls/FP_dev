@@ -54,10 +54,10 @@ public class KakaoFPSkillController {
         textCardbutton2.setLabel("텍스트카드 버튼2");
         textCardbutton2.setAction("webLinkUrl");
         textCardbutton2.setWebLinkUrl("http://localhost:8080/testPage");
-        List<Button> textCardbuttonList = new ArrayList<>();
-        textCardbuttonList.add(textCardbutton1);
-        textCardbuttonList.add(textCardbutton2);
-        textCard.setButtons(textCardbuttonList);
+        List<Button> textCardButtonList = new ArrayList<>();
+        textCardButtonList.add(textCardbutton1);
+        textCardButtonList.add(textCardbutton2);
+        textCard.setButtons(textCardButtonList);
         Map<String, Object> component3 = new HashMap<String, Object>();
         component3.put(ChatbotConstants.TEXT_CARD, textCard);
         outputs.add(component3);
@@ -77,13 +77,59 @@ public class KakaoFPSkillController {
         basicCardbutton2.setLabel("베이직카드 버튼2");
         basicCardbutton2.setAction("webLinkUrl");
         basicCardbutton2.setWebLinkUrl("http://localhost:8080/testPage");
-        List<Button> basicCardbuttonList = new ArrayList<>();
-        basicCardbuttonList.add(basicCardbutton1);
-        basicCardbuttonList.add(basicCardbutton2);
-        basicCard.setButtons(basicCardbuttonList);
+        List<Button> basicCardButtonList = new ArrayList<>();
+        basicCardButtonList.add(basicCardbutton1);
+        basicCardButtonList.add(basicCardbutton2);
+        basicCard.setButtons(basicCardButtonList);
         Map<String, Object> component4 = new HashMap<String, Object>();
         component4.put(ChatbotConstants.BASIC_CARD, basicCard);
         outputs.add(component4);
+
+        // Component #5 CommerceCard
+        CommerceCard commerceCard = new CommerceCard();
+        commerceCard.setTitle("커머스카드 제목");
+        commerceCard.setDescription("커머스카드 설명입니다.");
+        commerceCard.setPrice(770000);
+        commerceCard.setCurrency("won");
+        commerceCard.setDiscount(77000);
+        commerceCard.setDiscountRate(10);
+        commerceCard.setDiscountedPrice(693000);
+        List<Thumbnail> commerceCardThumbnails = new ArrayList<>();
+        Thumbnail commerceCardThumbnail = new Thumbnail();
+        commerceCardThumbnail.setImageUrl("http://localhost:8080/testImg.jpg");
+        commerceCardThumbnails.add(commerceCardThumbnail);
+        commerceCard.setThumbnails(commerceCardThumbnails);
+        Profile commerceCardProfile = new Profile();
+        commerceCardProfile.setImageUrl("http://localhost:8080/testImg.jpg");
+        commerceCardProfile.setNickname("커머스카드 프로필 이름");
+        commerceCard.setProfile(commerceCardProfile);
+        List<Button> commerceCardButtonList = new ArrayList<>();
+        Button commerceCardbutton1 = new Button();
+        commerceCardbutton1.setLabel("커머스카드 버튼1");
+        commerceCardbutton1.setAction("block");
+        commerceCardbutton1.setMessageText("테스트 블록 호출");
+        Map<String, Object> commerceCardBtn1extra = new HashMap<>();
+        commerceCardBtn1extra.put("key1", "value1");
+        commerceCardbutton1.setExtra(commerceCardBtn1extra);
+        Button commerceCardbutton2 = new Button();
+        commerceCardbutton2.setLabel("커머스카드 버튼2");
+        commerceCardbutton2.setAction("webLinkUrl");
+        commerceCardbutton2.setWebLinkUrl("http://localhost:8080/testPage");
+        Map<String, Object> commerceCardBtn2extra = new HashMap<>();
+        commerceCardBtn2extra.put("key1", "value1");
+        commerceCardbutton2.setExtra(commerceCardBtn2extra);
+        commerceCardButtonList.add(commerceCardbutton1);
+        commerceCardButtonList.add(commerceCardbutton2);
+        commerceCard.setButtons(commerceCardButtonList);
+        Map<String, Object> component5 = new HashMap<String, Object>();
+        component5.put(ChatbotConstants.COMMERCE_CARD, commerceCard);
+        outputs.add(component5);
+
+        // Component #6 ListCard
+
+        // Component #7 ItemCard
+
+        // Component #8 Carousel
 
         template.setOutputs(outputs);
         skillResponse.setTemplate(template);
