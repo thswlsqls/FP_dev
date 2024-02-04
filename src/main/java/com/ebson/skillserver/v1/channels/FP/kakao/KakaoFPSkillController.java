@@ -126,6 +126,47 @@ public class KakaoFPSkillController {
         outputs.add(component5);
 
         // Component #6 ListCard
+        ListCard listCard = new ListCard();
+        ListItem listCardHeader = new ListItem();
+        listCardHeader.setTitle("리스트카드 헤더 제목");
+        listCardHeader.setAction("block");
+        listCardHeader.setBlockId("6590ab5b193392115b5a7ff8");
+        listCard.setHeader(listCardHeader);
+        List<ListItem> listCardItems = new ArrayList<>();
+        ListItem listCardItem1 = new ListItem();
+        listCardItem1.setTitle("리스트카드 아이템1 제목");
+        listCardItem1.setDescription("리스트카드 아이템1 설명입니다.");
+        listCardItem1.setAction("block");
+        listCardItem1.setBlockId("6590ab5b193392115b5a7ff8");
+        Map<String, Object> listCardItem1Extra = new HashMap<>();
+        listCardItem1Extra.put("key1", "value1");
+        listCardItem1.setExtra(listCardItem1Extra);
+        listCardItems.add(listCardItem1);
+        ListItem listCardItem2 = new ListItem();
+        listCardItem2.setTitle("리스트카드 아이템2 제목");
+        listCardItem2.setDescription("리스트카드 아이템2 설명입니다.");
+        listCardItem2.setAction("message");
+        listCardItem2.setMessageText("리스트카드 아이템2의 액션 메세지 입니다.");
+        Map<String, Object> listCardItem2Extra = new HashMap<>();
+        listCardItem2Extra.put("key1", "value1");
+        listCardItem2.setExtra(listCardItem2Extra);
+        listCardItems.add(listCardItem2);
+        listCard.setItems(listCardItems);
+        List<Button> listCardButtons = new ArrayList<>();
+        Button listCardButton1 = new Button();
+        listCardButton1.setLabel("리스트카드 버튼1 제목");
+        listCardButton1.setAction("block");
+        listCardButton1.setBlockId("6590ab5b193392115b5a7ff8");
+        listCardButtons.add(listCardButton1);
+        Button listCardButton2 = new Button();
+        listCardButton2.setLabel("리스트카드 버튼2 제목");
+        listCardButton2.setAction("webLink");
+        listCardButton2.setWebLinkUrl("http://localhost:8080/testPage");
+        listCardButtons.add(listCardButton2);
+        listCard.setButtons(listCardButtons);
+        Map<String, Object> component6 = new HashMap<String, Object>();
+        component6.put(ChatbotConstants.LIST_CARD, listCard);
+        outputs.add(component6);
 
         // Component #7 ItemCard
 
