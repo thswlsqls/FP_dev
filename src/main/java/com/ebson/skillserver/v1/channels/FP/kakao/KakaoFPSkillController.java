@@ -169,9 +169,53 @@ public class KakaoFPSkillController {
         outputs.add(component6);
 
         // Component #7 ItemCard
+        ItemCard itemCard = new ItemCard();
+        ItemCard.Thumbnail itemCardThumbnail = itemCard.new Thumbnail();
+        itemCardThumbnail.setImageUrl("http://localhost:8080/testImg.jpg");
+        itemCard.setThumbnail(itemCardThumbnail);
+        ItemCard.Head itemCardHead = itemCard.new Head();
+        itemCardHead.setTitle("아이템카드 헤드의 제목");
+        itemCard.setHead(itemCardHead);
+        ItemCard.ImageTitle itemCardImageTitle = itemCard.new ImageTitle();
+        itemCardImageTitle.setTitle("아이템카드 이미지타이틀 제목");
+        itemCardImageTitle.setDescription("아이템카드 이미지타이틀 설명입니다.");
+        itemCardImageTitle.setImageUrl("http://localhost:8080/testImg.jpg");
+        itemCard.setImageTitle(itemCardImageTitle);
+        List<ItemList> itemCardItemListList = new ArrayList<>();
+        ItemList itemCardItemList1 = new ItemList();
+        itemCardItemList1.setTitle("아이템리스트1 제목");
+        itemCardItemList1.setDescription("아이템리스트1 설명입니다.");
+        itemCardItemListList.add(itemCardItemList1);
+        ItemList itemCardItemList2 = new ItemList();
+        itemCardItemList2.setTitle("아이템리스트2 제목");
+        itemCardItemList2.setDescription("아이템리스트2 설명입니다.");
+        itemCardItemListList.add(itemCardItemList2);
+        itemCard.setItemList(itemCardItemListList);
+        itemCard.setItemListAlignment("left");
+        ItemCard.ItemListSummary itemCardItemListSummary = itemCard.new ItemListSummary();
+        itemCardItemListSummary.setTitle("아이템 리스트 서머리 제목");
+        itemCardItemListSummary.setDescription("아이템 리스트 서머리 설명입니다.");
+        itemCard.setItemListSummary(itemCardItemListSummary);
+        itemCard.setTitle("아이템카드 제목");
+        itemCard.setDescription("아이템카드 설명입니다.");
+        List<Button> itemCardButtonList = new ArrayList<>();
+        Button itemCardButton1 = new Button();
+        itemCardButton1.setLabel("아이템카드 버튼1 제목");
+        itemCardButton1.setAction("block");
+        itemCardButton1.setBlockId("6590ab5b193392115b5a7ff8");
+        itemCardButtonList.add(itemCardButton1);
+        Button itemCardButton2 = new Button();
+        itemCardButton2.setLabel("아이템카드 버튼2 제목");
+        itemCardButton2.setAction("message");
+        itemCardButton2.setMessageText("아이템카드 버튼2 액션 메시지입니다.");
+        itemCardButtonList.add(itemCardButton2);
+        itemCard.setButtons(itemCardButtonList);
+        itemCard.setButtonLayout("vertical");
+        Map<String, Object> component7 = new HashMap<String, Object>();
+        component7.put(ChatbotConstants.ITEM_CARD, itemCard);
+        outputs.add(component7);
 
         // Component #8 Carousel
-
         template.setOutputs(outputs);
         skillResponse.setTemplate(template);
         skillResponse.setVersion(ChatbotConstants.VERSION);
