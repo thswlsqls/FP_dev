@@ -6,9 +6,9 @@ import java.util.Map;
 
 @Data
 public class Intent {
-    private String id;
-    private String name;
-    private Extra extra;
+    private String id; // 블록 id입니다.
+    private String name; // 블록명이며, 지식의 경우 “지식+”로 노출합니다.
+    private Extra extra; //
 
     @Data
     public class Extra {
