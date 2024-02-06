@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public class TestDomainCacheService {
 
     @Cacheable(value = "TestDomains", key = "'TestDomain:' + #id + ':' + #name")
-    public TestDomain getTestDomainByIdAndName(Long id, String name) {
+    public TestDomain getTestDomainByIdAndName(String id, String name) {
         // 이는 캐시 키를 "TestDomain:[id]:[name]" 형식으로 생성하도록 합니다.
         // 여기서 #id와 #name은 메서드의 파라미터 id와 name을 참조합니다.
         // 캐시 조회 명령어는 $ GET TestDomains::TestDomain:[id]:[name] 와 같습니다.
