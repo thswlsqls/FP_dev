@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebson.skillserver.v1.channels.FP.mapper.TestDomainMapper">
+    <resultMap id="TestDomainResultMap" type="com.ebson.skillserver.v1.channels.FP.domain.TestDomain">
+        <result property="testId" column="test_id"/>
+        <result property="testName" column="test_name"/>
+    </resultMap>
+
+    <select id="selectAllTestDomains" resultMap="TestDomainResultMap">
+        SELECT test_id
+             , test_name
+        FROM TEST_DOMAIN
+    </select>
+</mapper>
