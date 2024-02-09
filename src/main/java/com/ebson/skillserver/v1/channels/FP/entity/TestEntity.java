@@ -35,21 +35,19 @@ public class TestEntity {
     private Integer testNo;
 
     @Column(name = "test_flag", nullable = true)
-    private boolean testFlag;
+    private boolean testFlag; // MariaDB 의 경우 TINYINT(1) 형의 컬럼에 매핑됩니다.
 
     @Column(name = "creator", nullable = false, length = 100)
     private String creator;
 
-    @CreationTimestamp
-    @ColumnDefault("CURRENT_TIMESTAMP()")
+    @CreationTimestamp // 엔티티가 생성되어 데이터베이스에 처음 저장될 때 현재 시간을 자동으로 기록합니다.
     @Column(name = "created_date", nullable = false)
     private Date createdDate;
 
     @Column(name = "last_updater", nullable = false, length = 100)
     private String lastUpdater;
 
-    @ColumnDefault("CURRENT_TIMESTAMP()")
-    @UpdateTimestamp
+    @UpdateTimestamp // 엔티티가 생성되어 처음 저장될 때뿐만 아니라, 업데이트될 때마다 현재 시간을 자동으로 기록합니다.
     @Column(name = "last_updated_date", nullable = false)
     private Date lastUpdatedDate;
 }
