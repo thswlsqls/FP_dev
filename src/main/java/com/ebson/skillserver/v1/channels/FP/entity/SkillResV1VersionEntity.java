@@ -4,6 +4,7 @@ import com.ebson.skillserver.config.UUIDToBytesConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 import java.util.UUID;
@@ -15,7 +16,9 @@ import java.util.UUID;
 public class SkillResV1VersionEntity {
 
     @Id
-    @Column(name = "VERSION_ID", columnDefinition = "BINARY(16)")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(name = "VERSION_ID", nullable = false, columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID versionId;
 

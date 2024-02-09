@@ -1,5 +1,6 @@
 package com.ebson.skillserver.v1.channels.FP.entity;
 
+import com.ebson.skillserver.config.UUIDToBytesConverter;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -20,7 +21,7 @@ public class TestEntity {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @ColumnDefault("UNHEX(REPLACE(UUID(), '-', ''))")
+    @Convert(converter = UUIDToBytesConverter.class)
     @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID testId;
 
