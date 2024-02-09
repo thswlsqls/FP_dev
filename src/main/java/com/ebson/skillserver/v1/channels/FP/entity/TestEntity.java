@@ -28,19 +28,28 @@ public class TestEntity {
     @Column(name = "test_name", nullable = true, length = 100)
     private String testName;
 
-    @Column(name = "create_user", nullable = false, length = 100)
-    private String createUser;
+    @Column(name = "test_email", nullable = true, length = 100)
+    private String testEmail;
+
+    @Column(name = "test_no", nullable = true)
+    private Integer testNo;
+
+    @Column(name = "test_flag", nullable = true)
+    private boolean testFlag;
+
+    @Column(name = "creator", nullable = false, length = 100)
+    private String creator;
 
     @CreationTimestamp
     @ColumnDefault("CURRENT_TIMESTAMP()")
-    @Column(name = "create_date", nullable = false)
-    private Date createDate;
+    @Column(name = "created_date", nullable = false)
+    private Date createdDate;
 
-    @Column(name = "last_update_user", nullable = false, length = 100)
-    private String lastUpdateUser;
+    @Column(name = "last_updater", nullable = false, length = 100)
+    private String lastUpdater;
 
     @ColumnDefault("CURRENT_TIMESTAMP()")
     @UpdateTimestamp
-    @Column(name = "last_update_date", nullable = false)
-    private Date lastUpdateDate;
+    @Column(name = "last_updated_date", nullable = false)
+    private Date lastUpdatedDate;
 }
