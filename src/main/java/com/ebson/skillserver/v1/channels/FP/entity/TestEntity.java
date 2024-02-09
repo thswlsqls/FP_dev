@@ -22,10 +22,10 @@ public class TestEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Convert(converter = UUIDToBytesConverter.class)
-    @Column(name = "user_id", nullable = false, columnDefinition = "BINARY(16)")
+    @Column(name = "test_id", nullable = false, columnDefinition = "BINARY(16)")
     private UUID testId;
 
-    @Column(name = "name", nullable = true, length = 100)
+    @Column(name = "test_name", nullable = true, length = 100)
     private String testName;
 
     @Column(name = "create_user", nullable = false, length = 100)
