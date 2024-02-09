@@ -1,13 +1,12 @@
 package com.ebson.skillserver.v1.channels.FP.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.ebson.skillserver.config.UUIDToBytesConverter;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Table(name = "SKILL_RES_V1_VERSION")
@@ -17,10 +16,12 @@ public class SkillResV1VersionEntity {
 
     @Id
     @Column(name = "VERSION_ID", columnDefinition = "BINARY(16)")
-    private byte[] versionId;
+    @Convert(converter = UUIDToBytesConverter.class)
+    private UUID versionId;
 
     @Column(name = "BLOCK_ID", nullable = false, columnDefinition = "BINARY(16)")
-    private byte[] blockId;
+    @Convert(converter = UUIDToBytesConverter.class)
+    private UUID blockId;
 
     @Column(name = "MAJOR")
     private Integer major;
@@ -35,9 +36,11 @@ public class SkillResV1VersionEntity {
     private Date lastUpdatedDate;
 
     @Column(name = "CREATOR", columnDefinition = "BINARY(16)")
-    private byte[] creator;
+    @Convert(converter = UUIDToBytesConverter.class)
+    private UUID creator;
 
     @Column(name = "LAST_UPDATER", columnDefinition = "BINARY(16)")
-    private byte[] lastUpdater;
+    @Convert(converter = UUIDToBytesConverter.class)
+    private UUID lastUpdater;
 
 }
