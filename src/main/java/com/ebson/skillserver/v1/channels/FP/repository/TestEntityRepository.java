@@ -106,6 +106,7 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     @Query(value = "SELECT * FROM test_entity WHERE test_name = :testName AND test_email = :testEmail", nativeQuery = true)
     List<TestEntity> findByTestNameAndTestEmailNative(@Param("testName") String testName, @Param("testEmail") String testEmail);
 
+    // 생성일시를 기준으로 데이터 조회
     @Query(value = "SELECT * FROM test_entity WHERE created_date >= :startDate AND created_date <= :endDate", nativeQuery = true)
     List<TestEntity> findByCreatedDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
