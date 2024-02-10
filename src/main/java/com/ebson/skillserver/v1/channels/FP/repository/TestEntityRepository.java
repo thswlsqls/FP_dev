@@ -1,10 +1,12 @@
 package com.ebson.skillserver.v1.channels.FP.repository;
 
 import com.ebson.skillserver.v1.channels.FP.entity.TestEntity;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -12,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@Repository
 public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
 
     /** 1. JpaRepository 기본 제공 문법 */
@@ -56,6 +59,19 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     // 특정 이름을 가진 데이터 삭제
     long deleteByTestName(String testName);
 
+
+    /** 1.4. 수정 */
+    @Transactional
+    void updateTestEntityTestFlag(UUID id, boolean testFlag);
+    /**  스프링 데이터 JPA에서는 직접적으로 메서드 이름을 통한 업데이트 쿼리의 생성을 지원하지 않습니다.
+     * 엔티티를 조회한 후 변경하고자 하는 필드의 값을 수정하고 save() 메서드를 호출하여 변경사항을 적용하는 방식으로 수정 작업을 수행할 수 있습니다.
+     * 예를 들어, TestEntityRepository 를 implements 한 클래스에서 아래와같이 구현해야 합니다.
+     {
+        TestEntity tu = this.findById(id).orElseThrow(() -> new EntityNotFoundException("TestEntity not found"));
+        tu.setTestFlag(testFlag);
+        this.save(tu);
+    } */
+
     /** 2. JPQL */
     /** 2.1. 조회 */
     // 이름으로 데이터 조회
@@ -90,7 +106,7 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     @Query(value = "SELECT * FROM test_entity WHERE test_name = :testName AND test_email = :testEmail", nativeQuery = true)
     List<TestEntity> findByTestNameAndTestEmailNative(@Param("testName") String testName, @Param("testEmail") String testEmail);
 
-    @Query(value = "SELECT * FROM users WHERE created_date >= :startDate AND created_date <= :endDate", nativeQuery = true)
+    @Query(value = "SELECT * FROM test_entity WHERE created_date >= :startDate AND created_date <= :endDate", nativeQuery = true)
     List<TestEntity> findByCreatedDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 }
