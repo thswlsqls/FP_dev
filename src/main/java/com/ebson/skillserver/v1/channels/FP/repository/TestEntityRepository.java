@@ -65,7 +65,7 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     void updateTestEntityTestFlag(UUID id, boolean testFlag);
     /**  스프링 데이터 JPA에서는 직접적으로 메서드 이름을 통한 업데이트 쿼리의 생성을 지원하지 않습니다.
      * 엔티티를 조회한 후 변경하고자 하는 필드의 값을 수정하고 save() 메서드를 호출하여 변경사항을 적용하는 방식으로 수정 작업을 수행할 수 있습니다.
-     * 예를 들어, TestEntityRepository 를 implements 한 클래스에서 아래와같이 구현해야 합니다.
+     * 예를 들어, TestEntityRepository 를 implements 한 클래스에서 아래와 같이 구현해야 합니다.
      {
         TestEntity tu = this.findById(id).orElseThrow(() -> new EntityNotFoundException("TestEntity not found"));
         tu.setTestFlag(testFlag);
