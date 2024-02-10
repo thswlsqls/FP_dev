@@ -92,6 +92,13 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     @Query("UPDATE TestEntity tu SET t.testFlag = false WHERE tu.testNo < :testNo")
     int deactivateYoungUsers(@Param("testNo") int testNo);
 
+    /** 2.3. 삭제 */
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM TestEntity tu WHERE tu.testName = :testName")
+    void deleteTestEntityByTestNameWithJPQL(@Param("testName") String testName);
+
+
     /** 3. Native Query */
     /** 3.1. 조회 */
     // 네이티브 SQL을 사용하여 이름으로 데이터 조회
@@ -106,8 +113,31 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     @Query(value = "SELECT * FROM test_entity WHERE test_name = :testName AND test_email = :testEmail", nativeQuery = true)
     List<TestEntity> findByTestNameAndTestEmailNative(@Param("testName") String testName, @Param("testEmail") String testEmail);
 
-    // 생성일시를 기준으로 데이터 조회
+    // 생성 일시를 기준으로 데이터 조회
     @Query(value = "SELECT * FROM test_entity WHERE created_date >= :startDate AND created_date <= :endDate", nativeQuery = true)
     List<TestEntity> findByCreatedDateBetween(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+
+
+    /** 3.2. 생성 */
+    @Transactional
+    @Modifying
+    @Query(value = "INSERT INTO test_entity (test_name, test_email, test_flag) VALUES (:testName, :testEmail, :testFlag)", nativeQuery = true)
+    void insertTestEntity(@Param("testName") String testName, @Param("testEmail") String testEmail, @Param("testFlag") boolean testFlag);
+
+
+    /** 3.3. 수정 */
+    /** testName 으로 조건 조회해서 testEmail 수정 */
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE test_entity SET test_email = :testEmail WHERE test_name = :testName", nativeQuery = true)
+    void updateTestEmailByTestName(@Param("testEmail") String testEmail, @Param("testName") String testName);
+
+
+    /** 3.4. 삭제 */
+    /** testName 으로 조건 조회해서 데이터 삭제 */
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM test_entity WHERE test_name = :testName", nativeQuery = true)
+    void deleteTestEntityByTestName(@Param("testName") String testName);
 
 }
