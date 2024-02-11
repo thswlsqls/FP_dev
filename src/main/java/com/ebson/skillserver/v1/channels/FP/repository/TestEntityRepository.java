@@ -72,6 +72,7 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
         this.save(tu);
     } */
 
+
     /** 2. JPQL */
     /** 2.1. 조회 */
     // 이름으로 데이터 조회
