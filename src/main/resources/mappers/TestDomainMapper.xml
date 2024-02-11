@@ -11,4 +11,21 @@
              , test_name
         FROM TEST_DOMAIN
     </select>
+
+    <insert id="insertTestDomain">
+        INSERT INTO TEST_DOMAIN(test_name, test_email)
+        VALUES(#{testName}, #{testEmail})
+    </insert>
+
+    <update id="updateTestDomain">
+        UPDATE TEST_DOMAIN
+        SET test_name = #{testName}, test_email = #{testEmail}
+        WHERE test_id = #{testId}
+    </update>
+
+    <delete id="deleteTestDomain">
+        DELETE FROM TEST_DOMAIN
+        WHERE test_id = #{testId}
+    </delete>
+
 </mapper>

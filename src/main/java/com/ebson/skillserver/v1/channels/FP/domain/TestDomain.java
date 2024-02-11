@@ -6,4 +6,5 @@ import lombok.Data;
 public class TestDomain {
     private String testId;
     private String testName;
+    private String testEmail;
 }
