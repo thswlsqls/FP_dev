@@ -13,36 +13,37 @@ import java.util.UUID;
 public class UUIDTypeHandler extends BaseTypeHandler<UUID> {
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, UUID parameter, JdbcType jdbcType) throws SQLException {
-        ps.setBytes(i, toBytes(parameter));
+        ps.setBytes(i, UUIDToBytes(parameter));
     }
 
     @Override
     public UUID getNullableResult(ResultSet rs, String columnName) throws SQLException {
         byte[] bytes = rs.getBytes(columnName);
-        return fromBytes(bytes);
+        return bytesToUUID(bytes);
     }
 
     @Override
     public UUID getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         byte[] bytes = rs.getBytes(columnIndex);
-        return fromBytes(bytes);
+        return bytesToUUID(bytes);
     }
 
     @Override
     public UUID getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         byte[] bytes = cs.getBytes(columnIndex);
-        return fromBytes(bytes);
+        return bytesToUUID(bytes);
     }
 
-    private byte[] toBytes(UUID uuid) {
+    private byte[] UUIDToBytes(UUID uuid) {
+        if (uuid == null) return null;
         ByteBuffer bb = ByteBuffer.wrap(new byte[16]);
         bb.putLong(uuid.getMostSignificantBits());
         bb.putLong(uuid.getLeastSignificantBits());
         return bb.array();
     }
 
-    private UUID fromBytes(byte[] bytes) {
-        if (bytes == null) return null;
+    private UUID bytesToUUID(byte[] bytes) {
+        if (bytes == null || bytes.length != 16) return null;
         ByteBuffer bb = ByteBuffer.wrap(bytes);
         long firstLong = bb.getLong();
         long secondLong = bb.getLong();
