@@ -1,4 +1,4 @@
-package com.ebson.skillserver.config;
+package com.ebson.skillserver.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

@@ -1,6 +1,6 @@
 package com.ebson.skillserver.v1.channels.FP.entity;
 
-import com.ebson.skillserver.config.UUIDToBytesConverter;
+import com.ebson.skillserver.converter.UUIDToBytesConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
