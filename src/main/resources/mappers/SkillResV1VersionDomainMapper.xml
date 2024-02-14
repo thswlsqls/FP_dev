@@ -41,7 +41,7 @@
     </select>
 
     <!-- Insert -->
-    <insert id="insert" parameterType="com.ebson.skillserver.v1.channels.FP.domain.SkillResV1VersionDomain">
+    <insert id="insertSkillResV1Version" parameterType="com.ebson.skillserver.v1.channels.FP.domain.SkillResV1VersionDomain">
         INSERT INTO SKILL_RES_V1_VERSION (version_id
                     , block_id
                     , major
@@ -61,7 +61,7 @@
     </insert>
 
     <!-- Update -->
-    <update id="update" parameterType="com.ebson.skillserver.v1.channels.FP.domain.SkillResV1VersionDomain">
+    <update id="updateSkillResV1Version" parameterType="com.ebson.skillserver.v1.channels.FP.domain.SkillResV1VersionDomain">
         UPDATE SKILL_RES_V1_VERSION
         SET block_id = #{blockId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
             , major = #{major}

@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface SkillResV1VersionDomainMapper {
     SkillResV1VersionDomain selectByVersionId(UUID versionId);
     List<SkillResV1VersionDomain> selectAll();
-    void insert(SkillResV1VersionDomain skillResV1Version);
-    void update(SkillResV1VersionDomain skillResV1Version);
+    void insertSkillResV1Version(SkillResV1VersionDomain skillResV1Version);
+    void updateSkillResV1Version(SkillResV1VersionDomain skillResV1Version);
     void deleteByVersionId(UUID versionId);
 }
