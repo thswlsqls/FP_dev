@@ -46,7 +46,7 @@ public class SkillResV1VersionDomainMapperTest {
     }
 
     @Test
-    public void insertSkillResV1Version() {
+    public void insertSkillResV1VersionAndDeleteByVersionIdTest() {
         UUID versionId = UUID.randomUUID();
         UUID blockId = UUID.randomUUID();
         Integer major = 2;
@@ -79,5 +79,32 @@ public class SkillResV1VersionDomainMapperTest {
         assertNull(skillResV1VersionDomainMapper.selectByVersionId(versionId));
     }
 
+    @Test
+    public void updateSkillResV1VersionTest(){
+        UUID versionId = UUID.fromString("377dceb9-ca71-11ee-9419-0a0df06f9f06");
+        SkillResV1VersionDomain skillResV1VersionDomain = skillResV1VersionDomainMapper.selectByVersionId(versionId);
+
+        UUID updateBlockId = UUID.randomUUID();
+        Integer updateMajor = 2;
+        Integer updateMinor = 0;
+        Date updateLastUpdatedDate = new Date();
+        UUID updateLastUpdater = UUID.randomUUID();
+
+        skillResV1VersionDomain.setBlockId(updateBlockId);
+        skillResV1VersionDomain.setMajor(updateMajor);
+        skillResV1VersionDomain.setMinor(updateMinor);
+        skillResV1VersionDomain.setLastUpdatedDate(updateLastUpdatedDate);
+        skillResV1VersionDomain.setLastUpdater(updateLastUpdater);
+
+        skillResV1VersionDomainMapper.updateSkillResV1Version(skillResV1VersionDomain);
+        SkillResV1VersionDomain updatedSkillResV1VersionDomain = skillResV1VersionDomainMapper.selectByVersionId(versionId);
+        logger.info("updateSkillResV1Version 실행 결과: {}", updatedSkillResV1VersionDomain);
+        assertNotNull(updatedSkillResV1VersionDomain);
+        assertEquals(updatedSkillResV1VersionDomain.getBlockId(), updateBlockId);
+        assertEquals(updatedSkillResV1VersionDomain.getMajor(), updateMajor);
+        assertEquals(updatedSkillResV1VersionDomain.getMinor(), updateMinor);
+        assertEquals(updatedSkillResV1VersionDomain.getLastUpdatedDate().toString(), updateLastUpdatedDate.toString());
+        assertEquals(updatedSkillResV1VersionDomain.getLastUpdater(), updateLastUpdater);
+    }
 
 }
