@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebson.skillserver.v1.channels.FP.mapper.BuilderV1ChannelDomainMapper">
+
+    <resultMap id="builderV1ChannelMap" type="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ChannelDomain">
+        <result column="CHANNEL_ID" property="channelId" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="CHANNEL_NAME" property="channelName"/>
+        <result column="CREATED_DATE" property="createdDate"/>
+        <result column="LAST_UPDATED_DATE" property="lastUpdatedDate"/>
+        <result column="CREATOR" property="creator" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="LAST_UPDATER" property="lastUpdater" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+    </resultMap>
+
+    <!-- Select -->
+    <select id="selectByChannelId" resultMap="builderV1ChannelMap">
+        SELECT
+            , channel_id
+            , channel_name
+            , created_date
+            , last_updated_date
+            , creator
+            , last_updater
+        FROM BUILDER_V1_CHANNEL
+        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+    </select>
+
+    <!-- Select All -->
+    <select id="selectAll" resultMap="builderV1ChannelMap">
+        SELECT
+            channel_id
+            , channel_name
+            , created_date
+            , last_updated_date
+            , creator
+            , last_updater
+        FROM BUILDER_V1_CHANNEL
+    </select>
+
+    <!-- Insert -->
+    <insert id="insertBuilderV1Channel" parameterType="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ChannelDomain">
+        INSERT INTO BUILDER_V1_CHANNEL
+        (
+            channel_id
+            , channel_name
+            , created_date
+            , last_updated_date
+            , creator
+            , last_updater
+        )
+        VALUES
+        (
+            #{channelId, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+            , #{channelName}
+            , #{createdDate}
+            , #{lastUpdatedDate}
+            , #{creator, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+            , #{lastUpdater, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+        )
+    </insert>
+
+    <!-- Update -->
+    <update id="updateSkillResV1Version" parameterType="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ChannelDomain">
+        UPDATE BUILDER_V1_CHANNEL
+        SET channel_name = #{channelName}
+            , created_date = #{createdDate}
+            , last_updated_date = #{lastUpdatedDate}
+            , creator = #{creator, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+            , last_updater = #{lastUpdater, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+    </update>
+
+    <!-- Delete -->
+    <delete id="deleteByVersionId">
+        DELETE FROM SKILL_RES_V1_VERSION
+        WHERE version_id = #{versionId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+    </delete>
+
+</mapper>
+
