@@ -59,7 +59,7 @@
     </insert>
 
     <!-- Update -->
-    <update id="updateSkillResV1Version" parameterType="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ChannelDomain">
+    <update id="updateBuilderV1Channel" parameterType="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ChannelDomain">
         UPDATE BUILDER_V1_CHANNEL
         SET channel_name = #{channelName}
             , created_date = #{createdDate}
@@ -70,9 +70,9 @@
     </update>
 
     <!-- Delete -->
-    <delete id="deleteByVersionId">
-        DELETE FROM SKILL_RES_V1_VERSION
-        WHERE version_id = #{versionId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+    <delete id="deleteByChannelId">
+        DELETE FROM BUILDER_V1_CHANNEL
+        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
     </delete>
 
 </mapper>
