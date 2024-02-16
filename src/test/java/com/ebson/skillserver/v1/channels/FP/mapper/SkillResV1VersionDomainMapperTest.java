@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -51,8 +52,8 @@ public class SkillResV1VersionDomainMapperTest {
         UUID blockId = UUID.randomUUID();
         Integer major = 2;
         Integer minor = 0;
-        Date createDate = new Date();
-        Date lastUpdatedDate =  new Date();
+        LocalDateTime createDate = LocalDateTime.now();
+        LocalDateTime lastUpdatedDate = LocalDateTime.now();
         UUID creator = UUID.randomUUID();
         UUID lastUpdater = UUID.randomUUID();
 
@@ -87,7 +88,7 @@ public class SkillResV1VersionDomainMapperTest {
         UUID updateBlockId = UUID.randomUUID();
         Integer updateMajor = 2;
         Integer updateMinor = 0;
-        Date updateLastUpdatedDate = new Date();
+        LocalDateTime updateLastUpdatedDate = LocalDateTime.now();
         UUID updateLastUpdater = UUID.randomUUID();
 
         skillResV1VersionDomain.setBlockId(updateBlockId);
@@ -103,7 +104,7 @@ public class SkillResV1VersionDomainMapperTest {
         assertEquals(updatedSkillResV1VersionDomain.getBlockId(), updateBlockId);
         assertEquals(updatedSkillResV1VersionDomain.getMajor(), updateMajor);
         assertEquals(updatedSkillResV1VersionDomain.getMinor(), updateMinor);
-        assertEquals(updatedSkillResV1VersionDomain.getLastUpdatedDate().toString(), updateLastUpdatedDate.toString());
+        assertEquals(updateLastUpdatedDate.toLocalDate(), updatedSkillResV1VersionDomain.getLastUpdatedDate().toLocalDate());
         assertEquals(updatedSkillResV1VersionDomain.getLastUpdater(), updateLastUpdater);
     }
 
