@@ -3,25 +3,25 @@
 <mapper namespace="com.ebson.skillserver.v1.channels.FP.mapper.BuilderV1ChannelDomainMapper">
 
     <resultMap id="builderV1ChannelMap" type="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ChannelDomain">
-        <result column="CHANNEL_ID" property="channelId" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="CHANNEL_ID" property="channelId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
         <result column="CHANNEL_NAME" property="channelName"/>
         <result column="CREATED_DATE" property="createdDate"/>
         <result column="LAST_UPDATED_DATE" property="lastUpdatedDate"/>
-        <result column="CREATOR" property="creator" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
-        <result column="LAST_UPDATER" property="lastUpdater" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="CREATOR" property="creator" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="LAST_UPDATER" property="lastUpdater" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
     </resultMap>
 
     <!-- Select -->
     <select id="selectByChannelId" resultMap="builderV1ChannelMap">
         SELECT
-            , channel_id
+            channel_id
             , channel_name
             , created_date
             , last_updated_date
             , creator
             , last_updater
         FROM BUILDER_V1_CHANNEL
-        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        WHERE channel_id = #{channelId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
     </select>
 
     <!-- Select All -->
