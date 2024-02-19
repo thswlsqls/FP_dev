@@ -21,7 +21,7 @@
             , creator
             , last_updater
         FROM BUILDER_V1_CHANNEL
-        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
     </select>
 
     <!-- Select All -->
@@ -49,12 +49,12 @@
         )
         VALUES
         (
-            #{channelId, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+            #{channelId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
             , #{channelName}
             , #{createdDate}
             , #{lastUpdatedDate}
-            , #{creator, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
-            , #{lastUpdater, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+            , #{creator, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , #{lastUpdater, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
         )
     </insert>
 
@@ -64,15 +64,15 @@
         SET channel_name = #{channelName}
             , created_date = #{createdDate}
             , last_updated_date = #{lastUpdatedDate}
-            , creator = #{creator, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
-            , last_updater = #{lastUpdater, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
-        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+            , creator = #{creator, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , last_updater = #{lastUpdater, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
     </update>
 
     <!-- Delete -->
     <delete id="deleteByChannelId">
         DELETE FROM BUILDER_V1_CHANNEL
-        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.example.demo.handler.UUIDTypeHandler}
+        WHERE channel_id = #{channelId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
     </delete>
 
 </mapper>
