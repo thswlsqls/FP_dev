@@ -15,5 +15,5 @@ public class SkillResV1TemplateComponentDomain {
     private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
-
 }
+
