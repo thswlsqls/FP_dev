@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 public class SkillResV1TemplateListCardListItemDomain {
-    private UUID listItemId;
+    private UUID listItemId; // BINARY(16)을 UUID로 매핑
     private Integer listItemOrd;
     private UUID componentId;
     private Character headerYn; // 'Y' for yes, 'N' for no, or null if not applicable

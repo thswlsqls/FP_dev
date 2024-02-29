@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 public class SkillResV1TemplateSimpleTextDomain {
-    private UUID componentId;
+    private UUID componentId; // BINARY(16)을 UUID로 매핑
     private String text;
     private LocalDateTime createdDate;
     private LocalDateTime lastUpdatedDate;

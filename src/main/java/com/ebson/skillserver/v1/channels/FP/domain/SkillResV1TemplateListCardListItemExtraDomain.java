@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Data
 public class SkillResV1TemplateListCardListItemExtraDomain {
-    private UUID extraId;
+    private UUID extraId; // BINARY(16)을 UUID로 매핑
     private Integer listItemOrd;
     private UUID listItemId;
     private String key;
