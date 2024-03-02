@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebson.skillserver.v1.channels.FP.mapper.BuilderV1ChannelDomainMapper">
+
+    <resultMap id="builderV1ScenarioMap" type="com.ebson.skillserver.v1.scenarios.FP.domain.BuilderV1ScenarioDomain">
+        <result column="SCENARIO_ID" property="scenarioId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="CHANNEL_ID" property="channelId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="SCENARIO_NAME" property="scenarioName"/>
+        <result column="CREATED_DATE" property="createdDate"/>
+        <result column="LAST_UPDATED_DATE" property="lastUpdatedDate"/>
+        <result column="CREATOR" property="creator" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="LAST_UPDATER" property="lastUpdater" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+    </resultMap>
+
+    <!-- Select -->
+    <select id="selectByScenarioId" resultMap="builderV1ScenarioMap">
+        SELECT scenario_id
+            , channel_id
+            , scenario_name
+            , created_date
+            , last_updated_date
+            , creator
+            , last_updater
+        FROM BUILDER_V1_SCENARIO
+        WHERE scenario_id = #{scenarioId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+    </select>
+
+    <!-- Select All -->
+    <select id="selectAll" resultMap="builderV1ScenarioMap">
+        SELECT scenario_id
+            , channel_id
+            , scenario_name
+            , created_date
+            , last_updated_date
+            , creator
+            , last_updater
+        FROM BUILDER_V1_SCENARIO
+    </select>
+
+    <!-- Insert -->
+    <insert id="insertBuilderV1Scenario" parameterType="com.ebson.skillserver.v1.scenarios.FP.domain.BuilderV1ScenarioDomain">
+        INSERT INTO BUILDER_V1_SCENARIO
+        (
+            scenario_id
+            , channel_id
+            , scenario_name
+            , created_date
+            , last_updated_date
+            , creator
+            , last_updater
+        )
+        VALUES
+        (
+            #{scenarioId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , #{channelId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , #{scenarioName}
+            , #{createdDate}
+            , #{lastUpdatedDate}
+            , #{creator, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , #{lastUpdater, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        )
+    </insert>
+
+    <!-- Update -->
+    <update id="updateBuilderV1Scenario" parameterType="com.ebson.skillserver.v1.scenarios.FP.domain.BuilderV1ScenarioDomain">
+        UPDATE BUILDER_V1_SCENARIO
+        SET scenario_name = #{scenarioName}
+            , last_updated_date = #{lastUpdatedDate}
+            , last_updater = #{lastUpdater, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        WHERE scenario_id = #{scenarioId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+    </update>
+
+    <!-- Delete -->
+    <delete id="deleteByScenarioId">
+        DELETE
+        FROM BUILDER_V1_SCENARIO
+        WHERE scenario_id = #{scenarioId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+    </delete>
+
+
+</mapper>
