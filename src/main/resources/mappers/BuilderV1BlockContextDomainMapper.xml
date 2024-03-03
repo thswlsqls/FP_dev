@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ebson.skillserver.v1.channels.FP.mapper.BuilderV1BlockContextDomainMapper">
+
+    <resultMap id="builderV1BlockContextMap" type="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1BlockContextDomain">
+        <result column="context_id" property="contextId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="block_id" property="blockId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="context_type" property="contextType"/>
+        <result column="context_name" property="contextName"/>
+        <result column="created_date" property="createdDate"/>
+        <result column="last_update_date" property="lastUpdateDate"/>
+        <result column="creator" property="creator" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="last_updater" property="lastUpdater" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+    </resultMap>
+
+    <!-- Select -->
+    <select id="selectByContextId" resultMap="builderV1BlockContextMap">
+        SELECT context_id
+            , block_id
+            , context_type
+            , context_name
+            , created_date
+            , last_update_date
+            , creator
+            , last_updater
+        FROM BUILDER_V1_BLOCK_CONTEXT
+        WHERE context_id = #{contextId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+    </select>
+
+    <!-- Select All -->
+    <select id="selectAll" resultMap="builderV1BlockContextMap">
+        SELECT context_id
+            , block_id
+            , context_type
+            , context_name
+            , created_date
+            , last_update_date
+            , creator
+            , last_updater
+        FROM BUILDER_V1_BLOCK_CONTEXT
+    </select>
+
+    <!-- Insert -->
+    <insert id="insertBuilderV1BlockContext" parameterType="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1BlockContextDomain">
+        INSERT INTO BUILDER_V1_BLOCK_CONTEXT
+        (
+            context_id
+            , block_id
+            , context_type
+            , context_name
+            , created_date
+            , last_update_date
+            , creator
+            , last_updater
+        )
+        VALUES
+        (
+            #{contextId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , #{blockId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , #{contextType}
+            , #{contextName}
+            , #{createdDate}
+            , #{lastUpdateDate}
+            , #{creator, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , #{lastUpdater, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        )
+    </insert>
+
+    <!-- Update -->
+    <update id="updateBuilderV1BlockContext" parameterType="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1BlockContextDomain">
+        UPDATE BUILDER_V1_BLOCK_CONTEXT
+        SET context_type = #{contextType}
+            , context_name = #{contextName}
+            , last_update_date = #{lastUpdateDate}
+            , creator = #{creator, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , last_updater = #{lastUpdater, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        WHERE context_id = #{contextId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+    </update>
+
+    <!-- Delete -->
+    <delete id="deleteByContextId">
+        DELETE FROM BUILDER_V1_BLOCK_CONTEXT
+        WHERE context_id = #{contextId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+    </delete>
+
+</mapper>
