@@ -7,6 +7,8 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+// import javax.persistence.EntityManagerFactory;
+
 @Configuration
 // @EnableTransactionManagement // 트랜잭션 관리를 활성화합니다.
 public class TransactionManagerConfig {

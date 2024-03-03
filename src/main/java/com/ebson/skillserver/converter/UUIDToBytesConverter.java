@@ -2,9 +2,11 @@ package com.ebson.skillserver.converter;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
+// import javax.persistence.*;
 
 import java.nio.ByteBuffer;
 import java.util.UUID;
+
 
 @Converter(autoApply = true) // 이 컨버터를 자동으로 적용하도록 설정합니다.
 public class UUIDToBytesConverter implements AttributeConverter<UUID, byte[]> {

@@ -2,6 +2,7 @@ package com.ebson.skillserver.v1.channels.FP.entity;
 
 import com.ebson.skillserver.converter.UUIDToBytesConverter;
 import jakarta.persistence.*;
+// import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;

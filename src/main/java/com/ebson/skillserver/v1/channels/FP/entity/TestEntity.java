@@ -1,13 +1,14 @@
 package com.ebson.skillserver.v1.channels.FP.entity;
 
 import com.ebson.skillserver.converter.UUIDToBytesConverter;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import jakarta.persistence.*;
+// import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
 

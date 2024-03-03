@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ebson.skillserver.v1.channels.FP.mapper.BuilderV1ChannelDomainMapper">
+<mapper namespace="com.ebson.skillserver.v1.channels.FP.mapper.BuilderV1ScenarioDomainMapper">
 
-    <resultMap id="builderV1ScenarioMap" type="com.ebson.skillserver.v1.scenarios.FP.domain.BuilderV1ScenarioDomain">
+    <resultMap id="builderV1ScenarioMap" type="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ScenarioDomain">
         <result column="SCENARIO_ID" property="scenarioId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
         <result column="CHANNEL_ID" property="channelId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
         <result column="SCENARIO_NAME" property="scenarioName"/>
@@ -38,7 +38,7 @@
     </select>
 
     <!-- Insert -->
-    <insert id="insertBuilderV1Scenario" parameterType="com.ebson.skillserver.v1.scenarios.FP.domain.BuilderV1ScenarioDomain">
+    <insert id="insertBuilderV1Scenario" parameterType="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ScenarioDomain">
         INSERT INTO BUILDER_V1_SCENARIO
         (
             scenario_id
@@ -62,7 +62,7 @@
     </insert>
 
     <!-- Update -->
-    <update id="updateBuilderV1Scenario" parameterType="com.ebson.skillserver.v1.scenarios.FP.domain.BuilderV1ScenarioDomain">
+    <update id="updateBuilderV1Scenario" parameterType="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ScenarioDomain">
         UPDATE BUILDER_V1_SCENARIO
         SET scenario_name = #{scenarioName}
             , last_updated_date = #{lastUpdatedDate}

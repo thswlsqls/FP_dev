@@ -48,7 +48,7 @@ public class RedisConfig {
                 .build();
     }
 
-    @Bean
+    /** @Bean
     public RedisCacheManager exampleCacheManager(RedisConnectionFactory redisConnectionFactory) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
                 .prefixCacheNameWith("exampleCache:")
@@ -59,7 +59,7 @@ public class RedisConfig {
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(config)
                 .build();
-    }
+    } */
 
 }
 

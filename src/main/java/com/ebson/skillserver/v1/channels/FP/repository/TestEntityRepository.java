@@ -1,7 +1,6 @@
 package com.ebson.skillserver.v1.channels.FP.repository;
 
 import com.ebson.skillserver.v1.channels.FP.entity.TestEntity;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -41,7 +40,7 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     List<TestEntity> findByTestNameAndTestFlag(String username, boolean active);
 
     // 이름 또는 이메일로 데이터 찾기
-    List<TestEntity> findByTestNameOrEmail(String username, String email);
+    List<TestEntity> findByTestNameOrTestEmail(String username, String testEmail);
 
     // 숫자 범위 내의 데이터 찾기
     List<TestEntity> findByTestNoBetween(int startTestNo, int endTestNo);
@@ -61,8 +60,8 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
 
 
     /** 1.4. 수정 */
-    @Transactional
-    void updateTestEntityTestFlag(UUID id, boolean testFlag);
+    // @Transactional
+    // void updateTestEntity(TestEntity testEntity); //UUID testId, boolean testFlag);
     /**  스프링 데이터 JPA에서는 직접적으로 메서드 이름을 통한 업데이트 쿼리의 생성을 지원하지 않습니다.
      * 엔티티를 조회한 후 변경하고자 하는 필드의 값을 수정하고 save() 메서드를 호출하여 변경사항을 적용하는 방식으로 수정 작업을 수행할 수 있습니다.
      * 예를 들어, TestEntityRepository 를 implements 한 클래스에서 아래와 같이 구현해야 합니다.
@@ -76,7 +75,7 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     /** 2. JPQL */
     /** 2.1. 조회 */
     // 이름으로 데이터 조회
-    @Query("SELECT u FROM TestEntity tu WHERE tu.testName = :testName")
+    @Query("SELECT tu FROM TestEntity tu WHERE tu.testName = :testName")
     List<TestEntity> findByTestNameWithJPQL(@Param("testName") String testName);
 
     // 플래그 값으로 데이터 조회
@@ -90,7 +89,7 @@ public interface TestEntityRepository extends JpaRepository<TestEntity, UUID> {
     /** 2.2. 수정 */
     @Transactional
     @Modifying
-    @Query("UPDATE TestEntity tu SET t.testFlag = false WHERE tu.testNo < :testNo")
+    @Query("UPDATE TestEntity tu SET tu.testFlag = false WHERE tu.testNo < :testNo")
     int deactivateYoungUsers(@Param("testNo") int testNo);
 
     /** 2.3. 삭제 */
