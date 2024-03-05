@@ -8,9 +8,9 @@ import java.util.UUID;
 
 @Mapper
 public interface BuilderV1ScenarioDomainMapper {
-    BuilderV1ScenarioDomain selectByScenarioId(UUID scenarioId);
+    BuilderV1ScenarioDomain selectByScenarioId(String scenarioId);
     List<BuilderV1ScenarioDomain> selectAll();
     void insertBuilderV1Scenario(BuilderV1ScenarioDomain builderV1ScenarioDomain);
     void updateBuilderV1Scenario(BuilderV1ScenarioDomain builderV1ScenarioDomain);
-    void deleteByScenarioId(UUID scenarioId);
+    void deleteByScenarioId(String scenarioId);
 }
