@@ -4,7 +4,8 @@
 
     <resultMap id="builderV1BlockContextMap" type="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1BlockContextDomain">
         <result column="context_id" property="contextId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
-        <result column="block_id" property="blockId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="block_id" property="blockId" />
+        <result column="block_code" property="blockCode" />
         <result column="context_type" property="contextType"/>
         <result column="context_name" property="contextName"/>
         <result column="created_date" property="createdDate"/>
@@ -17,6 +18,7 @@
     <select id="selectByContextId" resultMap="builderV1BlockContextMap">
         SELECT context_id
             , block_id
+            , block_code
             , context_type
             , context_name
             , created_date
@@ -31,6 +33,7 @@
     <select id="selectAll" resultMap="builderV1BlockContextMap">
         SELECT context_id
             , block_id
+            , block_code
             , context_type
             , context_name
             , created_date
@@ -46,6 +49,7 @@
         (
             context_id
             , block_id
+            , block_code
             , context_type
             , context_name
             , created_date
@@ -56,7 +60,8 @@
         VALUES
         (
             #{contextId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
-            , #{blockId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+            , #{blockId}
+            , #{blockCode}
             , #{contextType}
             , #{contextName}
             , #{createdDate}

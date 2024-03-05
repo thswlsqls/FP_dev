@@ -8,7 +8,8 @@ import java.util.UUID;
 @Data
 public class BuilderV1BlockContextDomain {
     private UUID contextId;
-    private UUID blockId;
+    private String blockId;
+    private String blockCode;
     private String contextType;
     private String contextName;
     private LocalDateTime createdDate;

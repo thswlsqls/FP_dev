@@ -8,9 +8,9 @@ import java.util.UUID;
 
 @Mapper
 public interface BuilderV1BlockContextDomainMapper {
-    BuilderV1BlockContextDomain selectByContextId(UUID contextId);
+    BuilderV1BlockContextDomain selectByContextId(String contextId);
     List<BuilderV1BlockContextDomain> selectAll();
     void insertBuilderV1BlockContext(BuilderV1BlockContextDomain builderV1BlockContextDomain);
     void updateBuilderV1BlockContext(BuilderV1BlockContextDomain builderV1BlockContextDomain);
-    void deleteByContextId(UUID contextId);
+    void deleteByContextId(String contextId);
 }
