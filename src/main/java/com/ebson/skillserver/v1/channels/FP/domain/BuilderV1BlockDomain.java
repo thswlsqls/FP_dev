@@ -7,8 +7,9 @@ import java.util.UUID;
 
 @Data
 public class BuilderV1BlockDomain {
-    private UUID blockId;
-    private UUID scenarioId;
+    private String blockId;
+    private String scenarioId;
+    private String blockCode;
     private String blockName;
     private LocalDateTime createdDate;
     private LocalDateTime lastUpdatedDate;

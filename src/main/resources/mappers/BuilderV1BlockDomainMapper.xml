@@ -3,8 +3,9 @@
 <mapper namespace="com.ebson.skillserver.v1.channels.FP.mapper.BuilderV1BlockDomainMapper">
 
     <resultMap id="builderV1BlockMap" type="com.ebson.skillserver.v1.channels.FP.domain.BuilderV1BlockDomain">
-        <result column="BLOCK_ID" property="blockId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
-        <result column="SCENARIO_ID" property="scenarioId" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result column="BLOCK_ID" property="blockId" />
+        <result column="SCENARIO_ID" property="scenarioId" />
+        <result column="BLOCK_CODE" property="blockCode"/>
         <result column="BLOCK_NAME" property="blockName"/>
         <result column="CREATED_DATE" property="createdDate"/>
         <result column="LAST_UPDATED_DATE" property="lastUpdatedDate"/>
@@ -16,19 +17,21 @@
     <select id="selectByBlockId" resultMap="builderV1BlockMap">
         SELECT block_id
             , scenario_id
+            , block_code
             , block_name
             , created_date
             , last_updated_date
             , creator
             , last_updater
         FROM BUILDER_V1_BLOCK
-        WHERE BLOCK_ID = #{blockId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        WHERE BLOCK_ID = #{blockId}
     </select>
 
     <!-- Select All -->
     <select id="selectAll" resultMap="builderV1BlockMap">
         SELECT block_id
             , scenario_id
+            , block_code
             , block_name
             , created_date
             , last_updated_date
@@ -43,6 +46,7 @@
             (
                 block_id
                 , scenario_id
+                , block_code
                 , block_name
                 , created_date
                 , last_updated_date
@@ -51,8 +55,9 @@
             )
         VALUES
             (
-                #{blockId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
-                , #{scenarioId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+                #{blockId}
+                , #{scenarioId}
+                , #{blockCode}
                 , #{blockName}
                 , #{createdDate}
                 , #{lastUpdatedDate}
@@ -68,13 +73,13 @@
             , last_updated_date = #{lastUpdatedDate}
             , creator = #{creator, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
             , last_updater = #{lastUpdater, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
-        WHERE block_id = #{blockId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        WHERE block_id = #{blockId}
     </update>
 
     <!-- Delete -->
     <delete id="deleteByBlockId">
         DELETE FROM BUILDER_V1_BLOCK
-        WHERE block_id = #{blockId, jdbcType=BINARY, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        WHERE block_id = #{blockId}
     </delete>
 
 </mapper>
