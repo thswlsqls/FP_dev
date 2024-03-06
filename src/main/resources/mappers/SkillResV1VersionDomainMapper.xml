@@ -4,7 +4,8 @@
 
     <resultMap id="skillResV1VersionMap" type="com.ebson.skillserver.v1.channels.FP.domain.SkillResV1VersionDomain">
         <result property="versionId" column="VERSION_ID" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
-        <result property="blockId" column="BLOCK_ID" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
+        <result property="blockId" column="BLOCK_ID" />
+        <result property="blockCode" column="BLOCK_CODE" />
         <result property="major" column="MAJOR"/>
         <result property="minor" column="MINOR"/>
         <result property="createdDate" column="CREATED_DATE"/>
@@ -17,6 +18,7 @@
     <select id="selectByVersionId" resultMap="skillResV1VersionMap">
         SELECT version_id
                 , block_id
+                , block_code
                 , major
                 , minor
                 , created_date
@@ -31,6 +33,7 @@
     <select id="selectAll" resultMap="skillResV1VersionMap">
         SELECT version_id
                 , block_id
+                , block_code
                 , major
                 , minor
                 , created_date
@@ -44,6 +47,7 @@
     <insert id="insertSkillResV1Version" parameterType="com.ebson.skillserver.v1.channels.FP.domain.SkillResV1VersionDomain">
         INSERT INTO SKILL_RES_V1_VERSION (version_id
                     , block_id
+                    , block_code
                     , major
                     , minor
                     , created_date
@@ -51,7 +55,8 @@
                     , creator
                     , last_updater)
         VALUES (#{versionId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
-                , #{blockId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+                , #{blockId}
+                , #{blockCode}
                 , #{major}
                 , #{minor}
                 , #{createdDate}
@@ -63,7 +68,8 @@
     <!-- Update -->
     <update id="updateSkillResV1Version" parameterType="com.ebson.skillserver.v1.channels.FP.domain.SkillResV1VersionDomain">
         UPDATE SKILL_RES_V1_VERSION
-        SET block_id = #{blockId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
+        SET block_id = #{blockId}
+            , block_code = #{blockCode}
             , major = #{major}
             , minor = #{minor}
             , last_updated_date = #{lastUpdatedDate}

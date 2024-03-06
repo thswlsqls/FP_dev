@@ -11,7 +11,8 @@ import java.util.UUID; // UUID 타입을 사용하기 위한 import 추가
 @NoArgsConstructor
 public class SkillResV1VersionDomain {
     private UUID versionId;       // byte[] 대신 UUID 사용
-    private UUID blockId;         // byte[] 대신 UUID 사용
+    private String blockId;         // byte[] 대신 UUID 사용
+    private String blockCode;
     private Integer major;
     private Integer minor;
     private LocalDateTime createdDate;
