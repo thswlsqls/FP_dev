@@ -8,7 +8,8 @@ import java.util.UUID;
 @Data
 public class SkillResV1DataDomain {
     private UUID dataId;
-    private UUID blockId;
+    private String blockId;
+    private String blockCode;
     private String key;
     private String value;
     private LocalDateTime createdDate;
