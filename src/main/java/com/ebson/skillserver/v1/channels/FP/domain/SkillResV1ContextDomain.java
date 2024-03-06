@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 public class SkillResV1ContextDomain {
     private UUID contextId;
-    private String blockId;
+    private String blockId; // UUID -> String
     private String blockCode;
     private String contextName;
     private String contextType;

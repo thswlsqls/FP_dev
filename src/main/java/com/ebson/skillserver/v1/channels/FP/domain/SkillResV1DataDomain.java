@@ -8,7 +8,7 @@ import java.util.UUID;
 @Data
 public class SkillResV1DataDomain {
     private UUID dataId;
-    private String blockId;
+    private String blockId; // UUID -> String
     private String blockCode;
     private String key;
     private String value;
