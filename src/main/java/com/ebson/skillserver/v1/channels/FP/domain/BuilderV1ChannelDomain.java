@@ -9,8 +9,6 @@ import java.util.UUID;
 public class BuilderV1ChannelDomain {
     private UUID channelId;
     private String channelName;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

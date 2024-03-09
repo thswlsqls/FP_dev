@@ -11,8 +11,6 @@ public class SkillResV1TemplateComponentBtnExtraDomain {
     private UUID btnId;
     private String key;
     private String value;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

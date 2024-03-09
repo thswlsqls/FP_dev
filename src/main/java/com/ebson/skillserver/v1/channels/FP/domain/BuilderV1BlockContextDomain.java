@@ -12,8 +12,6 @@ public class BuilderV1BlockContextDomain {
     private String blockCode;
     private String contextType;
     private String contextName;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdateDate;
     private UUID creator;
     private UUID lastUpdater;
 }

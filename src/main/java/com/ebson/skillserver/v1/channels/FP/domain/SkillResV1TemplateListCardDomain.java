@@ -11,8 +11,6 @@ public class SkillResV1TemplateListCardDomain {
     private UUID componentId; // BINARY(16)을 UUID로 매핑
     private Integer cardOrd;
     private Character dataType;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

@@ -12,8 +12,6 @@ public class SkillResV1TemplateListCardListItemExtraDomain {
     private UUID listItemId;
     private String key;
     private String value;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator; // Can be null
     private UUID lastUpdater; // Can be null
 }

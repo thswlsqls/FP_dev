@@ -11,8 +11,6 @@ public class SkillResV1TemplateDomain {
     private String blockId; // UUID -> String
     private String blockCode;
     private String templateName;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

@@ -15,8 +15,6 @@ public class SkillResV1TemplateComponentBtnDomain {
     private String messageText;
     private String phone;
     private UUID blockId; // Optional, may be null if not linked to a block
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

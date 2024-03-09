@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 @org.springframework.context.annotation.Configuration
 public class MyBatisConfig {
 
-    /** @Bean
+    @Bean
     ConfigurationCustomizer mybatisConfigurationCustomizer() {
         return new ConfigurationCustomizer() {
             @Override
@@ -31,7 +31,7 @@ public class MyBatisConfig {
                 // 여기에 다른 SqlSessionFactoryBean 설정을 커스터마이징할 수 있습니다.
             }
         };
-    } */
+    }
 
 }
 

@@ -11,8 +11,6 @@ public class SkillResV1ContextParamDomain {
     private UUID contextId;
     private String key;
     private String value;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

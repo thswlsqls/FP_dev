@@ -36,8 +36,6 @@ public class SkillResV1TemplateItemCardDomain {
     private String title;
     private String desc;
     private String btnLayout; // NOT NULL, 기본값 'vertical'
-    private LocalDateTime createdDate; // NOT NULL
-    private LocalDateTime lastUpdatedDate; // NOT NULL
     private UUID creator;
     private UUID lastUpdater;
 }

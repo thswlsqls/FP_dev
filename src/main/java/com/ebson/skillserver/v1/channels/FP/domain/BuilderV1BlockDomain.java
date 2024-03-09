@@ -11,8 +11,6 @@ public class BuilderV1BlockDomain {
     private String scenarioId;
     private String blockCode;
     private String blockName;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

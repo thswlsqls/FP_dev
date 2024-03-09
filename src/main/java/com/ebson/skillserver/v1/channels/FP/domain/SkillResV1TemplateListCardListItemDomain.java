@@ -20,8 +20,6 @@ public class SkillResV1TemplateListCardListItemDomain {
     private String action;
     private UUID blockId; // Can be null if not linked to a specific block
     private String messageText;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator; // Can be null
     private UUID lastUpdater; // Can be null
 }

@@ -13,8 +13,6 @@ public class SkillResV1TemplateTextCardDomain {
     private Character dataType;
     private String title;
     private String desc;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

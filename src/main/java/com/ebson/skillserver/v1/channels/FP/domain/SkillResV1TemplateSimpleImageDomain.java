@@ -10,8 +10,6 @@ public class SkillResV1TemplateSimpleImageDomain {
     private UUID componentId; // BINARY(16)을 UUID로 매핑
     private String imgUrl;
     private String altText;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

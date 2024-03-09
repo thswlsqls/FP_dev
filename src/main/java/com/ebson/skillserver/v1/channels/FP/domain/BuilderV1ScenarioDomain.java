@@ -12,8 +12,6 @@ public class BuilderV1ScenarioDomain {
     private UUID channelId;
     private String scenarioCode;
     private String scenarioName;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

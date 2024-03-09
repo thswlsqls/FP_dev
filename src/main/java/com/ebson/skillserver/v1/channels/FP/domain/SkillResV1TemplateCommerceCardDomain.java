@@ -25,8 +25,6 @@ public class SkillResV1TemplateCommerceCardDomain {
     private String thumbFixedRatio;
     private String profileNickname;
     private String profileImgUrl;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 

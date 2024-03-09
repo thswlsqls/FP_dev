@@ -14,8 +14,6 @@ public class SkillResV1TemplateBasicCardDomain {
     private String title;
     private String desc;
     private String thumb; // This field is marked as NOT NULL in the DB schema.
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }

@@ -15,5 +15,7 @@ public class SkillResV1VersionDomain {
     private String blockCode;
     private Integer major;
     private Integer minor;
+    private UUID creator;
+    private UUID lastUpdater;
 }
 

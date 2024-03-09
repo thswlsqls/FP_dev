@@ -13,8 +13,6 @@ public class SkillResV1TemplateCarouselDomain {
     private String headerTitle;
     private String headerDesc;
     private String headerThumb;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
     private UUID creator;
     private UUID lastUpdater;
 }
