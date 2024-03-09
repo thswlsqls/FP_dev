@@ -15,9 +15,5 @@ public class SkillResV1VersionDomain {
     private String blockCode;
     private Integer major;
     private Integer minor;
-    private LocalDateTime createdDate;
-    private LocalDateTime lastUpdatedDate;
-    private UUID creator;         // byte[] 대신 UUID 사용
-    private UUID lastUpdater;     // byte[] 대신 UUID 사용
 }
 
