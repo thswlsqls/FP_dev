@@ -63,8 +63,6 @@ public class SkillResV1VersionDomainMapperTest {
         skillResV1VersionDomain.setBlockId(blockId);
         skillResV1VersionDomain.setMajor(major);
         skillResV1VersionDomain.setMinor(minor);
-        skillResV1VersionDomain.setCreatedDate(createDate);
-        skillResV1VersionDomain.setLastUpdatedDate(lastUpdatedDate);
         skillResV1VersionDomain.setCreator(creator);
         skillResV1VersionDomain.setLastUpdater(lastUpdater);
 
@@ -94,7 +92,6 @@ public class SkillResV1VersionDomainMapperTest {
         skillResV1VersionDomain.setBlockId(updateBlockId);
         skillResV1VersionDomain.setMajor(updateMajor);
         skillResV1VersionDomain.setMinor(updateMinor);
-        skillResV1VersionDomain.setLastUpdatedDate(updateLastUpdatedDate);
         skillResV1VersionDomain.setLastUpdater(updateLastUpdater);
 
         skillResV1VersionDomainMapper.updateSkillResV1Version(skillResV1VersionDomain);
@@ -104,7 +101,6 @@ public class SkillResV1VersionDomainMapperTest {
         assertEquals(updatedSkillResV1VersionDomain.getBlockId(), updateBlockId);
         assertEquals(updatedSkillResV1VersionDomain.getMajor(), updateMajor);
         assertEquals(updatedSkillResV1VersionDomain.getMinor(), updateMinor);
-        assertEquals(updateLastUpdatedDate.toLocalDate(), updatedSkillResV1VersionDomain.getLastUpdatedDate().toLocalDate());
         assertEquals(updatedSkillResV1VersionDomain.getLastUpdater(), updateLastUpdater);
     }
 
