@@ -37,10 +37,16 @@ public class BuilderV1ChannelEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID lastUpdater;
 
-    @PrePersist
+    @PrePersist // INSERT 쿼리 실행 시 
     protected void onCreate() {
         LocalDateTime now = LocalDateTime.now();
         this.createdDate = now;
+        this.lastUpdatedDate = now;
+    }
+
+    @PreUpdate // UPDATE 쿼리 실행 시
+    protected void onUpdate() {
+        LocalDateTime now = LocalDateTime.now();
         this.lastUpdatedDate = now;
     }
 }
