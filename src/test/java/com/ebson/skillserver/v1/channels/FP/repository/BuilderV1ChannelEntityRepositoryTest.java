@@ -1,8 +1,6 @@
 package com.ebson.skillserver.v1.channels.FP.repository;
 
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1ChannelEntity;
-import com.ebson.skillserver.v1.channels.FP.entity.SkillResV1VersionEntity;
-import com.ebson.skillserver.v1.channels.FP.mapper.BuilderV1ChannelDomainMapperTest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,8 +33,8 @@ public class BuilderV1ChannelEntityRepositoryTest {
     private BuilderV1ChannelEntity createBuilderV1ChannelEntity(){
         BuilderV1ChannelEntity builderV1ChannelEntity = new BuilderV1ChannelEntity();
         builderV1ChannelEntity.setChannelName("testChannelName");
-        builderV1ChannelEntity.setCreator(UUID.randomUUID());
-        builderV1ChannelEntity.setLastUpdater(UUID.randomUUID());
+        builderV1ChannelEntity.setCreator("testCreator");
+        builderV1ChannelEntity.setLastUpdater("testLastUpdater");
         return builderV1ChannelEntity;
     }
 
@@ -51,12 +49,13 @@ public class BuilderV1ChannelEntityRepositoryTest {
 //    }
 
     @Test
+    @Rollback(value = false)
     public void testSaveAndFlush() {
         BuilderV1ChannelEntity entity = createBuilderV1ChannelEntity();
         BuilderV1ChannelEntity savedEntity = builderV1ChannelEntityRepository.saveAndFlush(entity);
 
-        assertThat(savedEntity).isNotNull();
-        assertThat(savedEntity.getChannelId()).isNotNull();
+        assertNotNull(savedEntity);
+        assertNotNull(savedEntity.getChannelId());
     }
 
     @Test

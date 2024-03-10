@@ -42,12 +42,10 @@ public class SkillResV1VersionEntity {
     @Column(name = "LAST_UPDATED_DATE", nullable = false)
     private LocalDateTime lastUpdatedDate;
 
-    @Column(name = "CREATOR", columnDefinition = "BINARY(16)")
-    @Convert(converter = UUIDToBytesConverter.class)
-    private UUID creator;
+    @Column(name = "CREATOR", nullable = false, length = 45)
+    private String creator;
 
-    @Column(name = "LAST_UPDATER", columnDefinition = "BINARY(16)")
-    @Convert(converter = UUIDToBytesConverter.class)
-    private UUID lastUpdater;
+    @Column(name = "LAST_UPDATER", nullable = false, length = 45)
+    private String lastUpdater;
 
 }

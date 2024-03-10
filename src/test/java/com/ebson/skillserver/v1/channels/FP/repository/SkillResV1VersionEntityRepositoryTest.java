@@ -30,8 +30,8 @@ public class SkillResV1VersionEntityRepositoryTest {
         entity.setMinor(0);
         entity.setCreatedDate(LocalDateTime.now());
         entity.setLastUpdatedDate(LocalDateTime.now());
-        entity.setCreator(UUID.randomUUID());
-        entity.setLastUpdater(UUID.randomUUID());
+        entity.setCreator("testCreator");
+        entity.setLastUpdater("testLastUpdater");
         return entity;
     }
 
