@@ -34,6 +34,7 @@ public class BuilderV1BlockEntityRepositoryTest {
         logger.info("findedEntity.getBlockId().toString() : " + findedEntity.getBlockId().toString());
         logger.info("findedEntity.getBuilderV1ScenarioEntity().getScenarioId() : " + findedEntity.getBuilderV1ScenarioEntity().getScenarioId());
         logger.info("findedEntity.getBuilderV1ScenarioEntity().getBuilderV1ChannelEntity().getChannelId() : " + findedEntity.getBuilderV1ScenarioEntity().getBuilderV1ChannelEntity().getChannelId());
+        logger.info("findedEntity.getBuilderV1ScenarioEntity().getBuilderV1ChannelEntity().getChannelName() : " + findedEntity.getBuilderV1ScenarioEntity().getBuilderV1ChannelEntity().getChannelName());
 
         assertNotNull(findedEntity);
         assertNotNull(findedEntity.getBlockId());
