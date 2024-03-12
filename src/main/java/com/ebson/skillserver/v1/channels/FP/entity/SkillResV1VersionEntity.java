@@ -2,19 +2,16 @@ package com.ebson.skillserver.v1.channels.FP.entity;
 
 import com.ebson.skillserver.converter.UUIDToBytesConverter;
 import jakarta.persistence.*;
-// import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 @Entity
 @Table(name = "SKILL_RES_V1_VERSION")
-@Getter
-@Setter
+@Getter @Setter
 public class SkillResV1VersionEntity {
 
     @Id
@@ -24,8 +21,9 @@ public class SkillResV1VersionEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID versionId;
 
-    @Column(name = "BLOCK_ID", nullable = false, length = 45)
-    private String blockId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BLOCK_ID", referencedColumnName = "BLOCK_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_VERSION_BLOCK_ID"))
+    private BuilderV1BlockEntity builderV1BlockEntity;
 
     @Column(name = "BLOCK_CODE", nullable = false, length = 45)
     private String blockCode;
@@ -42,10 +40,21 @@ public class SkillResV1VersionEntity {
     @Column(name = "LAST_UPDATED_DATE", nullable = false)
     private LocalDateTime lastUpdatedDate;
 
-    @Column(name = "CREATOR", nullable = false, length = 45)
+    @Column(name = "CREATOR", length = 45)
     private String creator;
 
-    @Column(name = "LAST_UPDATER", nullable = false, length = 45)
+    @Column(name = "LAST_UPDATER", length = 45)
     private String lastUpdater;
 
+    @PrePersist
+    protected void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdDate = now;
+        this.lastUpdatedDate = now;
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.lastUpdatedDate = LocalDateTime.now();
+    }
 }
