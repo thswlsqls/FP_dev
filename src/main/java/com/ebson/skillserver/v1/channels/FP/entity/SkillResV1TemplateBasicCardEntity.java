@@ -9,21 +9,22 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "SKILL_RES_V1_TEMPLATE_COMMERCECARD")
+@Table(name = "SKILL_RES_V1_TEMPLATE_BASICCARD")
 @Getter @Setter
-public class SkillResV1TemplateCommerceCardEntity {
+public class SkillResV1TemplateBasicCardEntity {
+
     @Id
     @Column(name = "COMPONENT_ID", nullable = false, columnDefinition = "BINARY(16)")
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID componentId;
 
-    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    @JoinColumn(name = "COMPONENT_ID", referencedColumnName = "COMPONENT_ID")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "COMPONENT_ID")
     private SkillResV1TemplateComponentEntity skillResV1TemplateComponentEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CAROUSEL_ID", referencedColumnName = "CAROUSEL_ID", foreignKey = @ForeignKey(name = "FK_COMMERCECARD_CAROUSEL_ID"))
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "CAROUSEL_ID", referencedColumnName = "CAROUSEL_ID", foreignKey = @ForeignKey(name = "FK_BASICCARD_CAROUSEL_ID"))
     private SkillResV1TemplateCarouselEntity skillResV1TemplateCarouselEntity;
 
     @Column(name = "CARD_ORD")
@@ -38,41 +39,8 @@ public class SkillResV1TemplateCommerceCardEntity {
     @Column(name = "DESC", length = 255)
     private String desc;
 
-    @Column(name = "PRICE")
-    private Integer price;
-
-    @Column(name = "CURRENCY", length = 45)
-    private String currency;
-
-    @Column(name = "DISCOUNT")
-    private Integer discount;
-
-    @Column(name = "DISCOUNT_RATE")
-    private Integer discountRate;
-
-    @Column(name = "DISCOUNTED_PRICE")
-    private Integer discountedPrice;
-
-    @Column(name = "THUMB_IMG_URL", length = 255)
-    private String thumbImgUrl;
-
-    @Column(name = "THUMB_LINK_WEB", length = 255)
-    private String thumbLinkWeb;
-
-    @Column(name = "THUMB_LINK_PC", length = 255)
-    private String thumbLinkPc;
-
-    @Column(name = "THUMB_LINK_MOBILE", length = 255)
-    private String thumbLinkMobile;
-
-    @Column(name = "THUMB_FIXED_RATIO", length = 5)
-    private String thumbFixedRatio;
-
-    @Column(name = "PROFILE_NICKNAME", length = 45)
-    private String profileNickname;
-
-    @Column(name = "PROFILE_IMG_URL", length = 255)
-    private String profileImgUrl;
+    @Column(name = "THUMB", nullable = false, length = 255)
+    private String thumb;
 
     @Column(name = "CREATED_DATE", nullable = false)
     private LocalDateTime createdDate;
