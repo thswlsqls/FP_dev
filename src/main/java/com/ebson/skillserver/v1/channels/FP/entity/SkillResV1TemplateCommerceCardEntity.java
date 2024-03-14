@@ -22,7 +22,7 @@ public class SkillResV1TemplateCommerceCardEntity {
     @JoinColumn(name = "COMPONENT_ID", referencedColumnName = "COMPONENT_ID")
     private SkillResV1TemplateComponentEntity skillResV1TemplateComponentEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "CAROUSEL_ID", referencedColumnName = "CAROUSEL_ID", foreignKey = @ForeignKey(name = "FK_COMMERCECARD_CAROUSEL_ID"))
     private SkillResV1TemplateCarouselEntity skillResV1TemplateCarouselEntity;
 
