@@ -1,4 +1,4 @@
-package com.ebson.skillserver.v1.channels.FP.kakao;
+package com.ebson.skillserver.v1.channels.FP.kakao.controller;
 
 import com.ebson.skillserver.common.*;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -24,7 +24,6 @@ public class SkillResV1VersionEntityRepositoryTest {
 
     private SkillResV1VersionEntity createEntity() {
         SkillResV1VersionEntity entity = new SkillResV1VersionEntity();
-        entity.setBlockId("TestBlockId");
         entity.setBlockCode("TestBlockCode");
         entity.setMajor(1);
         entity.setMinor(0);
