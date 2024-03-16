@@ -14,7 +14,7 @@ public class ScenarioServiceBeanIdProviderTest {
     @Test
     public void testGetBeanIdWithFPChannel() {
         // FP 채널과 key1 시나리오 코드에 대한 빈 ID를 검증합니다.
-        Assertions.assertEquals("serviceBean1", provider.getBeanId("FP", "key1"));
+        Assertions.assertEquals("KakaoFPScenarioS01Service", provider.getBeanId("FP", "S01"));
     }
 
     @Test
