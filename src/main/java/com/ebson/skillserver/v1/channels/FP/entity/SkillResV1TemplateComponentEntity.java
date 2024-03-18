@@ -4,6 +4,7 @@ import com.ebson.skillserver.converter.UUIDToBytesConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.ibatis.annotations.One;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class SkillResV1TemplateComponentEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID componentId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "OUTPUT_ID", referencedColumnName = "OUTPUT_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_COMPONENT_OUTPUT_ID"))
     private SkillResV1TemplateOutputEntity skillResV1TemplateOutputEntity;
 

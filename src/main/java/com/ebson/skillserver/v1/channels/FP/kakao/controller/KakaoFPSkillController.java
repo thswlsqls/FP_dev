@@ -31,7 +31,7 @@ public class KakaoFPSkillController {
         simpleText.setText("스킬 응답 : 테스트 블럭을 호출하셨습니다.");
         List<Map<String, Object>> outputs = new ArrayList<>();
         Map<String, Object> component1 = new HashMap<String, Object>();
-        component1.put(ChatbotConstants.SIMPLE_TEXT, simpleText);
+        component1.put(ChatbotConstants.ComponentType.SIMPLE_TEXT, simpleText);
         outputs.add(component1);
 
         // Component #2 SimpleImage
@@ -39,7 +39,7 @@ public class KakaoFPSkillController {
         simpleImage.setAltText("이미지가 없습니다.");
         simpleImage.setImgUrl("http://localhost:8080/testImg.jpg");
         Map<String, Object> component2 = new HashMap<String, Object>();
-        component2.put(ChatbotConstants.SIMPLE_IMAGE, simpleImage);
+        component2.put(ChatbotConstants.ComponentType.SIMPLE_IMAGE, simpleImage);
         outputs.add(component2);
 
         // Component #3 TextCard
@@ -59,7 +59,7 @@ public class KakaoFPSkillController {
         textCardButtonList.add(textCardbutton2);
         textCard.setButtons(textCardButtonList);
         Map<String, Object> component3 = new HashMap<String, Object>();
-        component3.put(ChatbotConstants.TEXT_CARD, textCard);
+        component3.put(ChatbotConstants.ComponentType.TEXT_CARD, textCard);
         outputs.add(component3);
 
         // Component #4 BasicCard
@@ -82,7 +82,7 @@ public class KakaoFPSkillController {
         basicCardButtonList.add(basicCardbutton2);
         basicCard.setButtons(basicCardButtonList);
         Map<String, Object> component4 = new HashMap<String, Object>();
-        component4.put(ChatbotConstants.BASIC_CARD, basicCard);
+        component4.put(ChatbotConstants.ComponentType.BASIC_CARD, basicCard);
         outputs.add(component4);
 
         // Component #5 CommerceCard
@@ -122,7 +122,7 @@ public class KakaoFPSkillController {
         commerceCardButtonList.add(commerceCardbutton2);
         commerceCard.setButtons(commerceCardButtonList);
         Map<String, Object> component5 = new HashMap<String, Object>();
-        component5.put(ChatbotConstants.COMMERCE_CARD, commerceCard);
+        component5.put(ChatbotConstants.ComponentType.COMMERCE_CARD, commerceCard);
         outputs.add(component5);
 
         // Component #6 ListCard
@@ -165,7 +165,7 @@ public class KakaoFPSkillController {
         listCardButtons.add(listCardButton2);
         listCard.setButtons(listCardButtons);
         Map<String, Object> component6 = new HashMap<String, Object>();
-        component6.put(ChatbotConstants.LIST_CARD, listCard);
+        component6.put(ChatbotConstants.ComponentType.LIST_CARD, listCard);
         outputs.add(component6);
 
         // Component #7 ItemCard
@@ -212,12 +212,12 @@ public class KakaoFPSkillController {
         itemCard.setButtons(itemCardButtonList);
         itemCard.setButtonLayout("vertical");
         Map<String, Object> component7 = new HashMap<String, Object>();
-        component7.put(ChatbotConstants.ITEM_CARD, itemCard);
+        component7.put(ChatbotConstants.ComponentType.ITEM_CARD, itemCard);
         outputs.add(component7);
 
         // Component #8 Carousel
         Carousel carousel = new Carousel();
-        carousel.setType(ChatbotConstants.BASIC_CARD);
+        carousel.setType(ChatbotConstants.ComponentType.BASIC_CARD);
         List<Map<String, Object>> carouselItems = new ArrayList<>();
         BasicCard carouselBasicCard1 = new BasicCard();
         carouselBasicCard1.setTitle("캐러셀 베이직 카드1의 제목");
@@ -233,7 +233,7 @@ public class KakaoFPSkillController {
         carouselBasicCard1Buttons.add(carouselBasicCard1Button);
         carouselBasicCard1.setButtons(carouselBasicCard1Buttons);
         Map<String, Object> carouselComponent1 = new HashMap<>();
-        carouselComponent1.put(ChatbotConstants.BASIC_CARD, carouselBasicCard1);
+        carouselComponent1.put(ChatbotConstants.ComponentType.BASIC_CARD, carouselBasicCard1);
         carouselItems.add(carouselComponent1);
         BasicCard carouselBasicCard2 = new BasicCard();
         carouselBasicCard2.setTitle("캐러셀 베이직 카드2의 제목");
@@ -249,7 +249,7 @@ public class KakaoFPSkillController {
         carouselBasicCard2Buttons.add(carouselBasicCard2Button);
         carouselBasicCard2.setButtons(carouselBasicCard2Buttons);
         Map<String, Object> carouselComponent2 = new HashMap<>();
-        carouselComponent2.put(ChatbotConstants.BASIC_CARD, carouselBasicCard2);
+        carouselComponent2.put(ChatbotConstants.ComponentType.BASIC_CARD, carouselBasicCard2);
         carouselItems.add(carouselComponent2);
         carousel.setItems(carouselItems);
         Carousel.CarouselHeader carouselHeader = carousel.new CarouselHeader();
@@ -265,7 +265,7 @@ public class KakaoFPSkillController {
         carouselHeader.setThumbnail(carouselHeaderThumbnail);
         carousel.setHeader(carouselHeader);
         Map<String, Object> component8 = new HashMap<String, Object>();
-        component8.put(ChatbotConstants.CAROUSEL, carousel);
+        component8.put(ChatbotConstants.ComponentType.CAROUSEL, carousel);
         outputs.add(component8);
 
         template.setOutputs(outputs);
