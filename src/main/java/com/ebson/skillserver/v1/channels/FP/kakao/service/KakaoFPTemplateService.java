@@ -95,11 +95,13 @@ public class KakaoFPTemplateService {
 
                     yield null;
                 }
-                default -> null; // 기본적으로 제공된 ScenarioCode 사용
+                default -> null; 
             };
         }
 
         return null;
     }
+
+    /** componentType 으로 분기 처리한 블럭 마다 호출할 메서드 정의 - 메서드 내에서는 블록 코드별로 커스텀 할 수 있도록 함 */
 
 }
