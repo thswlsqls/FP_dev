@@ -107,4 +107,11 @@ public class KakaoFPTemplateService {
 
         return null;
     }
+
+    public Map<String, Object> setSkillResV1TemplateSimpleImage(SkillResV1TemplateSimpleImageEntity skillResV1TemplateSimpleImageEntity){
+
+        return null;
+    }
+
+
 }
