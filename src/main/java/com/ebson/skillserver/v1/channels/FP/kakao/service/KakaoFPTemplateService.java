@@ -103,5 +103,8 @@ public class KakaoFPTemplateService {
     }
 
     /** componentType 으로 분기 처리한 블럭 마다 호출할 메서드 정의 - 메서드 내에서는 블록 코드별로 커스텀 할 수 있도록 함 */
+    public Map<String, Object> setSkillResV1TemplateSimpleText(SkillResV1TemplateSimpleTextEntity skillResV1TemplateSimpleTextEntity){
 
+        return null;
+    }
 }
