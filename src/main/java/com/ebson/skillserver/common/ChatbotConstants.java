@@ -16,8 +16,6 @@ public final class ChatbotConstants {
 
     public static final String VERSION = "2.0";
 
-
-
     // 기타 고정 문자열 상수
     public static final String WELCOME_MESSAGE = "Welcome to our Chatbot";
 
