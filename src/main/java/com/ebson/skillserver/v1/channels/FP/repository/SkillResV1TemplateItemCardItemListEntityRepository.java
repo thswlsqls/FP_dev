@@ -5,8 +5,11 @@ import com.ebson.skillserver.v1.channels.FP.entity.SkillResV1TemplateItemCardIte
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface SkillResV1TemplateItemCardItemListEntityRepository extends JpaRepository<SkillResV1TemplateItemCardItemListEntity, UUID> {
+
+    List<SkillResV1TemplateItemCardItemListEntity> findBySkillResV1TemplateItemCardEntity_ComponentId(UUID componentId);
 }
