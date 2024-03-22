@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface SkillResV1TemplateTextCardEntityRepository extends JpaRepository<SkillResV1TemplateTextCardEntity, UUID> {
+
+
 }

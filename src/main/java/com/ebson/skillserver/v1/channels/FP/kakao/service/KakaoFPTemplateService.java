@@ -1,19 +1,15 @@
 package com.ebson.skillserver.v1.channels.FP.kakao.service;
 
-import com.ebson.skillserver.common.ChatbotConstants;
-import com.ebson.skillserver.common.SkillResponse;
-import com.ebson.skillserver.common.Template;
+import com.ebson.skillserver.common.*;
 import com.ebson.skillserver.v1.channels.FP.entity.*;
 import com.ebson.skillserver.v1.channels.FP.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class KakaoFPTemplateService {
@@ -62,7 +58,7 @@ public class KakaoFPTemplateService {
     SkillResV1TemplateListCardListItemExtraEntityRepository skillResV1TemplateListCardListItemExtraEntityRepository;
 
 
-    public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity builderV1BlockEntity) {
+    public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity be) {
 
         SkillResV1TemplateEntity skillResV1TemplateEntity = skillResV1TemplateEntityRepository.getReferenceById(templateId);
 
@@ -70,27 +66,27 @@ public class KakaoFPTemplateService {
 
         List<Map<String, Object>> outputs = new ArrayList<>();
         for (SkillResV1TemplateOutputEntity output : skillResV1TemplateOutputEntityList) {
-            SkillResV1TemplateComponentEntity skillResV1TemplateComponentEntity = skillResV1TemplateComponentEntityRepository.findBySkillResV1TemplateOutputEntity_OutputId(output.getOutputId());
-            UUID componentId = skillResV1TemplateComponentEntity.getComponentId();
+            SkillResV1TemplateComponentEntity tce = skillResV1TemplateComponentEntityRepository.findBySkillResV1TemplateOutputEntity_OutputId(output.getOutputId());
+            UUID componentId = tce.getComponentId();
 
             /** componentType 으로 분기처리해 outputs 리스트의 component 를 세팅 */
-            Map<String, Object> component = switch (skillResV1TemplateComponentEntity.getComponentType()) {
+            Map<String, Object> component = switch (tce.getComponentType()) {
                 case ChatbotConstants.ComponentType.SIMPLE_TEXT -> {
-                    SkillResV1TemplateSimpleTextEntity skillResV1TemplateSimpleTextEntity = skillResV1TemplateSimpleTextEntityRepository.getReferenceById(componentId);
+                    SkillResV1TemplateSimpleTextEntity ste = skillResV1TemplateSimpleTextEntityRepository.getReferenceById(componentId);
 
-                    yield getSimpleText(skillResV1TemplateSimpleTextEntity);
+                    yield getSimpleText(ste, be);
                 } case ChatbotConstants.ComponentType.SIMPLE_IMAGE -> {
-                    SkillResV1TemplateSimpleImageEntity skillResV1TemplateSimpleImageEntity = skillResV1TemplateSimpleImageEntityRepository.getReferenceById(componentId);
+                    SkillResV1TemplateSimpleImageEntity sie = skillResV1TemplateSimpleImageEntityRepository.getReferenceById(componentId);
 
-                    yield getSimpleImage(skillResV1TemplateSimpleImageEntity);
+                    yield getSimpleImage(sie, be);
                 } case ChatbotConstants.ComponentType.TEXT_CARD -> {
-                    SkillResV1TemplateTextCardEntity skillResV1TemplateTextCardEntity = skillResV1TemplateTextCardEntityRepository.getReferenceById(componentId);
+                    SkillResV1TemplateTextCardEntity tcde = skillResV1TemplateTextCardEntityRepository.getReferenceById(componentId);
 
-                    yield getTextCard(skillResV1TemplateTextCardEntity);
+                    yield getTextCard(tcde, be);
                 } case ChatbotConstants.ComponentType.BASIC_CARD -> {
-                    SkillResV1TemplateBasicCardEntity skillResV1TemplateBasicCardEntity = skillResV1TemplateBasicCardEntityRepository.getReferenceById(componentId);
+                    SkillResV1TemplateBasicCardEntity bcde = skillResV1TemplateBasicCardEntityRepository.getReferenceById(componentId);
 
-                    yield getBasicCard(skillResV1TemplateBasicCardEntity);
+                    yield getBasicCard(bcde, be);
                 } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
                     SkillResV1TemplateCommerceCardEntity skillResV1TemplateCommerceCardEntity = skillResV1TemplateCommerceCardEntityRepository.getReferenceById(componentId);
 
@@ -121,23 +117,74 @@ public class KakaoFPTemplateService {
         return skillResponse;
     }
 
-    /** componentType 으로 분기 처리한 블럭 마다 호출할 메서드 정의 - 메서드 내에서는 블록 코드별로 커스텀 할 수 있도록 함 */
-    public Map<String, Object> getSimpleText(SkillResV1TemplateSimpleTextEntity skillResV1TemplateSimpleTextEntity){
+    public Map<String, Object> getSimpleText(SkillResV1TemplateSimpleTextEntity ste, BuilderV1BlockEntity be){
+        SimpleText st = new SimpleText();
 
-        return null;
+        if (Objects.nonNull(ste)
+            && StringUtils.hasText(ste.getText())
+            && StringUtils.hasLength(ste.getText())) {
+            st.setText(ste.getText());
+        }
+
+        st = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> st;
+        };
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.SIMPLE_TEXT, st);
+        return output;
     }
 
-    public Map<String, Object> getSimpleImage(SkillResV1TemplateSimpleImageEntity skillResV1TemplateSimpleImageEntity){
+    public Map<String, Object> getSimpleImage(SkillResV1TemplateSimpleImageEntity sie, BuilderV1BlockEntity be){
+        SimpleImage si = new SimpleImage();
 
-        return null;
+        if (Objects.nonNull(sie)){
+            if (StringUtils.hasText(sie.getImgUrl()) && StringUtils.hasLength(sie.getImgUrl())) {
+                si.setImgUrl(sie.getImgUrl());
+            } if (StringUtils.hasText(sie.getAltText()) && StringUtils.hasLength(sie.getAltText())) {
+                si.setAltText(sie.getAltText());
+            }
+        }
+
+        si = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> si;
+        };
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.SIMPLE_IMAGE, si);
+        return output;
     }
 
-    public Map<String, Object> getTextCard(SkillResV1TemplateTextCardEntity skillResV1TemplateTextCardEntity){
+    public Map<String, Object> getTextCard(SkillResV1TemplateTextCardEntity tcde, BuilderV1BlockEntity be){
+        TextCard tcd = new TextCard();
 
-        return null;
+        if (Objects.nonNull(tcde)) {
+            if (StringUtils.hasText(tcde.getTitle()) && StringUtils.hasLength(tcde.getDesc())){
+                tcd.setTitle(tcde.getTitle());
+            } if (StringUtils.hasText(tcde.getDataType()) && StringUtils.hasLength(tcde.getDesc())) {
+                tcd.setDescription(tcde.getDesc());
+            }
+        }
+
+        tcd = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> tcd;
+        };
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.TEXT_CARD, tcd);
+        return output;
     }
 
-    public Map<String, Object> getBasicCard(SkillResV1TemplateBasicCardEntity skillResV1TemplateBasicCardEntity){
+    public Map<String, Object> getBasicCard(SkillResV1TemplateBasicCardEntity bcde, BuilderV1BlockEntity be){
 
         return null;
     }
