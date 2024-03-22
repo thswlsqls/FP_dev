@@ -97,10 +97,10 @@ public class KakaoFPTemplateService {
 
                     yield getItemCard(itce, list, be);
                 } case ChatbotConstants.ComponentType.LIST_CARD -> {
-                    SkillResV1TemplateListCardEntity skillResV1TemplateListCardEntity = skillResV1TemplateListCardEntityRepository.getReferenceById(componentId);
-                    List<SkillResV1TemplateListCardListItemEntity> skillResV1TemplateListCardListItemEntityList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(componentId);
+                    SkillResV1TemplateListCardEntity lcde = skillResV1TemplateListCardEntityRepository.getReferenceById(componentId);
+                    List<SkillResV1TemplateListCardListItemEntity> list = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(componentId);
 
-                    yield getListCard(skillResV1TemplateListCardEntity, skillResV1TemplateListCardListItemEntityList);
+                    yield getListCard(lcde, list, be);
                 } case ChatbotConstants.ComponentType.CAROUSEL -> {
                     SkillResV1TemplateCarouselEntity skillResV1TemplateCarouselEntity = skillResV1TemplateCarouselEntityRepository.getReferenceById(componentId);
 
@@ -405,9 +405,62 @@ public class KakaoFPTemplateService {
         return output;
     }
 
-    public Map<String, Object> getListCard(SkillResV1TemplateListCardEntity skillResV1TemplateListCardEntity, List<SkillResV1TemplateListCardListItemEntity> skillResV1TemplateListCardListItemEntityList){
+    public Map<String, Object> getListCard(SkillResV1TemplateListCardEntity lcde, List<SkillResV1TemplateListCardListItemEntity> list, BuilderV1BlockEntity be){
+        ListCard lcd = new ListCard();
+        List<ListItem> items = new ArrayList<>();
+        for (SkillResV1TemplateListCardListItemEntity listItem : list) {
+            ListItem item = new ListItem();
+            if (StringUtils.hasText(listItem.getTitle())){
+                item.setTitle(listItem.getTitle());
+            }
+            if (StringUtils.hasText(listItem.getDesc())){
+                item.setDescription(listItem.getDesc());
+            }
+            if (StringUtils.hasText(listItem.getImgUrl())) {
+                item.setImageUrl(listItem.getImgUrl());
+            }
+            Link link = new Link();
+            if (StringUtils.hasText(listItem.getLinkWeb())){
+                link.setWeb(listItem.getLinkWeb());
+            }
+            if (StringUtils.hasText(listItem.getLinkPc())){
+                link.setPc(listItem.getLinkPc());
+            }
+            if (StringUtils.hasText(listItem.getLinkMobile())){
+                link.setMobile(listItem.getLinkMobile());
+            }
+            if (StringUtils.hasText(link.getPc()) || StringUtils.hasText(link.getWeb()) || StringUtils.hasText(link.getMobile())) {
+                item.setLink(link);
+            }
+            if (StringUtils.hasText(listItem.getAction())) {
+                item.setAction(listItem.getAction());
+            }
+            if (StringUtils.hasText(listItem.getBlockId())) {
+                item.setBlockId(listItem.getAction());
+            }
+            if (StringUtils.hasText(listItem.getMessageText())) {
+                item.setMessageText(listItem.getMessageText());
+            }
+            if (listItem.getHeaderYn().equals('Y')) {
+                lcd.setHeader(item);
+            } else {
+                items.add(item);
+            }
+        }
+        if (items.size() != 0){
+            lcd.setItems(items);
+        }
 
-        return null;
+        lcd = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> lcd;
+        };
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.LIST_CARD, lcd);
+        return output;
     }
 
 }

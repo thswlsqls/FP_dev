@@ -52,8 +52,8 @@ public class SkillResV1TemplateListCardListItemEntity {
     @Column(name = "ACTION", length = 45)
     private String action;
 
-    @Column(name = "BLOCK_ID", columnDefinition = "BINARY(16)")
-    private UUID blockId;
+    @Column(name = "BLOCK_ID", length = 45)
+    private String blockId;
 
     @Column(name = "MESSAGE_TEXT", length = 255)
     private String messageText;
