@@ -88,14 +88,14 @@ public class KakaoFPTemplateService {
 
                     yield getBasicCard(bcde, be);
                 } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
-                    SkillResV1TemplateCommerceCardEntity skillResV1TemplateCommerceCardEntity = skillResV1TemplateCommerceCardEntityRepository.getReferenceById(componentId);
+                    SkillResV1TemplateCommerceCardEntity ccde = skillResV1TemplateCommerceCardEntityRepository.getReferenceById(componentId);
 
-                    yield getCommerceCard(skillResV1TemplateCommerceCardEntity);
+                    yield getCommerceCard(ccde, be);
                 } case ChatbotConstants.ComponentType.ITEM_CARD -> {
-                    SkillResV1TemplateItemCardEntity skillResV1TemplateItemCardEntity = skillResV1TemplateItemCardEntityRepository.getReferenceById(componentId);
-                    List<SkillResV1TemplateItemCardItemListEntity> skillResV1TemplateItemCardItemListEntityList = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
+                    SkillResV1TemplateItemCardEntity itce = skillResV1TemplateItemCardEntityRepository.getReferenceById(componentId);
+                    List<SkillResV1TemplateItemCardItemListEntity> list = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
 
-                    yield getItemCard(skillResV1TemplateItemCardEntity, skillResV1TemplateItemCardItemListEntityList);
+                    yield getItemCard(itce, list, be);
                 } case ChatbotConstants.ComponentType.LIST_CARD -> {
                     SkillResV1TemplateListCardEntity skillResV1TemplateListCardEntity = skillResV1TemplateListCardEntityRepository.getReferenceById(componentId);
                     List<SkillResV1TemplateListCardListItemEntity> skillResV1TemplateListCardListItemEntityList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(componentId);
@@ -121,8 +121,7 @@ public class KakaoFPTemplateService {
         SimpleText st = new SimpleText();
 
         if (Objects.nonNull(ste)
-            && StringUtils.hasText(ste.getText())
-            && StringUtils.hasLength(ste.getText())) {
+            && StringUtils.hasText(ste.getText())) {
             st.setText(ste.getText());
         }
 
@@ -142,9 +141,10 @@ public class KakaoFPTemplateService {
         SimpleImage si = new SimpleImage();
 
         if (Objects.nonNull(sie)){
-            if (StringUtils.hasText(sie.getImgUrl()) && StringUtils.hasLength(sie.getImgUrl())) {
+            if (StringUtils.hasText(sie.getImgUrl())) {
                 si.setImgUrl(sie.getImgUrl());
-            } if (StringUtils.hasText(sie.getAltText()) && StringUtils.hasLength(sie.getAltText())) {
+            }
+            if (StringUtils.hasText(sie.getAltText())) {
                 si.setAltText(sie.getAltText());
             }
         }
@@ -165,9 +165,10 @@ public class KakaoFPTemplateService {
         TextCard tcd = new TextCard();
 
         if (Objects.nonNull(tcde)) {
-            if (StringUtils.hasText(tcde.getTitle()) && StringUtils.hasLength(tcde.getDesc())){
+            if (StringUtils.hasText(tcde.getTitle())){
                 tcd.setTitle(tcde.getTitle());
-            } if (StringUtils.hasText(tcde.getDataType()) && StringUtils.hasLength(tcde.getDesc())) {
+            }
+            if (StringUtils.hasText(tcde.getDataType())) {
                 tcd.setDescription(tcde.getDesc());
             }
         }
@@ -185,18 +186,223 @@ public class KakaoFPTemplateService {
     }
 
     public Map<String, Object> getBasicCard(SkillResV1TemplateBasicCardEntity bcde, BuilderV1BlockEntity be){
+        BasicCard bcd = new BasicCard();
 
-        return null;
+        if (Objects.nonNull(bcd)) {
+            if (StringUtils.hasText(bcde.getTitle())) {
+                bcd.setTitle(bcde.getTitle());
+            }
+            if (StringUtils.hasText(bcde.getDesc())) {
+                bcd.setDescription(bcde.getDesc());
+            }
+            if (StringUtils.hasText(bcde.getThumb())) {
+                Thumbnail thumbnail = new Thumbnail();
+                thumbnail.setImageUrl(bcde.getThumb());
+                bcd.setThumbnail(thumbnail);
+            }
+        }
+
+        bcd = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> bcd;
+        };
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.BASIC_CARD, bcd);
+        return output;
     }
 
-    public Map<String, Object> getCommerceCard(SkillResV1TemplateCommerceCardEntity skillResV1TemplateCommerceCardEntity){
+    public Map<String, Object> getCommerceCard(SkillResV1TemplateCommerceCardEntity ccde, BuilderV1BlockEntity be){
+        CommerceCard ccd = new CommerceCard();
 
-        return null;
+        // 제목, 설명, 가격, 통화 설정
+        if (StringUtils.hasText(ccde.getTitle())) {
+            ccd.setTitle(ccde.getTitle());
+        }
+        if (StringUtils.hasText(ccde.getDesc())) {
+            ccd.setDescription(ccde.getDesc());
+        }
+        if (StringUtils.hasText(ccde.getCurrency())) {
+            ccd.setCurrency(ccde.getCurrency());
+        }
+
+        if (ccde.getPrice() != null) {
+            ccd.setPrice(ccde.getPrice());
+        } else {
+            ccd.setPrice(0);
+        }
+        if (ccde.getDiscount() != null) {
+            ccd.setDiscount(ccde.getDiscount());
+        } else {
+            ccd.setDiscount(0);
+        }
+        if (ccde.getDiscountRate() != null) {
+            ccd.setDiscountRate(ccde.getDiscountRate());
+        } else {
+            ccd.setDiscountRate(0);
+        }
+        if (ccde.getDiscountedPrice() != null) {
+            ccd.setDiscountedPrice(ccde.getDiscountedPrice());
+        } else {
+            ccd.setDiscountedPrice(0);
+        }
+
+        Thumbnail thumbnail = new Thumbnail();
+        Link link = new Link();
+        if (StringUtils.hasText(ccde.getThumbImgUrl())) {
+            thumbnail.setImageUrl(ccde.getThumbImgUrl());
+        }
+        if (StringUtils.hasText(ccde.getThumbFixedRatio())) {
+            thumbnail.setFixedRatio(Boolean.parseBoolean(ccde.getThumbFixedRatio()));
+        }
+        if (StringUtils.hasText(ccde.getThumbLinkWeb())) {
+            link.setWeb(ccde.getThumbLinkWeb());
+        }
+        if (StringUtils.hasText(ccde.getThumbLinkPc())){
+            link.setPc(ccde.getThumbLinkPc());
+        }
+        if (StringUtils.hasText(ccde.getThumbLinkMobile())) {
+            link.setMobile(ccde.getThumbLinkMobile());
+        }
+        thumbnail.setLink(link);
+        ccd.setThumbnails(Collections.singletonList(thumbnail));
+
+        Profile profile = new Profile();
+        if (StringUtils.hasText(ccde.getProfileNickname())) {
+            profile.setNickname(ccde.getProfileNickname());
+        }
+        if (StringUtils.hasText(ccde.getProfileImgUrl())) {
+            profile.setImageUrl(ccde.getProfileImgUrl());
+        }
+        ccd.setProfile(profile);
+
+        ccd = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> ccd;
+        };
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.COMMERCE_CARD, ccd);
+        return output;
     }
 
-    public Map<String, Object> getItemCard(SkillResV1TemplateItemCardEntity skillResV1TemplateItemCardEntity, List<SkillResV1TemplateItemCardItemListEntity> skillResV1TemplateItemCardItemListEntityList){
+    public Map<String, Object> getItemCard(SkillResV1TemplateItemCardEntity icde, List<SkillResV1TemplateItemCardItemListEntity> list, BuilderV1BlockEntity be){
+        ItemCard icd = new ItemCard();
 
-        return null;
+        if (StringUtils.hasText(icde.getTitle())){
+            icd.setTitle(icde.getTitle());
+        }
+        if (StringUtils.hasText(icde.getDesc())){
+            icd.setDescription(icde.getDesc());
+        }
+        if (StringUtils.hasText(icde.getItemlistAlign())){
+            icd.setItemListAlignment(icde.getItemlistAlign());
+        }
+        if (StringUtils.hasText(icde.getBtnLayout())){
+            icd.setButtonLayout(icde.getBtnLayout());
+        }
+        // 버튼 설정 등 추가 필드 설정이 필요하면 여기에 추가
+
+        // Thumbnail 설정
+        if ("Y".equals(icde.getThumbYn())) {
+            ItemCard.Thumbnail thumbnail = new ItemCard.Thumbnail();
+            if (StringUtils.hasText(icde.getThumbImgUrl())){
+                thumbnail.setImageUrl(icde.getThumbImgUrl());
+            }
+            if (icde.getThumbWidth() != null) {
+                thumbnail.setWidth(icde.getThumbWidth());
+            }
+            if (icde.getThumbHeight() != null) {
+                thumbnail.setHeight(icde.getThumbHeight());
+            }
+            // Link 설정이 필요하면 여기에 추가
+            icd.setThumbnail(thumbnail);
+        }
+
+        // Head 또는 Profile 설정 (동시에 설정 불가)
+        if ("Y".equals(icde.getHeadYn())) {
+            ItemCard.Head head = new ItemCard.Head();
+            if (StringUtils.hasText(icde.getHeadTitle())){
+                head.setTitle(icde.getHeadTitle());
+            }
+            icd.setHead(head);
+        } else if ("Y".equals(icde.getProfileYn())) {
+            ItemCard.Profile profile = new ItemCard.Profile();
+            if (StringUtils.hasText(profile.getImageUrl())) {
+                profile.setImageUrl(icde.getProfileImgUrl());
+            }
+            if (icde.getProfileWidth() != null) {
+                profile.setWidth(icde.getProfileWidth());
+            }
+            if (icde.getProfileHeight() != null) {
+                profile.setHeight(icde.getProfileHeight());
+            }
+            if (StringUtils.hasText(icde.getProfileTitle())) {
+                profile.setTitle(icde.getProfileTitle());
+            }
+
+            icd.setProfile(profile);
+        }
+
+        // ImageTitle 설정
+        if ("Y".equals(icde.getImgtitleYn())) {
+            ItemCard.ImageTitle imageTitle = new ItemCard.ImageTitle();
+            if (StringUtils.hasText(icde.getImgtitleTitle())) {
+                imageTitle.setTitle(icde.getImgtitleTitle());
+            }
+            if (StringUtils.hasText(icde.getImgtitleDesc())) {
+                imageTitle.setDescription(icde.getImgtitleDesc());
+            }
+            if (StringUtils.hasText(icde.getImgtitleImgUrl())) {
+                imageTitle.setImageUrl(icde.getImgtitleImgUrl());
+            }
+            icd.setImageTitle(imageTitle);
+        }
+
+        // ItemList 설정 (필수)
+        // 여기에 list를 사용하여 ItemList 객체들을 생성하고 설정하는 로직 추가
+
+        // ItemListSummary 설정
+        if ("Y".equals(icde.getItemlistSummaryYn())) {
+            ItemCard.ItemListSummary itemListSummary = new ItemCard.ItemListSummary();
+            if (StringUtils.hasText(icde.getItemlistSummaryTitle())) {
+                itemListSummary.setTitle(icde.getItemlistSummaryTitle());
+            }
+            if (StringUtils.hasText(icde.getItemlistSummaryDesc())) {
+                itemListSummary.setDescription(icde.getItemlistSummaryDesc());
+            }
+            icd.setItemListSummary(itemListSummary);
+        }
+
+        List<ItemList> itemListArrayList = new ArrayList<>();
+        for (SkillResV1TemplateItemCardItemListEntity itemCardItemList : list) {
+            ItemList itemList = new ItemList();
+            if (StringUtils.hasText(itemCardItemList.getTitle())){
+                itemList.setTitle(itemCardItemList.getTitle());
+            }
+            if (StringUtils.hasText(itemCardItemList.getDesc())) {
+                itemList.setDescription(itemCardItemList.getDesc());
+            }
+            itemListArrayList.add(itemList);
+        }
+        if (itemListArrayList.size() != 0){
+            icd.setItemList(itemListArrayList);
+        }
+
+        icd = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> icd;
+        };
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.ITEM_CARD, icd);
+        return output;
     }
 
     public Map<String, Object> getListCard(SkillResV1TemplateListCardEntity skillResV1TemplateListCardEntity, List<SkillResV1TemplateListCardListItemEntity> skillResV1TemplateListCardListItemEntityList){

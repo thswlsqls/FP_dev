@@ -170,13 +170,13 @@ public class KakaoFPSkillController {
 
         // Component #7 ItemCard
         ItemCard itemCard = new ItemCard();
-        ItemCard.Thumbnail itemCardThumbnail = itemCard.new Thumbnail();
+        ItemCard.Thumbnail itemCardThumbnail = new ItemCard.Thumbnail();
         itemCardThumbnail.setImageUrl("http://localhost:8080/testImg.jpg");
         itemCard.setThumbnail(itemCardThumbnail);
-        ItemCard.Head itemCardHead = itemCard.new Head();
+        ItemCard.Head itemCardHead = new ItemCard.Head();
         itemCardHead.setTitle("아이템카드 헤드의 제목");
         itemCard.setHead(itemCardHead);
-        ItemCard.ImageTitle itemCardImageTitle = itemCard.new ImageTitle();
+        ItemCard.ImageTitle itemCardImageTitle = new ItemCard.ImageTitle();
         itemCardImageTitle.setTitle("아이템카드 이미지타이틀 제목");
         itemCardImageTitle.setDescription("아이템카드 이미지타이틀 설명입니다.");
         itemCardImageTitle.setImageUrl("http://localhost:8080/testImg.jpg");
@@ -192,7 +192,7 @@ public class KakaoFPSkillController {
         itemCardItemListList.add(itemCardItemList2);
         itemCard.setItemList(itemCardItemListList);
         itemCard.setItemListAlignment("left");
-        ItemCard.ItemListSummary itemCardItemListSummary = itemCard.new ItemListSummary();
+        ItemCard.ItemListSummary itemCardItemListSummary = new ItemCard.ItemListSummary();
         itemCardItemListSummary.setTitle("아이템 리스트 서머리 제목");
         itemCardItemListSummary.setDescription("아이템 리스트 서머리 설명입니다.");
         itemCard.setItemListSummary(itemCardItemListSummary);

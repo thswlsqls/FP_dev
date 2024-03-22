@@ -19,7 +19,7 @@ public class ItemCard {
     private String buttonLayout; // 버튼 정렬 정보입니다. "vertical" (세로배치) 혹은 "horizontal" (가로배치) 만 입력 가능.
 
     @Data
-    public class Thumbnail {
+    public static class Thumbnail {
         private String imageUrl; // 필수O 이미지의 url 정보입니다.
         private Integer width; // 필수X 이미지의 넓이 정보입니다.
         private Integer height; // 필수X 이미지의 높이 정보입니다.
@@ -27,12 +27,12 @@ public class ItemCard {
     }
 
     @Data
-    public class Head {
+    public static class Head {
         private String title; // 필수O 최대 1 줄 (한 줄에 들어갈 수 있는 글자수는 기기 별로 상이)
     }
 
     @Data
-    public class Profile {
+    public static class Profile {
        private String imageUrl; // 필수X 프로필 이미지 정보입니다.
        private Integer width; // 필수X 프로필 이미지의 넓이 정보입니다.
        private Integer height; // 필수X 프로필 이미지의 높이 정보입니다.
@@ -40,14 +40,14 @@ public class ItemCard {
     }
 
     @Data
-    public class ImageTitle {
+    public static class ImageTitle {
         private String title;   // 필수O 최대 2줄 (한 줄에 들어갈 수 있는 글자수는 기기 별로 상이)
         private String description; // 필수X 최대 1줄 (한 줄에 들어갈 수 있는 글자수는 기기 별로 상이)
         private String imageUrl; // 필수X URL 형식, 최적이미지 사이즈 iOS 108 x 108, 안드로이드 98 x 98 (맞지 않는 경우 센터크롭됨)
     }
 
     @Data
-    public class ItemListSummary {
+    public static class ItemListSummary {
         private String title; // 필수O 아이템리스트 전체에 대한 제목 정보입니다. 최대 6자
         private String description; // 필수O 아이템리스트 전체에 대한 설명 정보입니다. 최대 14자 (통화기호/문자, 숫자, 콤마, 소수점, 띄어쓰기 포함)
     }
