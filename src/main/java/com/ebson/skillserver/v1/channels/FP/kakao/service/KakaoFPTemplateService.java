@@ -57,6 +57,8 @@ public class KakaoFPTemplateService {
     @Autowired
     SkillResV1TemplateListCardListItemExtraEntityRepository skillResV1TemplateListCardListItemExtraEntityRepository;
 
+    @Autowired
+    SkillResV1TemplateComponentBtnEntityRepository skillResV1TemplateComponentBtnEntityRepository;
 
     public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity be) {
 
@@ -68,6 +70,7 @@ public class KakaoFPTemplateService {
         for (SkillResV1TemplateOutputEntity output : skillResV1TemplateOutputEntityList) {
             SkillResV1TemplateComponentEntity tce = skillResV1TemplateComponentEntityRepository.findBySkillResV1TemplateOutputEntity_OutputId(output.getOutputId());
             UUID componentId = tce.getComponentId();
+            List<SkillResV1TemplateComponentBtnEntity> btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(componentId);
 
             /** componentType 으로 분기처리해 outputs 리스트의 component 를 세팅 */
             Map<String, Object> component = switch (tce.getComponentType()) {
@@ -82,25 +85,25 @@ public class KakaoFPTemplateService {
                 } case ChatbotConstants.ComponentType.TEXT_CARD -> {
                     SkillResV1TemplateTextCardEntity tcde = skillResV1TemplateTextCardEntityRepository.getReferenceById(componentId);
 
-                    yield getTextCard(tcde, be);
+                    yield getTextCard(tcde, be, btneList);
                 } case ChatbotConstants.ComponentType.BASIC_CARD -> {
                     SkillResV1TemplateBasicCardEntity bcde = skillResV1TemplateBasicCardEntityRepository.getReferenceById(componentId);
 
-                    yield getBasicCard(bcde, be);
+                    yield getBasicCard(bcde, be, btneList);
                 } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
                     SkillResV1TemplateCommerceCardEntity ccde = skillResV1TemplateCommerceCardEntityRepository.getReferenceById(componentId);
 
-                    yield getCommerceCard(ccde, be);
+                    yield getCommerceCard(ccde, be, btneList);
                 } case ChatbotConstants.ComponentType.ITEM_CARD -> {
                     SkillResV1TemplateItemCardEntity itce = skillResV1TemplateItemCardEntityRepository.getReferenceById(componentId);
-                    List<SkillResV1TemplateItemCardItemListEntity> list = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
+                    List<SkillResV1TemplateItemCardItemListEntity> itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
 
-                    yield getItemCard(itce, list, be);
+                    yield getItemCard(itce, itemListelist, be, btneList);
                 } case ChatbotConstants.ComponentType.LIST_CARD -> {
                     SkillResV1TemplateListCardEntity lcde = skillResV1TemplateListCardEntityRepository.getReferenceById(componentId);
-                    List<SkillResV1TemplateListCardListItemEntity> list = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(componentId);
+                    List<SkillResV1TemplateListCardListItemEntity> listItemeList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(componentId);
 
-                    yield getListCard(lcde, list, be);
+                    yield getListCard(lcde, listItemeList, be, btneList);
                 } case ChatbotConstants.ComponentType.CAROUSEL -> {
                     SkillResV1TemplateCarouselEntity skillResV1TemplateCarouselEntity = skillResV1TemplateCarouselEntityRepository.getReferenceById(componentId);
 
@@ -161,7 +164,7 @@ public class KakaoFPTemplateService {
         return output;
     }
 
-    public Map<String, Object> getTextCard(SkillResV1TemplateTextCardEntity tcde, BuilderV1BlockEntity be){
+    public Map<String, Object> getTextCard(SkillResV1TemplateTextCardEntity tcde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         TextCard tcd = new TextCard();
 
         if (Objects.nonNull(tcde)) {
@@ -180,12 +183,17 @@ public class KakaoFPTemplateService {
             default -> tcd;
         };
 
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            tcd.setButtons(btnList);
+        }
+
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.TEXT_CARD, tcd);
         return output;
     }
 
-    public Map<String, Object> getBasicCard(SkillResV1TemplateBasicCardEntity bcde, BuilderV1BlockEntity be){
+    public Map<String, Object> getBasicCard(SkillResV1TemplateBasicCardEntity bcde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         BasicCard bcd = new BasicCard();
 
         if (Objects.nonNull(bcd)) {
@@ -209,12 +217,17 @@ public class KakaoFPTemplateService {
             default -> bcd;
         };
 
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            bcd.setButtons(btnList);
+        }
+
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.BASIC_CARD, bcd);
         return output;
     }
 
-    public Map<String, Object> getCommerceCard(SkillResV1TemplateCommerceCardEntity ccde, BuilderV1BlockEntity be){
+    public Map<String, Object> getCommerceCard(SkillResV1TemplateCommerceCardEntity ccde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         CommerceCard ccd = new CommerceCard();
 
         // 제목, 설명, 가격, 통화 설정
@@ -285,12 +298,17 @@ public class KakaoFPTemplateService {
             default -> ccd;
         };
 
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            ccd.setButtons(btnList);
+        }
+
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.COMMERCE_CARD, ccd);
         return output;
     }
 
-    public Map<String, Object> getItemCard(SkillResV1TemplateItemCardEntity icde, List<SkillResV1TemplateItemCardItemListEntity> list, BuilderV1BlockEntity be){
+    public Map<String, Object> getItemCard(SkillResV1TemplateItemCardEntity icde, List<SkillResV1TemplateItemCardItemListEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         ItemCard icd = new ItemCard();
 
         if (StringUtils.hasText(icde.getTitle())){
@@ -379,7 +397,7 @@ public class KakaoFPTemplateService {
         }
 
         List<ItemList> itemListArrayList = new ArrayList<>();
-        for (SkillResV1TemplateItemCardItemListEntity itemCardItemList : list) {
+        for (SkillResV1TemplateItemCardItemListEntity itemCardItemList : itemListelist) {
             ItemList itemList = new ItemList();
             if (StringUtils.hasText(itemCardItemList.getTitle())){
                 itemList.setTitle(itemCardItemList.getTitle());
@@ -400,15 +418,20 @@ public class KakaoFPTemplateService {
             default -> icd;
         };
 
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            icd.setButtons(btnList);
+        }
+
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.ITEM_CARD, icd);
         return output;
     }
 
-    public Map<String, Object> getListCard(SkillResV1TemplateListCardEntity lcde, List<SkillResV1TemplateListCardListItemEntity> list, BuilderV1BlockEntity be){
+    public Map<String, Object> getListCard(SkillResV1TemplateListCardEntity lcde, List<SkillResV1TemplateListCardListItemEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         ListCard lcd = new ListCard();
         List<ListItem> items = new ArrayList<>();
-        for (SkillResV1TemplateListCardListItemEntity listItem : list) {
+        for (SkillResV1TemplateListCardListItemEntity listItem : itemListelist) {
             ListItem item = new ListItem();
             if (StringUtils.hasText(listItem.getTitle())){
                 item.setTitle(listItem.getTitle());
@@ -458,9 +481,42 @@ public class KakaoFPTemplateService {
             default -> lcd;
         };
 
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            lcd.setButtons(btnList);
+        }
+
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.LIST_CARD, lcd);
         return output;
     }
 
+    public List<Button> getButtonList(List<SkillResV1TemplateComponentBtnEntity> btnEntityList) {
+        List<Button> btnList = new ArrayList<>();
+
+        for (SkillResV1TemplateComponentBtnEntity btnEntity : btnEntityList) {
+            Button btn = new Button();
+            if (StringUtils.hasText(btnEntity.getLabel())) {
+                btn.setLabel(btnEntity.getLabel());
+            }
+            if (StringUtils.hasText(btnEntity.getAction())) {
+                btn.setAction(btnEntity.getAction());
+            }
+            if (StringUtils.hasText(btnEntity.getWebLinkUrl())) {
+                btn.setWebLinkUrl(btnEntity.getWebLinkUrl());
+            }
+            if (StringUtils.hasText(btnEntity.getMessageText())) {
+                btn.setMessageText(btnEntity.getMessageText());
+            }
+            if (StringUtils.hasText(btnEntity.getPhone())) {
+                btn.setPhoneNumber(btnEntity.getPhone());
+            }
+            if (StringUtils.hasText(btnEntity.getBlockId())) {
+                btn.setBlockId(btnEntity.getBlockId());
+            }
+            btnList.add(btn);
+        }
+
+        return btnList;
+    }
 }
