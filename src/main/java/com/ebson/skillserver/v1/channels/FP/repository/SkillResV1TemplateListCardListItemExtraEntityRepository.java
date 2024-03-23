@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface SkillResV1TemplateListCardListItemExtraEntityRepository extends JpaRepository<SkillResV1TemplateListCardListItemExtraEntity, UUID> {
 
-    List<SkillResV1TemplateListCardListItemExtraEntity> findBySkillResV1TemplateListCardListItemEntity_ListItemId(UUID listItemId);
+    SkillResV1TemplateListCardListItemExtraEntity findBySkillResV1TemplateListCardListItemEntity_ListItemId(UUID listItemId);
 }

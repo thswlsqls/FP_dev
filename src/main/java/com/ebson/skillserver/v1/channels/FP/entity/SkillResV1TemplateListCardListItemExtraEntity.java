@@ -23,7 +23,7 @@ public class SkillResV1TemplateListCardListItemExtraEntity {
     @Column(name = "LISTITEM_ORD", nullable = false)
     private Integer listItemOrd;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "LISTITEM_ID", referencedColumnName = "LISTITEM_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_LISTITEM_EXTRA_LISTITEM_ID"))
     private SkillResV1TemplateListCardListItemEntity skillResV1TemplateListCardListItemEntity;
 

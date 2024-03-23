@@ -467,12 +467,23 @@ public class KakaoFPTemplateService {
             if (StringUtils.hasText(listItem.getMessageText())) {
                 item.setMessageText(listItem.getMessageText());
             }
+            SkillResV1TemplateListCardListItemExtraEntity extrae = skillResV1TemplateListCardListItemExtraEntityRepository.findBySkillResV1TemplateListCardListItemEntity_ListItemId(listItem.getListItemId());
+            if (Objects.nonNull(extrae)) {
+                if (StringUtils.hasText(extrae.getKey())) {
+                    if (StringUtils.hasText(extrae.getValue())) {
+                        Map<String, Object> extra = new HashMap<>();
+                        extra.put(extrae.getKey(), extrae.getValue());
+                        item.setExtra(extra);
+                    }
+                }
+            }
             if (listItem.getHeaderYn().equals('Y')) {
                 lcd.setHeader(item);
             } else {
                 items.add(item);
             }
         }
+
         if (items.size() != 0){
             lcd.setItems(items);
         }
