@@ -63,6 +63,9 @@ public class KakaoFPTemplateService {
     @Autowired
     SkillResV1TemplateComponentBtnEntityRepository skillResV1TemplateComponentBtnEntityRepository;
 
+    @Autowired
+    SkillResV1TemplateQrplEntityRepository skillResV1TemplateQrplEntityRepository;
+
     public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity be) {
 
         SkillResV1TemplateEntity skillResV1TemplateEntity = skillResV1TemplateEntityRepository.getReferenceById(templateId);
@@ -119,6 +122,13 @@ public class KakaoFPTemplateService {
 
         Template template = new Template();
         template.setOutputs(outputs);
+
+        List<SkillResV1TemplateQrplEntity> qrpleList = skillResV1TemplateQrplEntityRepository.findBySkillResV1TemplateEntity_TemplateId(templateId);
+        if (qrpleList.size() != 0) {
+            List<Template.QuickReply> qrplList =  getQrplList(qrpleList);
+            template.setQuickReplies(qrplList);
+        }
+
         skillResponse.setTemplate(template);
         return skillResponse;
     }
@@ -544,4 +554,23 @@ public class KakaoFPTemplateService {
 
         return btnList;
     }
+
+    public List<Template.QuickReply> getQrplList(List<SkillResV1TemplateQrplEntity> qrpleList) {
+        List<Template.QuickReply> qrplList = new ArrayList<>();
+        for (SkillResV1TemplateQrplEntity qrple : qrpleList) {
+            Template.QuickReply qrpl = new Template.QuickReply();
+            if (StringUtils.hasText(qrple.getLabel())) {
+                qrpl.setLabel(qrple.getLabel());
+            }
+            if (StringUtils.hasText(qrple.getAction())) {
+                qrpl.setAction(qrple.getAction());
+            }
+            if (StringUtils.hasText(qrple.getMessageText())) {
+                qrpl.setMessagText(qrple.getMessageText());
+            }
+            qrplList.add(qrpl);
+        }
+        return qrplList;
+    }
+
 }

@@ -12,7 +12,7 @@ public class Template {
     private List<QuickReply> quickReplies;
 
     @Data
-    public class QuickReply {
+    public static class QuickReply {
         private String label;
         private String action;
         private String messagText;
