@@ -21,7 +21,7 @@ public class SkillResV1TemplateComponentBtnExtraEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID extraId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "BTN_ID", referencedColumnName = "BTN_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_BTN_EXTRA_BTN_ID"))
     private SkillResV1TemplateComponentBtnEntity skillResV1TemplateComponentBtnEntity;
 

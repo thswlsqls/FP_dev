@@ -58,6 +58,9 @@ public class KakaoFPTemplateService {
     SkillResV1TemplateListCardListItemExtraEntityRepository skillResV1TemplateListCardListItemExtraEntityRepository;
 
     @Autowired
+    SkillResV1TemplateComponentBtnExtraEntityRepository skillResV1TemplateComponentBtnExtraEntityRepository;
+
+    @Autowired
     SkillResV1TemplateComponentBtnEntityRepository skillResV1TemplateComponentBtnEntityRepository;
 
     public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity be) {
@@ -513,6 +516,17 @@ public class KakaoFPTemplateService {
             }
             if (StringUtils.hasText(btnEntity.getBlockId())) {
                 btn.setBlockId(btnEntity.getBlockId());
+            }
+            UUID btneId = btnEntity.getBtnId();
+            SkillResV1TemplateComponentBtnExtraEntity btnExtrae = skillResV1TemplateComponentBtnExtraEntityRepository.findBySkillResV1TemplateComponentBtnEntity_BtnId(btneId);
+            if (Objects.nonNull(btnExtrae)) {
+                Map<String, Object> extra = new HashMap<>();
+                if (StringUtils.hasText(btnExtrae.getKey())){
+                    if(StringUtils.hasText(btnExtrae.getValue())){
+                        extra.put(btnExtrae.getKey(), btnExtrae.getValue());
+                        btn.setExtra(extra);
+                    }
+                }
             }
             btnList.add(btn);
         }
