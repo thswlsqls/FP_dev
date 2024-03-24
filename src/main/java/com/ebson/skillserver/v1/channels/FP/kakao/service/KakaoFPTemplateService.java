@@ -126,13 +126,47 @@ public class KakaoFPTemplateService {
                             }
                             yield componentList;
                         } case ChatbotConstants.ComponentType.BASIC_CARD -> {
-                            yield null;
+                            List<SkillResV1TemplateBasicCardEntity> c_bcdeList = skillResV1TemplateBasicCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                            List<Map<String, Object>> componentList = new ArrayList<>();
+                            for ( SkillResV1TemplateBasicCardEntity c_bcde : c_bcdeList ) {
+                                UUID c_componentId = c_bcde.getComponentId();
+                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                Map<String, Object> c_bcd = getBasicCard(c_bcde, be, c_btneList);
+                                componentList.add(c_bcd);
+                            }
+                            yield componentList;
                         } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
-                            yield null;
-                        } case ChatbotConstants.ComponentType.LIST_CARD -> {
-                            yield null;
+                            List<SkillResV1TemplateCommerceCardEntity> c_ccdeList = skillResV1TemplateCommerceCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                            List<Map<String, Object>> componentList = new ArrayList<>();
+                            for ( SkillResV1TemplateCommerceCardEntity c_ccde : c_ccdeList ) {
+                                UUID c_componentId = c_ccde.getComponentId();
+                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                Map<String, Object> c_ccd = getCommerceCard(c_ccde, be, c_btneList);
+                                componentList.add(c_ccd);
+                            }
+                            yield componentList;
                         } case ChatbotConstants.ComponentType.ITEM_CARD -> {
-                            yield null;
+                            List<SkillResV1TemplateItemCardEntity> c_icdeList = skillResV1TemplateItemCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                            List<Map<String, Object>> componentList = new ArrayList<>();
+                            for ( SkillResV1TemplateItemCardEntity c_icde : c_icdeList ) {
+                                UUID c_componentId = c_icde.getComponentId();
+                                List<SkillResV1TemplateItemCardItemListEntity> c_itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
+                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                Map<String, Object> c_icd = getItemCard(c_icde, c_itemListelist, be, c_btneList);
+                                componentList.add(c_icd);
+                            }
+                            yield componentList;
+                        } case ChatbotConstants.ComponentType.LIST_CARD -> {
+                            List<SkillResV1TemplateListCardEntity> c_lcdeList = skillResV1TemplateListCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                            List<Map<String, Object>> componentList = new ArrayList<>();
+                            for ( SkillResV1TemplateListCardEntity c_lcde : c_lcdeList ) {
+                                UUID c_componentId = c_lcde.getComponentId();
+                                List<SkillResV1TemplateListCardListItemEntity> c_listItemeList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(c_componentId);
+                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                Map<String, Object> c_lcd = getListCard(c_lcde, c_listItemeList, be, c_btneList);
+                                componentList.add(c_lcd);
+                            }
+                            yield componentList;
                         }
                         default -> null;
                     };
