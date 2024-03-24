@@ -12,7 +12,7 @@ public class Carousel {
     private CarouselHeader header;
 
     @Data
-    public class CarouselHeader {
+    public static class CarouselHeader {
         private String title;
         private String description;
         private Thumbnail thumbnail;

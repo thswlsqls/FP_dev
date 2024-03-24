@@ -252,7 +252,7 @@ public class KakaoFPSkillController {
         carouselComponent2.put(ChatbotConstants.ComponentType.BASIC_CARD, carouselBasicCard2);
         carouselItems.add(carouselComponent2);
         carousel.setItems(carouselItems);
-        Carousel.CarouselHeader carouselHeader = carousel.new CarouselHeader();
+        Carousel.CarouselHeader carouselHeader = new Carousel.CarouselHeader();
         carouselHeader.setTitle("케러셀 헤더 제목");
         carouselHeader.setDescription("케러셀 헤더 설명입니다.");
         Thumbnail carouselHeaderThumbnail = new Thumbnail();

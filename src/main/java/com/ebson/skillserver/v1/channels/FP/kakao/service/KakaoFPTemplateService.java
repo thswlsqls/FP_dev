@@ -111,9 +111,32 @@ public class KakaoFPTemplateService {
 
                     yield getListCard(lcde, listItemeList, be, btneList);
                 } case ChatbotConstants.ComponentType.CAROUSEL -> {
-                    SkillResV1TemplateCarouselEntity skillResV1TemplateCarouselEntity = skillResV1TemplateCarouselEntityRepository.getReferenceById(componentId);
-
-                    yield null;
+                    SkillResV1TemplateCarouselEntity tcse = skillResV1TemplateCarouselEntityRepository.getReferenceById(componentId);
+                    UUID carouselId = tcse.getCarouselId();
+                    String c_type = tcse.getCardType();
+                    List<Map<String, Object>> c_items = switch (c_type) {
+                        case ChatbotConstants.ComponentType.TEXT_CARD -> {
+                            List<SkillResV1TemplateTextCardEntity> tceList = skillResV1TemplateTextCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                            List<Map<String, Object>> componentList = new ArrayList<>();
+                            for ( SkillResV1TemplateTextCardEntity c_tcde : tceList ) {
+                                UUID c_componentId = c_tcde.getComponentId();
+                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                Map<String, Object> c_tcd = getTextCard(c_tcde, be, c_btneList);
+                                componentList.add(c_tcd);
+                            }
+                            yield componentList;
+                        } case ChatbotConstants.ComponentType.BASIC_CARD -> {
+                            yield null;
+                        } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
+                            yield null;
+                        } case ChatbotConstants.ComponentType.LIST_CARD -> {
+                            yield null;
+                        } case ChatbotConstants.ComponentType.ITEM_CARD -> {
+                            yield null;
+                        }
+                        default -> null;
+                    };
+                    yield getCarousel(c_type, c_items, tcse);
                 }
                 default -> null; 
             };
@@ -512,6 +535,29 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.LIST_CARD, lcd);
+        return output;
+    }
+
+    public Map<String, Object> getCarousel(String type, List<Map<String, Object>> items, SkillResV1TemplateCarouselEntity crse) {
+        Carousel carousel = new Carousel();
+        carousel.setType(type);
+        carousel.setItems(items);
+        Carousel.CarouselHeader carouselHeader = new Carousel.CarouselHeader();
+
+        if (StringUtils.hasText(crse.getHeaderTitle())) {
+            carouselHeader.setTitle(crse.getHeaderTitle());
+            if (StringUtils.hasText(crse.getHeaderDesc())) {
+                carouselHeader.setDescription(crse.getHeaderDesc());
+                if (StringUtils.hasText(crse.getHeaderThumb())) {
+                    Thumbnail thumbnail = new Thumbnail();
+                    thumbnail.setImageUrl(crse.getHeaderThumb());
+                    carousel.setHeader(carouselHeader);
+                }
+            }
+        }
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.CAROUSEL, carousel);
         return output;
     }
 
