@@ -220,6 +220,7 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.SIMPLE_TEXT, st);
+        log.info("KakaoFPTemplateService^^getSimpleText() :: output : {}", output.toString());
         return output;
     }
 
@@ -244,6 +245,7 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.SIMPLE_IMAGE, si);
+        log.info("KakaoFPTemplateService^^getSimpleImage() :: output : {}", output.toString());
         return output;
     }
 
@@ -273,6 +275,7 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.TEXT_CARD, tcd);
+        log.info("KakaoFPTemplateService^^getTextCard() :: output : {}", output.toString());
         return output;
     }
 
@@ -307,6 +310,7 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.BASIC_CARD, bcd);
+        log.info("KakaoFPTemplateService^^getBasicCard() :: output : {}", output.toString());
         return output;
     }
 
@@ -388,6 +392,7 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.COMMERCE_CARD, ccd);
+        log.info("KakaoFPTemplateService^^getCommerceCard() :: output : {}", output.toString());
         return output;
     }
 
@@ -508,6 +513,7 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.ITEM_CARD, icd);
+        log.info("KakaoFPTemplateService^^getItemCard() :: output : {}", output.toString());
         return output;
     }
 
@@ -582,6 +588,7 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.LIST_CARD, lcd);
+        log.info("KakaoFPTemplateService^^getListCard() :: output : {}", output.toString());
         return output;
     }
 
@@ -605,6 +612,7 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.CAROUSEL, carousel);
+        log.info("KakaoFPTemplateService^^getCarousel() :: output : {}", output.toString());
         return output;
     }
 
