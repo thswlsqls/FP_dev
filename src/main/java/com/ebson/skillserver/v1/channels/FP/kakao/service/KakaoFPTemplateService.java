@@ -68,6 +68,8 @@ public class KakaoFPTemplateService {
     @Autowired
     SkillResV1TemplateQrplEntityRepository skillResV1TemplateQrplEntityRepository;
 
+    private final ObjectMapper om = new ObjectMapper();
+
     public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity be) {
         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: templateId : {} blockId : {}", templateId, be.getBlockId());
 
@@ -202,10 +204,13 @@ public class KakaoFPTemplateService {
         }
 
         skillResponse.setTemplate(template);
+        try {
+            log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: skillResponse : {}", om.writeValueAsString(skillResponse));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return skillResponse;
     }
-
-    private final ObjectMapper om = new ObjectMapper();
 
     public Map<String, Object> getSimpleText(SkillResV1TemplateSimpleTextEntity ste, BuilderV1BlockEntity be){
         SimpleText st = new SimpleText();
