@@ -3,6 +3,8 @@ package com.ebson.skillserver.v1.channels.FP.kakao.service;
 import com.ebson.skillserver.common.*;
 import com.ebson.skillserver.v1.channels.FP.entity.*;
 import com.ebson.skillserver.v1.channels.FP.repository.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -203,6 +205,8 @@ public class KakaoFPTemplateService {
         return skillResponse;
     }
 
+    private final ObjectMapper om = new ObjectMapper();
+
     public Map<String, Object> getSimpleText(SkillResV1TemplateSimpleTextEntity ste, BuilderV1BlockEntity be){
         SimpleText st = new SimpleText();
 
@@ -220,7 +224,11 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.SIMPLE_TEXT, st);
-        log.info("KakaoFPTemplateService^^getSimpleText() :: output : {}", output.toString());
+        try {
+            log.info("KakaoFPTemplateService^^getSimpleText() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return output;
     }
 
@@ -245,7 +253,11 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.SIMPLE_IMAGE, si);
-        log.info("KakaoFPTemplateService^^getSimpleImage() :: output : {}", output.toString());
+        try {
+            log.info("KakaoFPTemplateService^^getSimpleImage() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return output;
     }
 
@@ -275,7 +287,11 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.TEXT_CARD, tcd);
-        log.info("KakaoFPTemplateService^^getTextCard() :: output : {}", output.toString());
+        try {
+            log.info("KakaoFPTemplateService^^getTextCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return output;
     }
 
@@ -310,7 +326,11 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.BASIC_CARD, bcd);
-        log.info("KakaoFPTemplateService^^getBasicCard() :: output : {}", output.toString());
+        try {
+            log.info("KakaoFPTemplateService^^getBasicCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return output;
     }
 
@@ -392,7 +412,11 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.COMMERCE_CARD, ccd);
-        log.info("KakaoFPTemplateService^^getCommerceCard() :: output : {}", output.toString());
+        try {
+            log.info("KakaoFPTemplateService^^getCommerceCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return output;
     }
 
@@ -513,7 +537,11 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.ITEM_CARD, icd);
-        log.info("KakaoFPTemplateService^^getItemCard() :: output : {}", output.toString());
+        try {
+            log.info("KakaoFPTemplateService^^getItemCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return output;
     }
 
@@ -588,7 +616,11 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.LIST_CARD, lcd);
-        log.info("KakaoFPTemplateService^^getListCard() :: output : {}", output.toString());
+        try {
+            log.info("KakaoFPTemplateService^^getListCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return output;
     }
 
@@ -612,7 +644,11 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.CAROUSEL, carousel);
-        log.info("KakaoFPTemplateService^^getCarousel() :: output : {}", output.toString());
+        try {
+            log.info("KakaoFPTemplateService^^getCarousel() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return output;
     }
 
@@ -652,7 +688,11 @@ public class KakaoFPTemplateService {
             }
             btnList.add(btn);
         }
-
+        try {
+            log.info("KakaoFPTemplateService^^getButtonList() :: btnList : {}", om.writeValueAsString(btnList));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
         return btnList;
     }
 
@@ -670,6 +710,11 @@ public class KakaoFPTemplateService {
                 qrpl.setMessagText(qrple.getMessageText());
             }
             qrplList.add(qrpl);
+        }
+        try {
+            log.info("KakaoFPTemplateService^^getQrplList() :: qrplList : {}", om.writeValueAsString(qrplList));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
         }
         return qrplList;
     }
