@@ -73,142 +73,149 @@ public class KakaoFPTemplateService {
     public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity be) {
         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: templateId : {} blockId : {}", templateId, be.getBlockId());
 
-        SkillResV1TemplateEntity skillResV1TemplateEntity = skillResV1TemplateEntityRepository.getReferenceById(templateId);
-
-        List<SkillResV1TemplateOutputEntity> skillResV1TemplateOutputEntityList = skillResV1TemplateOutputEntityRepository.findBySkillResV1TemplateEntity_TemplateId(templateId);
-
-        List<Map<String, Object>> outputs = new ArrayList<>();
-        for (SkillResV1TemplateOutputEntity output : skillResV1TemplateOutputEntityList) {
-            log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: outputId : {} outputName : {} outputOrd : {}", output.getOutputId(), output.getOutputName(), output.getOutputOrd());
-
-            SkillResV1TemplateComponentEntity tce = skillResV1TemplateComponentEntityRepository.findBySkillResV1TemplateOutputEntity_OutputId(output.getOutputId());
-            UUID componentId = tce.getComponentId();
-            log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentId : {} componentName : {} componentType : {}", tce.getComponentId(), tce.getComponentName(), tce.getComponentType());
-
-            List<SkillResV1TemplateComponentBtnEntity> btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(componentId);
-
-            /** componentType 으로 분기처리해 outputs 리스트의 component 를 세팅 */
-            Map<String, Object> component = switch (tce.getComponentType()) {
-                case ChatbotConstants.ComponentType.SIMPLE_TEXT -> {
-                    SkillResV1TemplateSimpleTextEntity ste = skillResV1TemplateSimpleTextEntityRepository.getReferenceById(componentId);
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.SIMPLE_TEXT);
-                    yield getSimpleText(ste, be);
-                } case ChatbotConstants.ComponentType.SIMPLE_IMAGE -> {
-                    SkillResV1TemplateSimpleImageEntity sie = skillResV1TemplateSimpleImageEntityRepository.getReferenceById(componentId);
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.SIMPLE_IMAGE);
-                    yield getSimpleImage(sie, be);
-                } case ChatbotConstants.ComponentType.TEXT_CARD -> {
-                    SkillResV1TemplateTextCardEntity tcde = skillResV1TemplateTextCardEntityRepository.getReferenceById(componentId);
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.TEXT_CARD);
-                    yield getTextCard(tcde, be, btneList);
-                } case ChatbotConstants.ComponentType.BASIC_CARD -> {
-                    SkillResV1TemplateBasicCardEntity bcde = skillResV1TemplateBasicCardEntityRepository.getReferenceById(componentId);
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.BASIC_CARD);
-                    yield getBasicCard(bcde, be, btneList);
-                } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
-                    SkillResV1TemplateCommerceCardEntity ccde = skillResV1TemplateCommerceCardEntityRepository.getReferenceById(componentId);
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.COMMERCE_CARD);
-                    yield getCommerceCard(ccde, be, btneList);
-                } case ChatbotConstants.ComponentType.ITEM_CARD -> {
-                    SkillResV1TemplateItemCardEntity itce = skillResV1TemplateItemCardEntityRepository.getReferenceById(componentId);
-                    List<SkillResV1TemplateItemCardItemListEntity> itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.ITEM_CARD);
-                    yield getItemCard(itce, itemListelist, be, btneList);
-                } case ChatbotConstants.ComponentType.LIST_CARD -> {
-                    SkillResV1TemplateListCardEntity lcde = skillResV1TemplateListCardEntityRepository.getReferenceById(componentId);
-                    List<SkillResV1TemplateListCardListItemEntity> listItemeList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(componentId);
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.LIST_CARD);
-                    yield getListCard(lcde, listItemeList, be, btneList);
-                } case ChatbotConstants.ComponentType.CAROUSEL -> {
-                    SkillResV1TemplateCarouselEntity tcse = skillResV1TemplateCarouselEntityRepository.getReferenceById(componentId);
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.CAROUSEL);
-                    UUID carouselId = tcse.getCarouselId();
-                    String c_type = tcse.getCardType();
-                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: carouselId : {} cardType : {}", carouselId, c_type);
-
-                    List<Map<String, Object>> c_items = switch (c_type) {
-                        case ChatbotConstants.ComponentType.TEXT_CARD -> {
-                            List<SkillResV1TemplateTextCardEntity> tceList = skillResV1TemplateTextCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
-                            List<Map<String, Object>> componentList = new ArrayList<>();
-                            for ( SkillResV1TemplateTextCardEntity c_tcde : tceList ) {
-                                UUID c_componentId = c_tcde.getComponentId();
-                                log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
-                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                Map<String, Object> c_tcd = getTextCard(c_tcde, be, c_btneList);
-                                componentList.add(c_tcd);
-                            }
-                            yield componentList;
-                        } case ChatbotConstants.ComponentType.BASIC_CARD -> {
-                            List<SkillResV1TemplateBasicCardEntity> c_bcdeList = skillResV1TemplateBasicCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
-                            List<Map<String, Object>> componentList = new ArrayList<>();
-                            for ( SkillResV1TemplateBasicCardEntity c_bcde : c_bcdeList ) {
-                                UUID c_componentId = c_bcde.getComponentId();
-                                log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
-                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                Map<String, Object> c_bcd = getBasicCard(c_bcde, be, c_btneList);
-                                componentList.add(c_bcd);
-                            }
-                            yield componentList;
-                        } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
-                            List<SkillResV1TemplateCommerceCardEntity> c_ccdeList = skillResV1TemplateCommerceCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
-                            List<Map<String, Object>> componentList = new ArrayList<>();
-                            for ( SkillResV1TemplateCommerceCardEntity c_ccde : c_ccdeList ) {
-                                UUID c_componentId = c_ccde.getComponentId();
-                                log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
-                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                Map<String, Object> c_ccd = getCommerceCard(c_ccde, be, c_btneList);
-                                componentList.add(c_ccd);
-                            }
-                            yield componentList;
-                        } case ChatbotConstants.ComponentType.ITEM_CARD -> {
-                            List<SkillResV1TemplateItemCardEntity> c_icdeList = skillResV1TemplateItemCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
-                            List<Map<String, Object>> componentList = new ArrayList<>();
-                            for ( SkillResV1TemplateItemCardEntity c_icde : c_icdeList ) {
-                                UUID c_componentId = c_icde.getComponentId();
-                                log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
-                                List<SkillResV1TemplateItemCardItemListEntity> c_itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
-                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                Map<String, Object> c_icd = getItemCard(c_icde, c_itemListelist, be, c_btneList);
-                                componentList.add(c_icd);
-                            }
-                            yield componentList;
-                        } case ChatbotConstants.ComponentType.LIST_CARD -> {
-                            List<SkillResV1TemplateListCardEntity> c_lcdeList = skillResV1TemplateListCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
-                            List<Map<String, Object>> componentList = new ArrayList<>();
-                            for ( SkillResV1TemplateListCardEntity c_lcde : c_lcdeList ) {
-                                UUID c_componentId = c_lcde.getComponentId();
-                                log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
-                                List<SkillResV1TemplateListCardListItemEntity> c_listItemeList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(c_componentId);
-                                List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                Map<String, Object> c_lcd = getListCard(c_lcde, c_listItemeList, be, c_btneList);
-                                componentList.add(c_lcd);
-                            }
-                            yield componentList;
-                        }
-                        default -> null;
-                    };
-                    yield getCarousel(c_type, c_items, tcse);
-                }
-                default -> null; 
-            };
-            outputs.add(component);
-        }
-
-        Template template = new Template();
-        template.setOutputs(outputs);
-
-        List<SkillResV1TemplateQrplEntity> qrpleList = skillResV1TemplateQrplEntityRepository.findBySkillResV1TemplateEntity_TemplateId(templateId);
-        if (qrpleList.size() != 0) {
-            List<Template.QuickReply> qrplList =  getQrplList(qrpleList);
-            template.setQuickReplies(qrplList);
-        }
-
-        skillResponse.setTemplate(template);
         try {
-            log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: skillResponse : {}", om.writeValueAsString(skillResponse));
-        } catch (JsonProcessingException e){
+
+            SkillResV1TemplateEntity skillResV1TemplateEntity = skillResV1TemplateEntityRepository.getReferenceById(templateId);
+
+            List<SkillResV1TemplateOutputEntity> skillResV1TemplateOutputEntityList = skillResV1TemplateOutputEntityRepository.findBySkillResV1TemplateEntity_TemplateId(templateId);
+
+            List<Map<String, Object>> outputs = new ArrayList<>();
+            for (SkillResV1TemplateOutputEntity output : skillResV1TemplateOutputEntityList) {
+                log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: outputId : {} outputName : {} outputOrd : {}", output.getOutputId(), output.getOutputName(), output.getOutputOrd());
+
+                SkillResV1TemplateComponentEntity tce = skillResV1TemplateComponentEntityRepository.findBySkillResV1TemplateOutputEntity_OutputId(output.getOutputId());
+                UUID componentId = tce.getComponentId();
+                log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentId : {} componentName : {} componentType : {}", tce.getComponentId(), tce.getComponentName(), tce.getComponentType());
+
+                List<SkillResV1TemplateComponentBtnEntity> btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(componentId);
+
+                /** componentType 으로 분기처리해 outputs 리스트의 component 를 세팅 */
+                Map<String, Object> component = switch (tce.getComponentType()) {
+                    case ChatbotConstants.ComponentType.SIMPLE_TEXT -> {
+                        SkillResV1TemplateSimpleTextEntity ste = skillResV1TemplateSimpleTextEntityRepository.getReferenceById(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.SIMPLE_TEXT);
+                        yield getSimpleText(ste, be);
+                    } case ChatbotConstants.ComponentType.SIMPLE_IMAGE -> {
+                        SkillResV1TemplateSimpleImageEntity sie = skillResV1TemplateSimpleImageEntityRepository.getReferenceById(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.SIMPLE_IMAGE);
+                        yield getSimpleImage(sie, be);
+                    } case ChatbotConstants.ComponentType.TEXT_CARD -> {
+                        SkillResV1TemplateTextCardEntity tcde = skillResV1TemplateTextCardEntityRepository.getReferenceById(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.TEXT_CARD);
+                        yield getTextCard(tcde, be, btneList);
+                    } case ChatbotConstants.ComponentType.BASIC_CARD -> {
+                        SkillResV1TemplateBasicCardEntity bcde = skillResV1TemplateBasicCardEntityRepository.getReferenceById(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.BASIC_CARD);
+                        yield getBasicCard(bcde, be, btneList);
+                    } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
+                        SkillResV1TemplateCommerceCardEntity ccde = skillResV1TemplateCommerceCardEntityRepository.getReferenceById(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.COMMERCE_CARD);
+                        yield getCommerceCard(ccde, be, btneList);
+                    } case ChatbotConstants.ComponentType.ITEM_CARD -> {
+                        SkillResV1TemplateItemCardEntity itce = skillResV1TemplateItemCardEntityRepository.getReferenceById(componentId);
+                        List<SkillResV1TemplateItemCardItemListEntity> itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.ITEM_CARD);
+                        yield getItemCard(itce, itemListelist, be, btneList);
+                    } case ChatbotConstants.ComponentType.LIST_CARD -> {
+                        SkillResV1TemplateListCardEntity lcde = skillResV1TemplateListCardEntityRepository.getReferenceById(componentId);
+                        List<SkillResV1TemplateListCardListItemEntity> listItemeList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.LIST_CARD);
+                        yield getListCard(lcde, listItemeList, be, btneList);
+                    } case ChatbotConstants.ComponentType.CAROUSEL -> {
+                        SkillResV1TemplateCarouselEntity tcse = skillResV1TemplateCarouselEntityRepository.getReferenceById(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.CAROUSEL);
+                        UUID carouselId = tcse.getCarouselId();
+                        String c_type = tcse.getCardType();
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: carouselId : {} cardType : {}", carouselId, c_type);
+
+                        List<Map<String, Object>> c_items = switch (c_type) {
+                            case ChatbotConstants.ComponentType.TEXT_CARD -> {
+                                List<SkillResV1TemplateTextCardEntity> tceList = skillResV1TemplateTextCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                                List<Map<String, Object>> componentList = new ArrayList<>();
+                                for ( SkillResV1TemplateTextCardEntity c_tcde : tceList ) {
+                                    UUID c_componentId = c_tcde.getComponentId();
+                                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
+                                    List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                    Map<String, Object> c_tcd = getTextCard(c_tcde, be, c_btneList);
+                                    componentList.add(c_tcd);
+                                }
+                                yield componentList;
+                            } case ChatbotConstants.ComponentType.BASIC_CARD -> {
+                                List<SkillResV1TemplateBasicCardEntity> c_bcdeList = skillResV1TemplateBasicCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                                List<Map<String, Object>> componentList = new ArrayList<>();
+                                for ( SkillResV1TemplateBasicCardEntity c_bcde : c_bcdeList ) {
+                                    UUID c_componentId = c_bcde.getComponentId();
+                                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
+                                    List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                    Map<String, Object> c_bcd = getBasicCard(c_bcde, be, c_btneList);
+                                    componentList.add(c_bcd);
+                                }
+                                yield componentList;
+                            } case ChatbotConstants.ComponentType.COMMERCE_CARD -> {
+                                List<SkillResV1TemplateCommerceCardEntity> c_ccdeList = skillResV1TemplateCommerceCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                                List<Map<String, Object>> componentList = new ArrayList<>();
+                                for ( SkillResV1TemplateCommerceCardEntity c_ccde : c_ccdeList ) {
+                                    UUID c_componentId = c_ccde.getComponentId();
+                                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
+                                    List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                    Map<String, Object> c_ccd = getCommerceCard(c_ccde, be, c_btneList);
+                                    componentList.add(c_ccd);
+                                }
+                                yield componentList;
+                            } case ChatbotConstants.ComponentType.ITEM_CARD -> {
+                                List<SkillResV1TemplateItemCardEntity> c_icdeList = skillResV1TemplateItemCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                                List<Map<String, Object>> componentList = new ArrayList<>();
+                                for ( SkillResV1TemplateItemCardEntity c_icde : c_icdeList ) {
+                                    UUID c_componentId = c_icde.getComponentId();
+                                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
+                                    List<SkillResV1TemplateItemCardItemListEntity> c_itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
+                                    List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                    Map<String, Object> c_icd = getItemCard(c_icde, c_itemListelist, be, c_btneList);
+                                    componentList.add(c_icd);
+                                }
+                                yield componentList;
+                            } case ChatbotConstants.ComponentType.LIST_CARD -> {
+                                List<SkillResV1TemplateListCardEntity> c_lcdeList = skillResV1TemplateListCardEntityRepository.findBySkillResV1TemplateCarouselEntity_CarouselId(carouselId);
+                                List<Map<String, Object>> componentList = new ArrayList<>();
+                                for ( SkillResV1TemplateListCardEntity c_lcde : c_lcdeList ) {
+                                    UUID c_componentId = c_lcde.getComponentId();
+                                    log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
+                                    List<SkillResV1TemplateListCardListItemEntity> c_listItemeList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(c_componentId);
+                                    List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
+                                    Map<String, Object> c_lcd = getListCard(c_lcde, c_listItemeList, be, c_btneList);
+                                    componentList.add(c_lcd);
+                                }
+                                yield componentList;
+                            }
+                            default -> null;
+                        };
+                        yield getCarousel(c_type, c_items, tcse);
+                    }
+                    default -> null;
+                };
+                outputs.add(component);
+            }
+
+            Template template = new Template();
+            template.setOutputs(outputs);
+
+            List<SkillResV1TemplateQrplEntity> qrpleList = skillResV1TemplateQrplEntityRepository.findBySkillResV1TemplateEntity_TemplateId(templateId);
+            if (qrpleList.size() != 0) {
+                List<Template.QuickReply> qrplList =  getQrplList(qrpleList);
+                template.setQuickReplies(qrplList);
+            }
+
+            skillResponse.setTemplate(template);
+            try {
+                log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: skillResponse : {}", om.writeValueAsString(skillResponse));
+            } catch (JsonProcessingException e){
+                log.error(e.getMessage());
+            }
+            
+        } catch (Exception e) {
             log.error(e.getMessage());
         }
+
         return skillResponse;
     }
 
