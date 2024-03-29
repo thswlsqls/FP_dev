@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -70,6 +71,7 @@ public class KakaoFPTemplateService {
 
     private final ObjectMapper om = new ObjectMapper();
 
+    @Transactional
     public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity be) {
         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: templateId : {} blockId : {}", templateId, be.getBlockId());
 
@@ -239,7 +241,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getSimpleText() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
