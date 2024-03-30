@@ -113,16 +113,16 @@ public class KakaoFPTemplateService {
                         SkillResV1TemplateCommerceCardEntity ccde = skillResV1TemplateCommerceCardEntityRepository.getReferenceById(componentId);
                         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.COMMERCE_CARD);
                         yield getCommerceCard(ccde, be, btneList);
-                    } case ChatbotConstants.ComponentType.ITEM_CARD -> {
-                        SkillResV1TemplateItemCardEntity itce = skillResV1TemplateItemCardEntityRepository.getReferenceById(componentId);
-                        List<SkillResV1TemplateItemCardItemListEntity> itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
-                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.ITEM_CARD);
-                        yield getItemCard(itce, itemListelist, be, btneList);
                     } case ChatbotConstants.ComponentType.LIST_CARD -> {
                         SkillResV1TemplateListCardEntity lcde = skillResV1TemplateListCardEntityRepository.getReferenceById(componentId);
                         List<SkillResV1TemplateListCardListItemEntity> listItemeList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(componentId);
                         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.LIST_CARD);
                         yield getListCard(lcde, listItemeList, be, btneList);
+                    } case ChatbotConstants.ComponentType.ITEM_CARD -> {
+                        SkillResV1TemplateItemCardEntity itce = skillResV1TemplateItemCardEntityRepository.getReferenceById(componentId);
+                        List<SkillResV1TemplateItemCardItemListEntity> itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
+                        log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.ITEM_CARD);
+                        yield getItemCard(itce, itemListelist, be, btneList);
                     } case ChatbotConstants.ComponentType.CAROUSEL -> {
                         SkillResV1TemplateCarouselEntity tcse = skillResV1TemplateCarouselEntityRepository.getReferenceById(componentId);
                         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.CAROUSEL);
@@ -434,6 +434,86 @@ public class KakaoFPTemplateService {
         return output;
     }
 
+
+    public Map<String, Object> getListCard(SkillResV1TemplateListCardEntity lcde, List<SkillResV1TemplateListCardListItemEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
+        ListCard lcd = new ListCard();
+        List<ListItem> items = new ArrayList<>();
+        for (SkillResV1TemplateListCardListItemEntity listItem : itemListelist) {
+            ListItem item = new ListItem();
+            if (StringUtils.hasText(listItem.getTitle())){
+                item.setTitle(listItem.getTitle());
+            }
+            if (StringUtils.hasText(listItem.getDesc())){
+                item.setDescription(listItem.getDesc());
+            }
+            if (StringUtils.hasText(listItem.getImgUrl())) {
+                item.setImageUrl(listItem.getImgUrl());
+            }
+            Link link = new Link();
+            if (StringUtils.hasText(listItem.getLinkWeb())){
+                link.setWeb(listItem.getLinkWeb());
+            }
+            if (StringUtils.hasText(listItem.getLinkPc())){
+                link.setPc(listItem.getLinkPc());
+            }
+            if (StringUtils.hasText(listItem.getLinkMobile())){
+                link.setMobile(listItem.getLinkMobile());
+            }
+            if (StringUtils.hasText(link.getPc()) || StringUtils.hasText(link.getWeb()) || StringUtils.hasText(link.getMobile())) {
+                item.setLink(link);
+            }
+            if (StringUtils.hasText(listItem.getAction())) {
+                item.setAction(listItem.getAction());
+            }
+            if (StringUtils.hasText(listItem.getBlockId())) {
+                item.setBlockId(listItem.getAction());
+            }
+            if (StringUtils.hasText(listItem.getMessageText())) {
+                item.setMessageText(listItem.getMessageText());
+            }
+            SkillResV1TemplateListCardListItemExtraEntity extrae = skillResV1TemplateListCardListItemExtraEntityRepository.findBySkillResV1TemplateListCardListItemEntity_ListItemId(listItem.getListItemId());
+            if (Objects.nonNull(extrae)) {
+                if (StringUtils.hasText(extrae.getKey())) {
+                    if (StringUtils.hasText(extrae.getValue())) {
+                        Map<String, Object> extra = new HashMap<>();
+                        extra.put(extrae.getKey(), extrae.getValue());
+                        item.setExtra(extra);
+                    }
+                }
+            }
+            if (listItem.getHeaderYn().equals("Y")) {
+                lcd.setHeader(item);
+            } else {
+                items.add(item);
+            }
+        }
+
+        if (items.size() != 0){
+            lcd.setItems(items);
+        }
+
+        lcd = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> lcd;
+        };
+
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            lcd.setButtons(btnList);
+        }
+
+        Map<String, Object> output = new HashMap<>(); // component
+        output.put(ChatbotConstants.ComponentType.LIST_CARD, lcd);
+        try {
+            log.info("KakaoFPTemplateService^^getListCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
+        return output;
+    }
+
     public Map<String, Object> getItemCard(SkillResV1TemplateItemCardEntity icde, List<SkillResV1TemplateItemCardItemListEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         ItemCard icd = new ItemCard();
 
@@ -553,85 +633,6 @@ public class KakaoFPTemplateService {
         output.put(ChatbotConstants.ComponentType.ITEM_CARD, icd);
         try {
             log.info("KakaoFPTemplateService^^getItemCard() :: output : {}", om.writeValueAsString(output));
-        } catch (JsonProcessingException e){
-            log.error(e.getMessage());
-        }
-        return output;
-    }
-
-    public Map<String, Object> getListCard(SkillResV1TemplateListCardEntity lcde, List<SkillResV1TemplateListCardListItemEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
-        ListCard lcd = new ListCard();
-        List<ListItem> items = new ArrayList<>();
-        for (SkillResV1TemplateListCardListItemEntity listItem : itemListelist) {
-            ListItem item = new ListItem();
-            if (StringUtils.hasText(listItem.getTitle())){
-                item.setTitle(listItem.getTitle());
-            }
-            if (StringUtils.hasText(listItem.getDesc())){
-                item.setDescription(listItem.getDesc());
-            }
-            if (StringUtils.hasText(listItem.getImgUrl())) {
-                item.setImageUrl(listItem.getImgUrl());
-            }
-            Link link = new Link();
-            if (StringUtils.hasText(listItem.getLinkWeb())){
-                link.setWeb(listItem.getLinkWeb());
-            }
-            if (StringUtils.hasText(listItem.getLinkPc())){
-                link.setPc(listItem.getLinkPc());
-            }
-            if (StringUtils.hasText(listItem.getLinkMobile())){
-                link.setMobile(listItem.getLinkMobile());
-            }
-            if (StringUtils.hasText(link.getPc()) || StringUtils.hasText(link.getWeb()) || StringUtils.hasText(link.getMobile())) {
-                item.setLink(link);
-            }
-            if (StringUtils.hasText(listItem.getAction())) {
-                item.setAction(listItem.getAction());
-            }
-            if (StringUtils.hasText(listItem.getBlockId())) {
-                item.setBlockId(listItem.getAction());
-            }
-            if (StringUtils.hasText(listItem.getMessageText())) {
-                item.setMessageText(listItem.getMessageText());
-            }
-            SkillResV1TemplateListCardListItemExtraEntity extrae = skillResV1TemplateListCardListItemExtraEntityRepository.findBySkillResV1TemplateListCardListItemEntity_ListItemId(listItem.getListItemId());
-            if (Objects.nonNull(extrae)) {
-                if (StringUtils.hasText(extrae.getKey())) {
-                    if (StringUtils.hasText(extrae.getValue())) {
-                        Map<String, Object> extra = new HashMap<>();
-                        extra.put(extrae.getKey(), extrae.getValue());
-                        item.setExtra(extra);
-                    }
-                }
-            }
-            if (listItem.getHeaderYn().equals('Y')) {
-                lcd.setHeader(item);
-            } else {
-                items.add(item);
-            }
-        }
-
-        if (items.size() != 0){
-            lcd.setItems(items);
-        }
-
-        lcd = switch (be.getBlockId()) {
-            case "" -> {
-                yield null;
-            }
-            default -> lcd;
-        };
-
-        if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
-            lcd.setButtons(btnList);
-        }
-
-        Map<String, Object> output = new HashMap<>(); // component
-        output.put(ChatbotConstants.ComponentType.LIST_CARD, lcd);
-        try {
-            log.info("KakaoFPTemplateService^^getListCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
             log.error(e.getMessage());
         }
