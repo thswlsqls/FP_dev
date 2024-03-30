@@ -73,4 +73,19 @@ public class KakaoFPTemplateServiceTest {
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("basicCard"));
     }
 
+    @Test
+    public void commerceCardTest(){
+        SkillResponse sr = new SkillResponse();
+        sr.setVersion(ChatbotConstants.VERSION);
+
+        UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("64C3A144EE8511EEB5380A48BC1A5EE1"));
+        BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
+        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+
+        Assertions.assertNotNull(sr.getTemplate());
+        Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("commerceCard"));
+    }
+
+
+
 }
