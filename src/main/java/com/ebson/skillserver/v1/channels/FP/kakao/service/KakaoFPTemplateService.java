@@ -532,7 +532,7 @@ public class KakaoFPTemplateService {
         // 버튼 설정 등 추가 필드 설정이 필요하면 여기에 추가
 
         // Thumbnail 설정
-        if ("Y".equals(icde.getThumbYn())) {
+        if (StringUtils.hasText(icde.getThumbYn()) && "Y".equals(icde.getThumbYn())) {
             ItemCard.Thumbnail thumbnail = new ItemCard.Thumbnail();
             if (StringUtils.hasText(icde.getThumbImgUrl())){
                 thumbnail.setImageUrl(icde.getThumbImgUrl());
@@ -548,13 +548,13 @@ public class KakaoFPTemplateService {
         }
 
         // Head 또는 Profile 설정 (동시에 설정 불가)
-        if ("Y".equals(icde.getHeadYn())) {
+        if (StringUtils.hasText(icde.getHeadYn()) && "Y".equals(icde.getHeadYn())) {
             ItemCard.Head head = new ItemCard.Head();
             if (StringUtils.hasText(icde.getHeadTitle())){
                 head.setTitle(icde.getHeadTitle());
             }
             icd.setHead(head);
-        } else if ("Y".equals(icde.getProfileYn())) {
+        } else if (StringUtils.hasText(icde.getProfileYn()) && "Y".equals(icde.getProfileYn())) {
             ItemCard.Profile profile = new ItemCard.Profile();
             if (StringUtils.hasText(profile.getImageUrl())) {
                 profile.setImageUrl(icde.getProfileImgUrl());
@@ -573,7 +573,7 @@ public class KakaoFPTemplateService {
         }
 
         // ImageTitle 설정
-        if ("Y".equals(icde.getImgtitleYn())) {
+        if (StringUtils.hasText(icde.getImgtitleYn()) && "Y".equals(icde.getImgtitleYn())) {
             ItemCard.ImageTitle imageTitle = new ItemCard.ImageTitle();
             if (StringUtils.hasText(icde.getImgtitleTitle())) {
                 imageTitle.setTitle(icde.getImgtitleTitle());
@@ -591,7 +591,7 @@ public class KakaoFPTemplateService {
         // 여기에 list를 사용하여 ItemList 객체들을 생성하고 설정하는 로직 추가
 
         // ItemListSummary 설정
-        if ("Y".equals(icde.getItemlistSummaryYn())) {
+        if (StringUtils.hasText(icde.getItemlistSummaryYn()) && "Y".equals(icde.getItemlistSummaryYn())) {
             ItemCard.ItemListSummary itemListSummary = new ItemCard.ItemListSummary();
             if (StringUtils.hasText(icde.getItemlistSummaryTitle())) {
                 itemListSummary.setTitle(icde.getItemlistSummaryTitle());
