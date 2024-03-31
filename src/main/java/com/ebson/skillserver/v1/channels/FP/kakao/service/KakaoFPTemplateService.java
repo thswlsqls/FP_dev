@@ -481,7 +481,7 @@ public class KakaoFPTemplateService {
                     }
                 }
             }
-            if (listItem.getHeaderYn().equals("Y")) {
+            if (StringUtils.hasText(listItem.getHeaderYn()) && listItem.getHeaderYn().equals("Y")) {
                 lcd.setHeader(item);
             } else {
                 items.add(item);
