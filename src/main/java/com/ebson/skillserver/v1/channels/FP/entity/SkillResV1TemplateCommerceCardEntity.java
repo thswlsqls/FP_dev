@@ -17,8 +17,9 @@ public class SkillResV1TemplateCommerceCardEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID componentId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+
     @MapsId
+    @ManyToOne(fetch = FetchType.LAZY) // carousel item 인 경우 N:1
     @JoinColumn(name = "COMPONENT_ID", referencedColumnName = "COMPONENT_ID")
     private SkillResV1TemplateComponentEntity skillResV1TemplateComponentEntity;
 

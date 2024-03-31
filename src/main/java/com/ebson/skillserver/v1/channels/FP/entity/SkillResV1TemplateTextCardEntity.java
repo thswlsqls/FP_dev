@@ -19,7 +19,7 @@ public class SkillResV1TemplateTextCardEntity {
     private UUID componentId;
 
     @MapsId
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // carousel item 인 경우 N:1
     @JoinColumn(name = "COMPONENT_ID")
     private SkillResV1TemplateComponentEntity skillResV1TemplateComponentEntity;
 
