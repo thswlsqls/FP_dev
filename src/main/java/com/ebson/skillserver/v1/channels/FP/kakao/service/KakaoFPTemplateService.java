@@ -210,7 +210,7 @@ public class KakaoFPTemplateService {
             skillResponse.setTemplate(template);
             try {
                 log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: skillResponse : {}", om.writeValueAsString(skillResponse));
-            } catch (JsonProcessingException e){
+            } catch (JsonProcessingException e) {
                 log.error(e.getMessage());
             }
             
