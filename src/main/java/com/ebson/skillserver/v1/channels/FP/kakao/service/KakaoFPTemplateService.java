@@ -139,7 +139,7 @@ public class KakaoFPTemplateService {
                         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.ITEM_CARD);
                         yield getItemCard(itce, itemListelist, be, btneList);
                     } case ChatbotConstants.ComponentType.CAROUSEL -> {
-                        SkillResV1TemplateCarouselEntity tcse = skillResV1TemplateCarouselEntityRepository.getReferenceById(componentId);
+                        SkillResV1TemplateCarouselEntity tcse = skillResV1TemplateCarouselEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(componentId);
                         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: componentType : {}", ChatbotConstants.ComponentType.CAROUSEL);
                         UUID carouselId = tcse.getCarouselId();
                         String c_type = tcse.getCardType();

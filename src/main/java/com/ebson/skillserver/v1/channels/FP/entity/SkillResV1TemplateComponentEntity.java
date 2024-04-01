@@ -4,6 +4,7 @@ import com.ebson.skillserver.converter.UUIDToBytesConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.One;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,7 +22,7 @@ public class SkillResV1TemplateComponentEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID componentId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // carousel 인 경우 N:1
     @JoinColumn(name = "OUTPUT_ID", referencedColumnName = "OUTPUT_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_COMPONENT_OUTPUT_ID"))
     private SkillResV1TemplateOutputEntity skillResV1TemplateOutputEntity;
 
