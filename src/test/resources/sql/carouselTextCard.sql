@@ -15,11 +15,11 @@ VALUES (UNHEX('7D879BEEEF2511EEB5380A48BC1A5EE1'), 'carousel', '테스트 컴포
 ;
 
 INSERT INTO SKILL_RES_V1_TEMPLATE_COMPONENT (OUTPUT_ID, COMPONENT_TYPE, COMPONENT_NAME, CREATOR, LAST_UPDATER)
-VALUES (NULL, 'textCard', '테스트 컴포넌트(carousel > textCard > 1)', 'admin', 'admin')
+VALUES (NULL, 'textCard', '테스트 컴포넌트(carousel > textCard > 1)', 'admin', 'admin') -- carousel item 에 해당하는 component 의 경우 output_id = null
 ;
 
 INSERT INTO SKILL_RES_V1_TEMPLATE_COMPONENT (OUTPUT_ID, COMPONENT_TYPE, COMPONENT_NAME, CREATOR, LAST_UPDATER)
-VALUES (NULL, 'textCard', '테스트 컴포넌트(carousel > textCard > 2)', 'admin', 'admin')
+VALUES (NULL, 'textCard', '테스트 컴포넌트(carousel > textCard > 2)', 'admin', 'admin') -- carousel item 에 해당하는 component 의 경우 output_id = null
 ;
 
 -- 8.4. SKILL_RES_V1_TEMPLATE_CAROUSEL , SKILL_RES_V1_TEMPLATE_TEXTCARD
@@ -28,11 +28,11 @@ VALUES (UNHEX('96561374EF2511EEB5380A48BC1A5EE1'), 'textCard', '테스트 헤더
 ;
 
 INSERT INTO SKILL_RES_V1_TEMPLATE_TEXTCARD (CAROUSEL_ID, COMPONENT_ID, CARD_ORD, TITLE, `DESC`, CREATOR, LAST_UPDATER)
-VALUES (UNHEX('F19C7476EF2511EEB5380A48BC1A5EE1'), UNHEX('6861AD2AF03111EEB5380A48BC1A5EE1'), 1, '테스트 제목1', '테스트 설명입니다.1', 'admin', 'admin')
+VALUES (UNHEX('F19C7476EF2511EEB5380A48BC1A5EE1'), UNHEX('6861AD2AF03111EEB5380A48BC1A5EE1'), 1, '테스트 제목1', '테스트 설명입니다.1', 'admin', 'admin')  -- carousel item 에 해당하는 component card 의 경우 carousel_id 값이 필
 ;
 
 INSERT INTO SKILL_RES_V1_TEMPLATE_TEXTCARD (CAROUSEL_ID, COMPONENT_ID, CARD_ORD, TITLE, `DESC`, CREATOR, LAST_UPDATER)
-VALUES (UNHEX('F19C7476EF2511EEB5380A48BC1A5EE1'), UNHEX('693B3C9FF03111EEB5380A48BC1A5EE1'), 2, '테스트 제목2', '테스트 설명입니다.2', 'admin', 'admin')
+VALUES (UNHEX('F19C7476EF2511EEB5380A48BC1A5EE1'), UNHEX('693B3C9FF03111EEB5380A48BC1A5EE1'), 2, '테스트 제목2', '테스트 설명입니다.2', 'admin', 'admin')  -- carousel item 에 해당하는 component card 의 경우 carousel_id 값이 필
 ;
 
 -- 8.5. SKILL_RES_V1_TEMPLATE_COMPONENT_BTN
