@@ -153,7 +153,7 @@ public class KakaoFPTemplateService {
                                     UUID c_componentId = c_tcde.getComponentId();
                                     log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
                                     List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                    Map<String, Object> c_tcd = getTextCard(c_tcde, be, c_btneList);
+                                    Map<String, Object> c_tcd = getCarouselTextCard(c_tcde, be, c_btneList);
                                     componentList.add(c_tcd);
                                 }
                                 yield componentList;
@@ -299,7 +299,7 @@ public class KakaoFPTemplateService {
             if (StringUtils.hasText(tcde.getTitle())){
                 tcd.setTitle(tcde.getTitle());
             }
-            if (StringUtils.hasText(tcde.getDataType())) {
+            if (StringUtils.hasText(tcde.getDesc())) {
                 tcd.setDescription(tcde.getDesc());
             }
         }
@@ -318,6 +318,36 @@ public class KakaoFPTemplateService {
 
         Map<String, Object> output = new HashMap<>(); // component
         output.put(ChatbotConstants.ComponentType.TEXT_CARD, tcd);
+        try {
+            log.info("KakaoFPTemplateService^^getTextCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
+        return output;
+    }
+
+    public Map<String, Object> getCarouselTextCard(SkillResV1TemplateTextCardEntity tcde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList) {
+        Map<String, Object> output = new HashMap<>(); // component
+        if (Objects.nonNull(tcde)) {
+            if (StringUtils.hasText(tcde.getTitle())){
+                output.put("title", tcde.getTitle());
+            }
+            if (StringUtils.hasText(tcde.getDesc())) {
+                output.put("description", tcde.getDesc());
+            }
+        }
+
+        output = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> output;
+        };
+
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            output.put("buttons", btnList);
+        }
         try {
             log.info("KakaoFPTemplateService^^getTextCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
