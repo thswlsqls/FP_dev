@@ -349,7 +349,7 @@ public class KakaoFPTemplateService {
             output.put("buttons", btnList);
         }
         try {
-            log.info("KakaoFPTemplateService^^getTextCard() :: output : {}", om.writeValueAsString(output));
+            log.info("KakaoFPTemplateService^^getCarouselTextCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
             log.error(e.getMessage());
         }
