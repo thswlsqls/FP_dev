@@ -164,7 +164,7 @@ public class KakaoFPTemplateService {
                                     UUID c_componentId = c_bcde.getComponentId();
                                     log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
                                     List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                    Map<String, Object> c_bcd = getBasicCard(c_bcde, be, c_btneList);
+                                    Map<String, Object> c_bcd = getCarouselBasicCard(c_bcde, be, c_btneList);
                                     componentList.add(c_bcd);
                                 }
                                 yield componentList;
