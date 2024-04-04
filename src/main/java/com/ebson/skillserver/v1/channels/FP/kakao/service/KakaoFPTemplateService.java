@@ -359,7 +359,7 @@ public class KakaoFPTemplateService {
     public Map<String, Object> getBasicCard(SkillResV1TemplateBasicCardEntity bcde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         BasicCard bcd = new BasicCard();
 
-        if (Objects.nonNull(bcd)) {
+        if (Objects.nonNull(bcde)) {
             if (StringUtils.hasText(bcde.getTitle())) {
                 bcd.setTitle(bcde.getTitle());
             }
@@ -389,6 +389,43 @@ public class KakaoFPTemplateService {
         output.put(ChatbotConstants.ComponentType.BASIC_CARD, bcd);
         try {
             log.info("KakaoFPTemplateService^^getBasicCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
+        return output;
+    }
+
+    public Map<String, Object> getCarouselBasicCard(SkillResV1TemplateBasicCardEntity bcde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
+        Map<String, Object> output = new HashMap<>(); // component
+
+        if (Objects.nonNull(bcde)) {
+            if (StringUtils.hasText(bcde.getTitle())) {
+                output.put("title", bcde.getTitle());
+            }
+            if (StringUtils.hasText(bcde.getDesc())) {
+                output.put("description", bcde.getDesc());
+            }
+            if (StringUtils.hasText(bcde.getThumb())) {
+                Map<String, Object> thumbnail = new HashMap<>();
+                thumbnail.put("imageUrl", bcde.getThumb());
+                output.put("thumbnail", thumbnail);
+            }
+        }
+
+        output = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> output;
+        };
+
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            output.put("buttons", btnList);
+        }
+
+        try {
+            log.info("KakaoFPTemplateService^^getCarouselBasicCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
             log.error(e.getMessage());
         }
