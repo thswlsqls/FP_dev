@@ -175,7 +175,7 @@ public class KakaoFPTemplateService {
                                     UUID c_componentId = c_ccde.getComponentId();
                                     log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
                                     List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                    Map<String, Object> c_ccd = getCommerceCard(c_ccde, be, c_btneList);
+                                    Map<String, Object> c_ccd = getCarouselCommerceCard(c_ccde, be, c_btneList);
                                     componentList.add(c_ccd);
                                 }
                                 yield componentList;
@@ -512,6 +512,90 @@ public class KakaoFPTemplateService {
         output.put(ChatbotConstants.ComponentType.COMMERCE_CARD, ccd);
         try {
             log.info("KakaoFPTemplateService^^getCommerceCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
+        return output;
+    }
+
+    public Map<String, Object> getCarouselCommerceCard(SkillResV1TemplateCommerceCardEntity ccde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
+        Map<String, Object> output = new HashMap<>(); // component
+
+        // 제목, 설명, 가격, 통화 설정
+        if (StringUtils.hasText(ccde.getTitle())) {
+            output.put("title", ccde.getTitle());
+        }
+        if (StringUtils.hasText(ccde.getDesc())) {
+            output.put("description", ccde.getDesc());
+        }
+        if (StringUtils.hasText(ccde.getCurrency())) {
+            output.put("currency", ccde.getCurrency());
+        }
+
+        if (ccde.getPrice() != null) {
+            output.put("price", ccde.getPrice());
+        } else {
+            output.put("price", 0);
+        }
+        if (ccde.getDiscount() != null) {
+            output.put("discount", ccde.getDiscount());
+        } else {
+            output.put("discount", 0);
+        }
+        if (ccde.getDiscountRate() != null) {
+            output.put("discountRate", ccde.getDiscountRate());
+        } else {
+            output.put("discountRate", 0);
+        }
+        if (ccde.getDiscountedPrice() != null) {
+            output.put("discountedPrice", ccde.getDiscountedPrice());
+        } else {
+            output.put("discountedPrice", 0);
+        }
+
+        Map<String, Object> thumbnail = new HashMap<>();
+        Map<String , Object> link = new HashMap<>();
+        if (StringUtils.hasText(ccde.getThumbImgUrl())) {
+            thumbnail.put("thumbImgUrl", ccde.getThumbImgUrl());
+        }
+        if (StringUtils.hasText(ccde.getThumbFixedRatio())) {
+            thumbnail.put("thumbFixedRatio", Boolean.parseBoolean(ccde.getThumbFixedRatio()));
+        }
+        if (StringUtils.hasText(ccde.getThumbLinkWeb())) {
+            link.put("web", ccde.getThumbLinkWeb());
+        }
+        if (StringUtils.hasText(ccde.getThumbLinkPc())){
+            link.put("pc", ccde.getThumbLinkPc());
+        }
+        if (StringUtils.hasText(ccde.getThumbLinkMobile())) {
+            link.put("mobile", ccde.getThumbLinkMobile());
+        }
+        thumbnail.put("link", link);
+        output.put("thumbnails", Collections.singletonList(thumbnail));
+
+        Map<String, Object> profile = new HashMap<>();
+        if (StringUtils.hasText(ccde.getProfileNickname())) {
+            profile.put("nickname", ccde.getProfileNickname());
+        }
+        if (StringUtils.hasText(ccde.getProfileImgUrl())) {
+            profile.put("imageUrl", ccde.getProfileImgUrl());
+        }
+        output.put("profile", profile);
+
+        output = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> output;
+        };
+
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            output.put("buttons", btnList);
+        }
+
+        try {
+            log.info("KakaoFPTemplateService^^getCarouselCommerceCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
             log.error(e.getMessage());
         }
