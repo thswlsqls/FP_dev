@@ -682,6 +682,86 @@ public class KakaoFPTemplateService {
         return output;
     }
 
+    public Map<String, Object> getCarouselListCard(SkillResV1TemplateListCardEntity lcde, List<SkillResV1TemplateListCardListItemEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
+
+        Map<String, Object> output = new HashMap<>(); // component
+        List<Map<String, Object>> items = new ArrayList<>();
+        for (SkillResV1TemplateListCardListItemEntity listItem : itemListelist) {
+            Map<String, Object> item = new HashMap<>();
+
+            if (StringUtils.hasText(listItem.getTitle())){
+                item.put("title", listItem.getTitle());
+            }
+            if (StringUtils.hasText(listItem.getDesc())){
+                item.put("description", listItem.getDesc());
+            }
+            if (StringUtils.hasText(listItem.getImgUrl())) {
+                item.put("imageUrl", listItem.getImgUrl());
+            }
+
+            Map<String, Object> link = new HashMap<>();
+            if (StringUtils.hasText(listItem.getLinkWeb())){
+                link.put("web", listItem.getLinkWeb());
+            }
+            if (StringUtils.hasText(listItem.getLinkPc())){
+                link.put("pc", listItem.getLinkPc());
+            }
+            if (StringUtils.hasText(listItem.getLinkMobile())){
+                link.put("mobile", listItem.getLinkMobile());
+            }
+            if (StringUtils.hasText(link.get("pc").toString()) || StringUtils.hasText(link.get("web").toString()) || StringUtils.hasText(link.get("mobile").toString())) {
+                item.put("link", link);
+            }
+            if (StringUtils.hasText(listItem.getAction())) {
+                item.put("action", listItem.getAction());
+            }
+            if (StringUtils.hasText(listItem.getBlockId())) {
+                item.put("blockId", listItem.getAction());
+            }
+            if (StringUtils.hasText(listItem.getMessageText())) {
+                item.put("messageText", listItem.getMessageText());
+            }
+            SkillResV1TemplateListCardListItemExtraEntity extrae = skillResV1TemplateListCardListItemExtraEntityRepository.findBySkillResV1TemplateListCardListItemEntity_ListItemId(listItem.getListItemId());
+            if (Objects.nonNull(extrae)) {
+                if (StringUtils.hasText(extrae.getKey())) {
+                    if (StringUtils.hasText(extrae.getValue())) {
+                        Map<String, Object> extra = new HashMap<>();
+                        extra.put(extrae.getKey(), extrae.getValue());
+                        item.put("extra", extra);
+                    }
+                }
+            }
+            if (StringUtils.hasText(listItem.getHeaderYn()) && listItem.getHeaderYn().equals("Y")) {
+                output.put("header", item);
+            } else {
+                items.add(item);
+            }
+        }
+
+        if (items.size() != 0){
+            output.put("items", items);
+        }
+
+        output = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> output;
+        };
+
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            output.put("buttons", btnList);
+        }
+
+        try {
+            log.info("KakaoFPTemplateService^^getCarouselListCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
+        return output;
+    }
+
     public Map<String, Object> getItemCard(SkillResV1TemplateItemCardEntity icde, List<SkillResV1TemplateItemCardItemListEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         ItemCard icd = new ItemCard();
 
