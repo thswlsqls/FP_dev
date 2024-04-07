@@ -187,7 +187,7 @@ public class KakaoFPTemplateService {
                                     log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
                                     List<SkillResV1TemplateListCardListItemEntity> c_listItemeList = skillResV1TemplateListCardListItemEntityRepository.findBySkillResV1TemplateListCardEntity_ComponentId(c_componentId);
                                     List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                    Map<String, Object> c_lcd = getListCard(c_lcde, c_listItemeList, be, c_btneList);
+                                    Map<String, Object> c_lcd = getCarouselListCard(c_lcde, c_listItemeList, be, c_btneList);
                                     componentList.add(c_lcd);
                                 }
                                 yield componentList;
@@ -199,7 +199,7 @@ public class KakaoFPTemplateService {
                                     log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: c_componentId : {}", c_componentId);
                                     List<SkillResV1TemplateItemCardItemListEntity> c_itemListelist = skillResV1TemplateItemCardItemListEntityRepository.findBySkillResV1TemplateItemCardEntity_ComponentId(componentId);
                                     List<SkillResV1TemplateComponentBtnEntity> c_btneList = skillResV1TemplateComponentBtnEntityRepository.findBySkillResV1TemplateComponentEntity_ComponentId(c_componentId);
-                                    Map<String, Object> c_icd = getItemCard(c_icde, c_itemListelist, be, c_btneList);
+                                    Map<String, Object> c_icd = getCarouselItemCard(c_icde, c_itemListelist, be, c_btneList);
                                     componentList.add(c_icd);
                                 }
                                 yield componentList;
@@ -709,7 +709,7 @@ public class KakaoFPTemplateService {
             if (StringUtils.hasText(listItem.getLinkMobile())){
                 link.put("mobile", listItem.getLinkMobile());
             }
-            if (StringUtils.hasText(link.get("pc").toString()) || StringUtils.hasText(link.get("web").toString()) || StringUtils.hasText(link.get("mobile").toString())) {
+            if (Objects.nonNull(link.get("pc")) || Objects.nonNull(link.get("web")) || Objects.nonNull(link.get("mobile"))) {
                 item.put("link", link);
             }
             if (StringUtils.hasText(listItem.getAction())) {
@@ -804,7 +804,7 @@ public class KakaoFPTemplateService {
             icd.setHead(head);
         } else if (StringUtils.hasText(icde.getProfileYn()) && "Y".equals(icde.getProfileYn())) {
             ItemCard.Profile profile = new ItemCard.Profile();
-            if (StringUtils.hasText(profile.getImageUrl())) {
+            if (StringUtils.hasText(icde.getProfileImgUrl())) {
                 profile.setImageUrl(icde.getProfileImgUrl());
             }
             if (icde.getProfileWidth() != null) {
@@ -881,6 +881,138 @@ public class KakaoFPTemplateService {
         output.put(ChatbotConstants.ComponentType.ITEM_CARD, icd);
         try {
             log.info("KakaoFPTemplateService^^getItemCard() :: output : {}", om.writeValueAsString(output));
+        } catch (JsonProcessingException e){
+            log.error(e.getMessage());
+        }
+        return output;
+    }
+
+    public Map<String, Object> getCarouselItemCard(SkillResV1TemplateItemCardEntity icde, List<SkillResV1TemplateItemCardItemListEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
+        ItemCard icd = new ItemCard();
+        Map<String, Object> output = new HashMap<>(); // component
+
+        if (StringUtils.hasText(icde.getTitle())){
+            output.put("title", icde.getTitle());
+        }
+        if (StringUtils.hasText(icde.getDesc())){
+            output.put("description", icde.getDesc());
+        }
+        if (StringUtils.hasText(icde.getItemlistAlign())){
+            output.put("itemListAlignment", icde.getItemlistAlign());
+        }
+        if (StringUtils.hasText(icde.getBtnLayout())){
+            output.put("buttonLayout", icde.getBtnLayout());
+        }
+        // 버튼 설정 등 추가 필드 설정이 필요하면 여기에 추가
+
+        // Thumbnail 설정
+        if (StringUtils.hasText(icde.getThumbYn()) && "Y".equals(icde.getThumbYn())) {
+            Map<String, Object> thumbnail = new HashMap<>();
+
+            if (StringUtils.hasText(icde.getThumbImgUrl())){
+                thumbnail.put("imageUrl", icde.getThumbImgUrl());
+            }
+            if (icde.getThumbWidth() != null) {
+                thumbnail.put("width", icde.getThumbWidth());
+            }
+            if (icde.getThumbHeight() != null) {
+                thumbnail.put("height", icde.getThumbHeight());
+            }
+
+            // Link 설정이 필요하면 여기에 추가
+            output.put("thumbnail", thumbnail);
+        }
+
+        // Head 또는 Profile 설정 (동시에 설정 불가)
+        if (StringUtils.hasText(icde.getHeadYn()) && "Y".equals(icde.getHeadYn())) {
+            Map<String, Object> head = new HashMap<>();
+
+            if (StringUtils.hasText(icde.getHeadTitle())){
+                head.put("title", icde.getHeadTitle());
+            }
+
+            output.put("head", head);
+        } else if (StringUtils.hasText(icde.getProfileYn()) && "Y".equals(icde.getProfileYn())) {
+            Map<String, Object> profile = new HashMap<>();
+
+            if (StringUtils.hasText(icde.getProfileImgUrl())) {
+                profile.put("imageUrl", icde.getProfileImgUrl());
+            }
+            if (icde.getProfileWidth() != null) {
+                profile.put("width", icde.getProfileWidth());
+            }
+            if (icde.getProfileHeight() != null) {
+                profile.put("height", icde.getProfileHeight());
+            }
+            if (StringUtils.hasText(icde.getProfileTitle())) {
+                profile.put("title", icde.getProfileTitle());
+            }
+
+            output.put("profile", profile);
+        }
+
+        // ImageTitle 설정
+        if (StringUtils.hasText(icde.getImgtitleYn()) && "Y".equals(icde.getImgtitleYn())) {
+            Map<String, Object> imageTitle = new HashMap<>();
+
+            if (StringUtils.hasText(icde.getImgtitleTitle())) {
+                imageTitle.put("title", icde.getImgtitleTitle());
+            }
+            if (StringUtils.hasText(icde.getImgtitleDesc())) {
+                imageTitle.put("description", icde.getImgtitleDesc());
+            }
+            if (StringUtils.hasText(icde.getImgtitleImgUrl())) {
+                imageTitle.put("imageUrl", icde.getImgtitleImgUrl());
+            }
+
+            output.put("imageTitle", imageTitle);
+        }
+
+        // ItemList 설정 (필수)
+        // 여기에 list를 사용하여 ItemList 객체들을 생성하고 설정하는 로직 추가
+
+        // ItemListSummary 설정
+        if (StringUtils.hasText(icde.getItemlistSummaryYn()) && "Y".equals(icde.getItemlistSummaryYn())) {
+            Map<String, Object> itemListSummary = new HashMap<>();
+
+            if (StringUtils.hasText(icde.getItemlistSummaryTitle())) {
+                itemListSummary.put("title", icde.getItemlistSummaryTitle());
+            }
+            if (StringUtils.hasText(icde.getItemlistSummaryDesc())) {
+                itemListSummary.put("description", icde.getItemlistSummaryDesc());
+            }
+            output.put("itemListSummary", itemListSummary);
+        }
+
+        List<ItemList> itemListArrayList = new ArrayList<>();
+        for (SkillResV1TemplateItemCardItemListEntity itemCardItemList : itemListelist) {
+            ItemList itemList = new ItemList();
+            if (StringUtils.hasText(itemCardItemList.getTitle())){
+                itemList.setTitle(itemCardItemList.getTitle());
+            }
+            if (StringUtils.hasText(itemCardItemList.getDesc())) {
+                itemList.setDescription(itemCardItemList.getDesc());
+            }
+            itemListArrayList.add(itemList);
+        }
+        if (itemListArrayList.size() != 0){
+            output.put("itemList", itemListArrayList);
+        }
+
+        output = switch (be.getBlockId()) {
+            case "" -> {
+                yield null;
+            }
+            default -> output;
+        };
+
+        if (btneList.size() != 0) {
+            List<Button> btnList = getButtonList(btneList);
+            icd.setButtons(btnList);
+        }
+
+        try {
+            log.info("KakaoFPTemplateService^^getCarouselItemCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
             log.error(e.getMessage());
         }
