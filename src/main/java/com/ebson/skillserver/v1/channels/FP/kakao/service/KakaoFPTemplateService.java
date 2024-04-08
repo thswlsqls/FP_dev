@@ -302,10 +302,10 @@ public class KakaoFPTemplateService {
         if (Objects.nonNull(tcde)) {
             if (StringUtils.hasText(tcde.getTitle())){
                 tcd.setTitle(tcde.getTitle());
-            }
+            } else { tcd.setTitle(""); }
             if (StringUtils.hasText(tcde.getDesc())) {
                 tcd.setDescription(tcde.getDesc());
-            }
+            } else { tcd.setDescription(""); }
         }
 
         tcd = switch (be.getBlockId()) {
@@ -335,10 +335,10 @@ public class KakaoFPTemplateService {
         if (Objects.nonNull(tcde)) {
             if (StringUtils.hasText(tcde.getTitle())){
                 output.put("title", tcde.getTitle());
-            }
+            } else { output.put("title", ""); }
             if (StringUtils.hasText(tcde.getDesc())) {
                 output.put("description", tcde.getDesc());
-            }
+            } else { output.put("description", ""); }
         }
 
         output = switch (be.getBlockId()) {
