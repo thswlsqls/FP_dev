@@ -39,8 +39,20 @@ public class SkillResV1TemplateBasicCardEntity {
     @Column(name = "DESC", length = 255)
     private String desc;
 
-    @Column(name = "THUMB", nullable = false, length = 255)
-    private String thumb;
+    @Column(name = "THUMB_IMG_URL", length = 255)
+    private String thumbImgUrl;
+
+    @Column(name = "THUMB_LINK_WEB", length = 255)
+    private String thumbLinkWeb;
+
+    @Column(name = "THUMB_LINK_PC", length = 255)
+    private String thumbLinkPc;
+
+    @Column(name = "THUMB_LINK_MOBILE", length = 255)
+    private String thumbLinkMobile;
+
+    @Column(name = "THUMB_FIXED_RATIO", length = 5)
+    private String thumbFixedRatio;
 
     @Column(name = "CREATED_DATE", nullable = false)
     private LocalDateTime createdDate;

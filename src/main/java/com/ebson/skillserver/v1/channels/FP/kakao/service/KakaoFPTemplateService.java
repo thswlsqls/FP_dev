@@ -370,11 +370,27 @@ public class KakaoFPTemplateService {
             if (StringUtils.hasText(bcde.getDesc())) {
                 bcd.setDescription(bcde.getDesc());
             }
-            if (StringUtils.hasText(bcde.getThumb())) {
-                Thumbnail thumbnail = new Thumbnail();
-                thumbnail.setImageUrl(bcde.getThumb());
-                bcd.setThumbnail(thumbnail);
+            Thumbnail thumbnail = new Thumbnail();
+            Link link = new Link();
+            if (StringUtils.hasText(bcde.getThumbImgUrl())) {
+                thumbnail.setImageUrl(bcde.getThumbImgUrl());
             }
+            if (StringUtils.hasText(bcde.getThumbFixedRatio())) {
+                thumbnail.setFixedRatio(Boolean.parseBoolean(bcde.getThumbFixedRatio()));
+            }
+            if (StringUtils.hasText(bcde.getThumbLinkWeb())) {
+                link.setWeb(bcde.getThumbLinkWeb());
+            }
+            if (StringUtils.hasText(bcde.getThumbLinkPc())){
+                link.setPc(bcde.getThumbLinkPc());
+            }
+            if (StringUtils.hasText(bcde.getThumbLinkMobile())) {
+                link.setMobile(bcde.getThumbLinkMobile());
+            }
+            if (StringUtils.hasText(link.getPc()) || StringUtils.hasText(link.getWeb()) || StringUtils.hasText(link.getMobile())) {
+                thumbnail.setLink(link);
+            }
+            bcd.setThumbnail(thumbnail);
         }
 
         bcd = switch (be.getBlockId()) {
@@ -409,11 +425,29 @@ public class KakaoFPTemplateService {
             if (StringUtils.hasText(bcde.getDesc())) {
                 output.put("description", bcde.getDesc());
             }
-            if (StringUtils.hasText(bcde.getThumb())) {
-                Map<String, Object> thumbnail = new HashMap<>();
-                thumbnail.put("imageUrl", bcde.getThumb());
-                output.put("thumbnail", thumbnail);
+
+            Map<String, Object> thumbnail = new HashMap<>();
+            Map<String, Object> link = new HashMap<>();
+            if (StringUtils.hasText(bcde.getThumbImgUrl())) {
+                thumbnail.put("imageUrl", bcde.getThumbImgUrl());
             }
+            if (StringUtils.hasText(bcde.getThumbFixedRatio())) {
+                thumbnail.put("fixedRatio", Boolean.parseBoolean(bcde.getThumbFixedRatio()));
+            }
+            if (StringUtils.hasText(bcde.getThumbLinkWeb())) {
+                link.put("web", bcde.getThumbLinkWeb());
+            }
+            if (StringUtils.hasText(bcde.getThumbLinkPc())){
+                link.put("pc", bcde.getThumbLinkPc());
+            }
+            if (StringUtils.hasText(bcde.getThumbLinkMobile())) {
+                link.put("mobile", bcde.getThumbLinkMobile());
+            }
+            if (Objects.nonNull(link.get("pc")) || Objects.nonNull(link.get("web")) || Objects.nonNull(link.get("mobile"))) {
+                thumbnail.put("link", link);
+            }
+            output.put("thumbnail", thumbnail);
+
         }
 
         output = switch (be.getBlockId()) {
