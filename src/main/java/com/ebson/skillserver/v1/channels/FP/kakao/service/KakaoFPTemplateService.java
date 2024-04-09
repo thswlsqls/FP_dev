@@ -297,31 +297,30 @@ public class KakaoFPTemplateService {
     }
 
     public Map<String, Object> getTextCard(SkillResV1TemplateTextCardEntity tcde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
-        TextCard tcd = new TextCard();
-
+        Map<String, Object> tcdMap = new HashMap<>();
         if (Objects.nonNull(tcde)) {
             if (StringUtils.hasText(tcde.getTitle())){
-                tcd.setTitle(tcde.getTitle());
-            } else { tcd.setTitle(""); }
+                tcdMap.put("title", tcde.getTitle());
+            }
             if (StringUtils.hasText(tcde.getDesc())) {
-                tcd.setDescription(tcde.getDesc());
-            } else { tcd.setDescription(""); }
+                tcdMap.put("description", tcde.getDesc());
+            }
         }
 
-        tcd = switch (be.getBlockId()) {
+        tcdMap = switch (be.getBlockId()) {
             case "" -> {
                 yield null;
             }
-            default -> tcd;
+            default -> tcdMap;
         };
 
         if (btneList.size() != 0) {
             List<Button> btnList = getButtonList(btneList);
-            tcd.setButtons(btnList);
+            tcdMap.put("buttons", btnList);
         }
 
         Map<String, Object> output = new HashMap<>(); // component
-        output.put(ChatbotConstants.ComponentType.TEXT_CARD, tcd);
+        output.put(ChatbotConstants.ComponentType.TEXT_CARD, tcdMap);
         try {
             log.info("KakaoFPTemplateService^^getTextCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
