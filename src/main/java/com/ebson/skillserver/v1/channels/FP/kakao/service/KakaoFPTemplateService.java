@@ -361,51 +361,52 @@ public class KakaoFPTemplateService {
 
     public Map<String, Object> getBasicCard(SkillResV1TemplateBasicCardEntity bcde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
         BasicCard bcd = new BasicCard();
+        Map<String, Object> bcdMap = new HashMap<>();
 
         if (Objects.nonNull(bcde)) {
             if (StringUtils.hasText(bcde.getTitle())) {
-                bcd.setTitle(bcde.getTitle());
+                bcdMap.put("title", bcde.getTitle());
             }
             if (StringUtils.hasText(bcde.getDesc())) {
-                bcd.setDescription(bcde.getDesc());
+                bcdMap.put("description", bcde.getDesc());
             }
-            Thumbnail thumbnail = new Thumbnail();
-            Link link = new Link();
+            Map<String, Object> thumbnail = new HashMap<>();
+            Map<String, Object> link = new HashMap<>();
             if (StringUtils.hasText(bcde.getThumbImgUrl())) {
-                thumbnail.setImageUrl(bcde.getThumbImgUrl());
+                thumbnail.put("imageUrl", bcde.getThumbImgUrl());
             }
             if (StringUtils.hasText(bcde.getThumbFixedRatio())) {
-                thumbnail.setFixedRatio(Boolean.parseBoolean(bcde.getThumbFixedRatio()));
+                thumbnail.put("fixedRatio", Boolean.parseBoolean(bcde.getThumbFixedRatio()));
             }
             if (StringUtils.hasText(bcde.getThumbLinkWeb())) {
-                link.setWeb(bcde.getThumbLinkWeb());
+                link.put("web", bcde.getThumbLinkWeb());
             }
             if (StringUtils.hasText(bcde.getThumbLinkPc())){
-                link.setPc(bcde.getThumbLinkPc());
+                link.put("pc", bcde.getThumbLinkPc());
             }
             if (StringUtils.hasText(bcde.getThumbLinkMobile())) {
-                link.setMobile(bcde.getThumbLinkMobile());
+                link.put("mobile", bcde.getThumbLinkMobile());
             }
-            if (StringUtils.hasText(link.getPc()) || StringUtils.hasText(link.getWeb()) || StringUtils.hasText(link.getMobile())) {
-                thumbnail.setLink(link);
+            if (Objects.nonNull(link.get("pc")) || Objects.nonNull(link.get("web")) || Objects.nonNull(link.get("mobile"))) {
+                thumbnail.put("link", link);
             }
-            bcd.setThumbnail(thumbnail);
+            bcdMap.put("thumbnail", thumbnail);
         }
 
-        bcd = switch (be.getBlockId()) {
+        bcdMap = switch (be.getBlockId()) {
             case "" -> {
                 yield null;
             }
-            default -> bcd;
+            default -> bcdMap;
         };
 
         if (btneList.size() != 0) {
             List<Button> btnList = getButtonList(btneList);
-            bcd.setButtons(btnList);
+            bcdMap.put("buttons", btnList);
         }
 
         Map<String, Object> output = new HashMap<>(); // component
-        output.put(ChatbotConstants.ComponentType.BASIC_CARD, bcd);
+        output.put(ChatbotConstants.ComponentType.BASIC_CARD, bcdMap);
         try {
             log.info("KakaoFPTemplateService^^getBasicCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
