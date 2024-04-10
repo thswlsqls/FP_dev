@@ -315,7 +315,7 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
             tcdMap.put("buttons", btnList);
         }
 
@@ -348,7 +348,7 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
             output.put("buttons", btnList);
         }
         try {
@@ -401,7 +401,7 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
             bcdMap.put("buttons", btnList);
         }
 
@@ -447,7 +447,6 @@ public class KakaoFPTemplateService {
                 thumbnail.put("link", link);
             }
             output.put("thumbnail", thumbnail);
-
         }
 
         output = switch (be.getBlockId()) {
@@ -458,7 +457,7 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
             output.put("buttons", btnList);
         }
 
@@ -471,83 +470,87 @@ public class KakaoFPTemplateService {
     }
 
     public Map<String, Object> getCommerceCard(SkillResV1TemplateCommerceCardEntity ccde, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
-        CommerceCard ccd = new CommerceCard();
+        Map<String, Object> ccdMap = new HashMap<>(); // component
 
         // 제목, 설명, 가격, 통화 설정
         if (StringUtils.hasText(ccde.getTitle())) {
-            ccd.setTitle(ccde.getTitle());
+            ccdMap.put("title", ccde.getTitle());
         }
         if (StringUtils.hasText(ccde.getDesc())) {
-            ccd.setDescription(ccde.getDesc());
+            ccdMap.put("description", ccde.getDesc());
         }
         if (StringUtils.hasText(ccde.getCurrency())) {
-            ccd.setCurrency(ccde.getCurrency());
+            ccdMap.put("currency", ccde.getCurrency());
         }
 
         if (ccde.getPrice() != null) {
-            ccd.setPrice(ccde.getPrice());
+            ccdMap.put("price", ccde.getPrice());
         } else {
-            ccd.setPrice(0);
+            ccdMap.put("price", 0);
         }
         if (ccde.getDiscount() != null) {
-            ccd.setDiscount(ccde.getDiscount());
+            ccdMap.put("discount", ccde.getDiscount());
         } else {
-            ccd.setDiscount(0);
+            ccdMap.put("discount", 0);
         }
         if (ccde.getDiscountRate() != null) {
-            ccd.setDiscountRate(ccde.getDiscountRate());
+            ccdMap.put("discountRate", ccde.getDiscountRate());
         } else {
-            ccd.setDiscountRate(0);
+            ccdMap.put("discountRate", 0);
         }
         if (ccde.getDiscountedPrice() != null) {
-            ccd.setDiscountedPrice(ccde.getDiscountedPrice());
+            ccdMap.put("discountedPrice", ccde.getDiscountedPrice());
         } else {
-            ccd.setDiscountedPrice(0);
+            ccdMap.put("discountedPrice", 0);
         }
 
-        Thumbnail thumbnail = new Thumbnail();
-        Link link = new Link();
+        Map<String, Object> thumbnail = new HashMap<>();
+        Map<String , Object> link = new HashMap<>();
         if (StringUtils.hasText(ccde.getThumbImgUrl())) {
-            thumbnail.setImageUrl(ccde.getThumbImgUrl());
+            thumbnail.put("imgUrl", ccde.getThumbImgUrl());
         }
         if (StringUtils.hasText(ccde.getThumbFixedRatio())) {
-            thumbnail.setFixedRatio(Boolean.parseBoolean(ccde.getThumbFixedRatio()));
+            thumbnail.put("fixedRatio", Boolean.parseBoolean(ccde.getThumbFixedRatio()));
         }
         if (StringUtils.hasText(ccde.getThumbLinkWeb())) {
-            link.setWeb(ccde.getThumbLinkWeb());
+            link.put("web", ccde.getThumbLinkWeb());
         }
         if (StringUtils.hasText(ccde.getThumbLinkPc())){
-            link.setPc(ccde.getThumbLinkPc());
+            link.put("pc", ccde.getThumbLinkPc());
         }
         if (StringUtils.hasText(ccde.getThumbLinkMobile())) {
-            link.setMobile(ccde.getThumbLinkMobile());
+            link.put("mobile", ccde.getThumbLinkMobile());
         }
-        thumbnail.setLink(link);
-        ccd.setThumbnails(Collections.singletonList(thumbnail));
+        if (Objects.nonNull(link.get("web")) || Objects.nonNull(link.get("pc")) || Objects.nonNull(link.get("mobile"))) {
+            thumbnail.put("link", link);
+        }
+        ccdMap.put("thumbnails", Collections.singletonList(thumbnail));
 
-        Profile profile = new Profile();
+        Map<String, Object> profile = new HashMap<>();
         if (StringUtils.hasText(ccde.getProfileNickname())) {
-            profile.setNickname(ccde.getProfileNickname());
+            profile.put("nickname", ccde.getProfileNickname());
         }
         if (StringUtils.hasText(ccde.getProfileImgUrl())) {
-            profile.setImageUrl(ccde.getProfileImgUrl());
+            profile.put("imageUrl", ccde.getProfileImgUrl());
         }
-        ccd.setProfile(profile);
+        if (Objects.nonNull(profile.get("nickname")) || Objects.nonNull(profile.get("imageUrl"))) {
+            ccdMap.put("profile", profile);
+        }
 
-        ccd = switch (be.getBlockId()) {
+        ccdMap = switch (be.getBlockId()) {
             case "" -> {
                 yield null;
             }
-            default -> ccd;
+            default -> ccdMap;
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
-            ccd.setButtons(btnList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
+            ccdMap.put("buttons", btnList);
         }
 
         Map<String, Object> output = new HashMap<>(); // component
-        output.put(ChatbotConstants.ComponentType.COMMERCE_CARD, ccd);
+        output.put(ChatbotConstants.ComponentType.COMMERCE_CARD, ccdMap);
         try {
             log.info("KakaoFPTemplateService^^getCommerceCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
@@ -608,7 +611,9 @@ public class KakaoFPTemplateService {
         if (StringUtils.hasText(ccde.getThumbLinkMobile())) {
             link.put("mobile", ccde.getThumbLinkMobile());
         }
-        thumbnail.put("link", link);
+        if (Objects.nonNull(link.get("web")) || Objects.nonNull(link.get("pc")) || Objects.nonNull(link.get("mobile"))) {
+            thumbnail.put("link", link);
+        }
         output.put("thumbnails", Collections.singletonList(thumbnail));
 
         Map<String, Object> profile = new HashMap<>();
@@ -618,7 +623,9 @@ public class KakaoFPTemplateService {
         if (StringUtils.hasText(ccde.getProfileImgUrl())) {
             profile.put("imageUrl", ccde.getProfileImgUrl());
         }
-        output.put("profile", profile);
+        if (Objects.nonNull(profile.get("nickname")) || Objects.nonNull(profile.get("imageUrl"))) {
+            output.put("profile", profile);
+        }
 
         output = switch (be.getBlockId()) {
             case "" -> {
@@ -628,7 +635,7 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
             output.put("buttons", btnList);
         }
 
@@ -706,8 +713,8 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
-            lcd.setButtons(btnList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
+            // lcd.setButtons(btnList);
         }
 
         Map<String, Object> output = new HashMap<>(); // component
@@ -788,7 +795,7 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
             output.put("buttons", btnList);
         }
 
@@ -911,8 +918,8 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
-            icd.setButtons(btnList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
+            // icd.setButtons(btnList);
         }
 
         Map<String, Object> output = new HashMap<>(); // component
@@ -1045,8 +1052,8 @@ public class KakaoFPTemplateService {
         };
 
         if (btneList.size() != 0) {
-            List<Button> btnList = getButtonList(btneList);
-            icd.setButtons(btnList);
+            List<Map<String, Object>> btnList = getButtonList(btneList);
+            // icd.setButtons(btnList);
         }
 
         try {
@@ -1085,28 +1092,28 @@ public class KakaoFPTemplateService {
         return output;
     }
 
-    public List<Button> getButtonList(List<SkillResV1TemplateComponentBtnEntity> btnEntityList) {
-        List<Button> btnList = new ArrayList<>();
+    public List<Map<String, Object>> getButtonList(List<SkillResV1TemplateComponentBtnEntity> btnEntityList) {
+        List<Map<String, Object>> btnMapList = new ArrayList<>();
 
         for (SkillResV1TemplateComponentBtnEntity btnEntity : btnEntityList) {
-            Button btn = new Button();
+            Map<String, Object> btnMap = new HashMap<>();
             if (StringUtils.hasText(btnEntity.getLabel())) {
-                btn.setLabel(btnEntity.getLabel());
+                btnMap.put("label", btnEntity.getLabel());
             }
             if (StringUtils.hasText(btnEntity.getAction())) {
-                btn.setAction(btnEntity.getAction());
+                btnMap.put("action", btnEntity.getAction());
             }
             if (StringUtils.hasText(btnEntity.getWebLinkUrl())) {
-                btn.setWebLinkUrl(btnEntity.getWebLinkUrl());
+                btnMap.put("webLinkUrl", btnEntity.getWebLinkUrl());
             }
             if (StringUtils.hasText(btnEntity.getMessageText())) {
-                btn.setMessageText(btnEntity.getMessageText());
+                btnMap.put("messageText", btnEntity.getMessageText());
             }
             if (StringUtils.hasText(btnEntity.getPhone())) {
-                btn.setPhoneNumber(btnEntity.getPhone());
+                btnMap.put("phoneNumber", btnEntity.getPhone());
             }
             if (StringUtils.hasText(btnEntity.getBlockId())) {
-                btn.setBlockId(btnEntity.getBlockId());
+                btnMap.put("blockId", btnEntity.getBlockId());
             }
             UUID btneId = btnEntity.getBtnId();
             SkillResV1TemplateComponentBtnExtraEntity btnExtrae = skillResV1TemplateComponentBtnExtraEntityRepository.findBySkillResV1TemplateComponentBtnEntity_BtnId(btneId);
@@ -1115,18 +1122,18 @@ public class KakaoFPTemplateService {
                 if (StringUtils.hasText(btnExtrae.getKey())){
                     if(StringUtils.hasText(btnExtrae.getValue())){
                         extra.put(btnExtrae.getKey(), btnExtrae.getValue());
-                        btn.setExtra(extra);
+                        btnMap.put("extra", extra);
                     }
                 }
             }
-            btnList.add(btn);
+            btnMapList.add(btnMap);
         }
         try {
-            log.info("KakaoFPTemplateService^^getButtonList() :: btnList : {}", om.writeValueAsString(btnList));
+            log.info("KakaoFPTemplateService^^getButtonList() :: btnList : {}", om.writeValueAsString(btnMapList));
         } catch (JsonProcessingException e){
             log.error(e.getMessage());
         }
-        return btnList;
+        return btnMapList;
     }
 
     public List<Template.QuickReply> getQrplList(List<SkillResV1TemplateQrplEntity> qrpleList) {
