@@ -224,7 +224,7 @@ public class KakaoFPTemplateService {
 
             List<SkillResV1TemplateQrplEntity> qrpleList = skillResV1TemplateQrplEntityRepository.findBySkillResV1TemplateEntity_TemplateId(templateId);
             if (qrpleList.size() != 0) {
-                List<Template.QuickReply> qrplList =  getQrplList(qrpleList);
+                List<Map<String, Object>> qrplList =  getQrplList(qrpleList);
                 template.setQuickReplies(qrplList);
             }
 
@@ -649,40 +649,42 @@ public class KakaoFPTemplateService {
 
 
     public Map<String, Object> getListCard(SkillResV1TemplateListCardEntity lcde, List<SkillResV1TemplateListCardListItemEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
-        ListCard lcd = new ListCard();
-        List<ListItem> items = new ArrayList<>();
+        Map<String, Object> lcdMap = new HashMap<>(); // component
+        List<Map<String, Object>> items = new ArrayList<>();
         for (SkillResV1TemplateListCardListItemEntity listItem : itemListelist) {
-            ListItem item = new ListItem();
+            Map<String, Object> item = new HashMap<>();
+
             if (StringUtils.hasText(listItem.getTitle())){
-                item.setTitle(listItem.getTitle());
+                item.put("title", listItem.getTitle());
             }
             if (StringUtils.hasText(listItem.getDesc())){
-                item.setDescription(listItem.getDesc());
+                item.put("description", listItem.getDesc());
             }
             if (StringUtils.hasText(listItem.getImgUrl())) {
-                item.setImageUrl(listItem.getImgUrl());
+                item.put("imageUrl", listItem.getImgUrl());
             }
-            Link link = new Link();
+
+            Map<String, Object> link = new HashMap<>();
             if (StringUtils.hasText(listItem.getLinkWeb())){
-                link.setWeb(listItem.getLinkWeb());
+                link.put("web", listItem.getLinkWeb());
             }
             if (StringUtils.hasText(listItem.getLinkPc())){
-                link.setPc(listItem.getLinkPc());
+                link.put("pc", listItem.getLinkPc());
             }
             if (StringUtils.hasText(listItem.getLinkMobile())){
-                link.setMobile(listItem.getLinkMobile());
+                link.put("mobile", listItem.getLinkMobile());
             }
-            if (StringUtils.hasText(link.getPc()) || StringUtils.hasText(link.getWeb()) || StringUtils.hasText(link.getMobile())) {
-                item.setLink(link);
+            if (Objects.nonNull(link.get("pc")) || Objects.nonNull(link.get("web")) || Objects.nonNull(link.get("mobile"))) {
+                item.put("link", link);
             }
             if (StringUtils.hasText(listItem.getAction())) {
-                item.setAction(listItem.getAction());
+                item.put("action", listItem.getAction());
             }
             if (StringUtils.hasText(listItem.getBlockId())) {
-                item.setBlockId(listItem.getAction());
+                item.put("blockId", listItem.getAction());
             }
             if (StringUtils.hasText(listItem.getMessageText())) {
-                item.setMessageText(listItem.getMessageText());
+                item.put("messageText", listItem.getMessageText());
             }
             SkillResV1TemplateListCardListItemExtraEntity extrae = skillResV1TemplateListCardListItemExtraEntityRepository.findBySkillResV1TemplateListCardListItemEntity_ListItemId(listItem.getListItemId());
             if (Objects.nonNull(extrae)) {
@@ -690,35 +692,35 @@ public class KakaoFPTemplateService {
                     if (StringUtils.hasText(extrae.getValue())) {
                         Map<String, Object> extra = new HashMap<>();
                         extra.put(extrae.getKey(), extrae.getValue());
-                        item.setExtra(extra);
+                        item.put("extra", extra);
                     }
                 }
             }
             if (StringUtils.hasText(listItem.getHeaderYn()) && listItem.getHeaderYn().equals("Y")) {
-                lcd.setHeader(item);
+                lcdMap.put("header", item);
             } else {
                 items.add(item);
             }
         }
 
         if (items.size() != 0){
-            lcd.setItems(items);
+            lcdMap.put("items", items);
         }
 
-        lcd = switch (be.getBlockId()) {
+        lcdMap = switch (be.getBlockId()) {
             case "" -> {
                 yield null;
             }
-            default -> lcd;
+            default -> lcdMap;
         };
 
         if (btneList.size() != 0) {
             List<Map<String, Object>> btnList = getButtonList(btneList);
-            // lcd.setButtons(btnList);
+            lcdMap.put("buttons", btnList);
         }
 
         Map<String, Object> output = new HashMap<>(); // component
-        output.put(ChatbotConstants.ComponentType.LIST_CARD, lcd);
+        output.put(ChatbotConstants.ComponentType.LIST_CARD, lcdMap);
         try {
             log.info("KakaoFPTemplateService^^getListCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
@@ -808,76 +810,83 @@ public class KakaoFPTemplateService {
     }
 
     public Map<String, Object> getItemCard(SkillResV1TemplateItemCardEntity icde, List<SkillResV1TemplateItemCardItemListEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
-        ItemCard icd = new ItemCard();
+        Map<String, Object> icdMap = new HashMap<>(); // component
 
         if (StringUtils.hasText(icde.getTitle())){
-            icd.setTitle(icde.getTitle());
+            icdMap.put("title", icde.getTitle());
         }
         if (StringUtils.hasText(icde.getDesc())){
-            icd.setDescription(icde.getDesc());
+            icdMap.put("description", icde.getDesc());
         }
         if (StringUtils.hasText(icde.getItemlistAlign())){
-            icd.setItemListAlignment(icde.getItemlistAlign());
+            icdMap.put("itemListAlignment", icde.getItemlistAlign());
         }
         if (StringUtils.hasText(icde.getBtnLayout())){
-            icd.setButtonLayout(icde.getBtnLayout());
+            icdMap.put("buttonLayout", icde.getBtnLayout());
         }
         // 버튼 설정 등 추가 필드 설정이 필요하면 여기에 추가
 
         // Thumbnail 설정
         if (StringUtils.hasText(icde.getThumbYn()) && "Y".equals(icde.getThumbYn())) {
-            ItemCard.Thumbnail thumbnail = new ItemCard.Thumbnail();
+            Map<String, Object> thumbnail = new HashMap<>();
+
             if (StringUtils.hasText(icde.getThumbImgUrl())){
-                thumbnail.setImageUrl(icde.getThumbImgUrl());
+                thumbnail.put("imageUrl", icde.getThumbImgUrl());
             }
             if (icde.getThumbWidth() != null) {
-                thumbnail.setWidth(icde.getThumbWidth());
+                thumbnail.put("width", icde.getThumbWidth());
             }
             if (icde.getThumbHeight() != null) {
-                thumbnail.setHeight(icde.getThumbHeight());
+                thumbnail.put("height", icde.getThumbHeight());
             }
+
             // Link 설정이 필요하면 여기에 추가
-            icd.setThumbnail(thumbnail);
+            icdMap.put("thumbnail", thumbnail);
         }
 
         // Head 또는 Profile 설정 (동시에 설정 불가)
         if (StringUtils.hasText(icde.getHeadYn()) && "Y".equals(icde.getHeadYn())) {
-            ItemCard.Head head = new ItemCard.Head();
+            Map<String, Object> head = new HashMap<>();
+
             if (StringUtils.hasText(icde.getHeadTitle())){
-                head.setTitle(icde.getHeadTitle());
-            }
-            icd.setHead(head);
-        } else if (StringUtils.hasText(icde.getProfileYn()) && "Y".equals(icde.getProfileYn())) {
-            ItemCard.Profile profile = new ItemCard.Profile();
-            if (StringUtils.hasText(icde.getProfileImgUrl())) {
-                profile.setImageUrl(icde.getProfileImgUrl());
-            }
-            if (icde.getProfileWidth() != null) {
-                profile.setWidth(icde.getProfileWidth());
-            }
-            if (icde.getProfileHeight() != null) {
-                profile.setHeight(icde.getProfileHeight());
-            }
-            if (StringUtils.hasText(icde.getProfileTitle())) {
-                profile.setTitle(icde.getProfileTitle());
+                head.put("title", icde.getHeadTitle());
             }
 
-            icd.setProfile(profile);
+            icdMap.put("head", head);
+        } else if (StringUtils.hasText(icde.getProfileYn()) && "Y".equals(icde.getProfileYn())) {
+            Map<String, Object> profile = new HashMap<>();
+
+            if (StringUtils.hasText(icde.getProfileImgUrl())) {
+                profile.put("imageUrl", icde.getProfileImgUrl());
+            }
+            if (icde.getProfileWidth() != null) {
+                profile.put("width", icde.getProfileWidth());
+            }
+            if (icde.getProfileHeight() != null) {
+                profile.put("height", icde.getProfileHeight());
+            }
+            if (StringUtils.hasText(icde.getProfileTitle())) {
+                profile.put("title", icde.getProfileTitle());
+            }
+
+            icdMap.put("profile", profile);
         }
 
         // ImageTitle 설정
         if (StringUtils.hasText(icde.getImgtitleYn()) && "Y".equals(icde.getImgtitleYn())) {
-            ItemCard.ImageTitle imageTitle = new ItemCard.ImageTitle();
+            Map<String, Object> imageTitle = new HashMap<>();
+
             if (StringUtils.hasText(icde.getImgtitleTitle())) {
-                imageTitle.setTitle(icde.getImgtitleTitle());
+                imageTitle.put("title", icde.getImgtitleTitle());
             }
             if (StringUtils.hasText(icde.getImgtitleDesc())) {
-                imageTitle.setDescription(icde.getImgtitleDesc());
+                imageTitle.put("description", icde.getImgtitleDesc());
             }
             if (StringUtils.hasText(icde.getImgtitleImgUrl())) {
-                imageTitle.setImageUrl(icde.getImgtitleImgUrl());
+                imageTitle.put("imageUrl", icde.getImgtitleImgUrl());
             }
-            icd.setImageTitle(imageTitle);
+
+            icdMap.put("imageTitle", imageTitle);
         }
 
         // ItemList 설정 (필수)
@@ -885,14 +894,15 @@ public class KakaoFPTemplateService {
 
         // ItemListSummary 설정
         if (StringUtils.hasText(icde.getItemlistSummaryYn()) && "Y".equals(icde.getItemlistSummaryYn())) {
-            ItemCard.ItemListSummary itemListSummary = new ItemCard.ItemListSummary();
+            Map<String, Object> itemListSummary = new HashMap<>();
+
             if (StringUtils.hasText(icde.getItemlistSummaryTitle())) {
-                itemListSummary.setTitle(icde.getItemlistSummaryTitle());
+                itemListSummary.put("title", icde.getItemlistSummaryTitle());
             }
             if (StringUtils.hasText(icde.getItemlistSummaryDesc())) {
-                itemListSummary.setDescription(icde.getItemlistSummaryDesc());
+                itemListSummary.put("description", icde.getItemlistSummaryDesc());
             }
-            icd.setItemListSummary(itemListSummary);
+            icdMap.put("itemListSummary", itemListSummary);
         }
 
         List<ItemList> itemListArrayList = new ArrayList<>();
@@ -907,23 +917,23 @@ public class KakaoFPTemplateService {
             itemListArrayList.add(itemList);
         }
         if (itemListArrayList.size() != 0){
-            icd.setItemList(itemListArrayList);
+            icdMap.put("itemList", itemListArrayList);
         }
 
-        icd = switch (be.getBlockId()) {
+        icdMap = switch (be.getBlockId()) {
             case "" -> {
                 yield null;
             }
-            default -> icd;
+            default -> icdMap;
         };
 
         if (btneList.size() != 0) {
             List<Map<String, Object>> btnList = getButtonList(btneList);
-            // icd.setButtons(btnList);
+            icdMap.put("buttons", btnList);
         }
 
         Map<String, Object> output = new HashMap<>(); // component
-        output.put(ChatbotConstants.ComponentType.ITEM_CARD, icd);
+        output.put(ChatbotConstants.ComponentType.ITEM_CARD, icdMap);
         try {
             log.info("KakaoFPTemplateService^^getItemCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
@@ -933,7 +943,6 @@ public class KakaoFPTemplateService {
     }
 
     public Map<String, Object> getCarouselItemCard(SkillResV1TemplateItemCardEntity icde, List<SkillResV1TemplateItemCardItemListEntity> itemListelist, BuilderV1BlockEntity be, List<SkillResV1TemplateComponentBtnEntity> btneList){
-        ItemCard icd = new ItemCard();
         Map<String, Object> output = new HashMap<>(); // component
 
         if (StringUtils.hasText(icde.getTitle())){
@@ -1136,20 +1145,21 @@ public class KakaoFPTemplateService {
         return btnMapList;
     }
 
-    public List<Template.QuickReply> getQrplList(List<SkillResV1TemplateQrplEntity> qrpleList) {
-        List<Template.QuickReply> qrplList = new ArrayList<>();
+    public List<Map<String, Object>> getQrplList(List<SkillResV1TemplateQrplEntity> qrpleList) {
+        List<Map<String, Object>> qrplList = new ArrayList<>();
         for (SkillResV1TemplateQrplEntity qrple : qrpleList) {
-            Template.QuickReply qrpl = new Template.QuickReply();
+            Map<String, Object> qrplMap = new HashMap<>();
+
             if (StringUtils.hasText(qrple.getLabel())) {
-                qrpl.setLabel(qrple.getLabel());
+                qrplMap.put("label", qrple.getLabel());
             }
             if (StringUtils.hasText(qrple.getAction())) {
-                qrpl.setAction(qrple.getAction());
+                qrplMap.put("action", qrple.getAction());
             }
             if (StringUtils.hasText(qrple.getMessageText())) {
-                qrpl.setMessagText(qrple.getMessageText());
+                qrplMap.put("messagText", qrple.getMessageText());
             }
-            qrplList.add(qrpl);
+            qrplList.add(qrplMap);
         }
         try {
             log.info("KakaoFPTemplateService^^getQrplList() :: qrplList : {}", om.writeValueAsString(qrplList));
