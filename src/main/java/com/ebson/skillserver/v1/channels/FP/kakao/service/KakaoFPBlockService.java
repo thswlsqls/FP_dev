@@ -5,6 +5,7 @@ import com.ebson.skillserver.component.ApplicationContextAwareImpl;
 import com.ebson.skillserver.component.ScenarioServiceBeanIdProvider;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1ScenarioEntity;
+import com.ebson.skillserver.v1.channels.FP.entity.SkillBusiV1UserFpEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,17 @@ public class KakaoFPBlockService {
     @Autowired
     ScenarioServiceBeanIdProvider beanIdProvider;
 
-    public SkillResponse retrieveScenarioServiceAndReturn(SkillResponse skillResponse, BuilderV1BlockEntity builderV1BlockEntity, String channelName){
+    public SkillResponse retrieveScenarioServiceAndReturn(SkillBusiV1UserFpEntity skillBusiV1UserFpEntity
+                                                        , BuilderV1BlockEntity builderV1BlockEntity
+                                                        , String channelName){
 
         BuilderV1ScenarioEntity builderV1ScenarioEntity = builderV1BlockEntity.getBuilderV1ScenarioEntity();
         String scenarioCode = builderV1ScenarioEntity.getScenarioCode();
 
         KakaoFPScenarioService kakaoFPScenarioService = (KakaoFPScenarioService) applicationContext.getBean(beanIdProvider.getBeanId(channelName, scenarioCode));
+        SkillResponse skillResponse = kakaoFPScenarioService.getTemplateAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, channelName);
 
-        return null;
+        return skillResponse;
     }
 
 }

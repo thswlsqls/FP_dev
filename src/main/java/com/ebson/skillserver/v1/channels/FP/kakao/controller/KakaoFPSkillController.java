@@ -1,9 +1,12 @@
 package com.ebson.skillserver.v1.channels.FP.kakao.controller;
 
 import com.ebson.skillserver.common.*;
+import com.ebson.skillserver.v1.channels.FP.entity.SkillBusiV1UserFpEntity;
+import com.ebson.skillserver.v1.channels.FP.repository.SkillBusiV1UserFpEntityRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +21,22 @@ public class KakaoFPSkillController {
 
     private static final Logger log = LoggerFactory.getLogger(KakaoFPSkillController.class);
 
-    @PostMapping("/FP/kakao/basicSkill")
-    public SkillResponse handleSkillRequest(@RequestBody SkillPayload skillPayload) {
+    @Autowired
+    SkillBusiV1UserFpEntityRepository skillBusiV1UserFpEntityRepository;
+
+    @PostMapping("/FP/kakao/mainSkill")
+    public SkillResponse handleSkillRequest(@RequestBody SkillPayload skillPayload){
+
+        String userKey = skillPayload.getBot().getId();
+        SkillBusiV1UserFpEntity skillBusiV1UserFpEntity = skillBusiV1UserFpEntityRepository.findByUserKey(userKey);
+
+
+
+        return null;
+    }
+
+    @PostMapping("/FP/kakao/skillResponseTest")
+    public SkillResponse handleSkillRequestWithDomainTest(@RequestBody SkillPayload skillPayload) {
 
         // 요청 처리 로직 구현
         // 예제로 간단한 응답을 생성하여 반환

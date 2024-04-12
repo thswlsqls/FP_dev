@@ -14,7 +14,7 @@ public class BuilderV1BlockEntity {
     @Column(name = "BLOCK_ID", nullable = false, length = 45)
     private String blockId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "SCENARIO_ID", nullable = false, referencedColumnName = "SCENARIO_ID", foreignKey = @ForeignKey(name = "FK_BLOCK_SCENARIO_ID"))
     private BuilderV1ScenarioEntity builderV1ScenarioEntity;
 
