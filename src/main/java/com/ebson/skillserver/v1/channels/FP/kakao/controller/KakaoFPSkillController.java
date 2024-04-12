@@ -1,7 +1,11 @@
 package com.ebson.skillserver.v1.channels.FP.kakao.controller;
 
 import com.ebson.skillserver.common.*;
+import com.ebson.skillserver.util.UUIDFormatter;
+import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.SkillBusiV1UserFpEntity;
+import com.ebson.skillserver.v1.channels.FP.kakao.service.KakaoFPBlockService;
+import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1BlockEntityRepository;
 import com.ebson.skillserver.v1.channels.FP.repository.SkillBusiV1UserFpEntityRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -11,10 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class KakaoFPSkillController {
@@ -24,15 +25,32 @@ public class KakaoFPSkillController {
     @Autowired
     SkillBusiV1UserFpEntityRepository skillBusiV1UserFpEntityRepository;
 
+    @Autowired
+    BuilderV1BlockEntityRepository builderV1BlockEntityRepository;
+
+    @Autowired
+    KakaoFPBlockService kakaoFPBlockService;
+
     @PostMapping("/FP/kakao/mainSkill")
     public SkillResponse handleSkillRequest(@RequestBody SkillPayload skillPayload){
+        SkillResponse skillResponse = null;
 
-        String userKey = skillPayload.getBot().getId();
-        SkillBusiV1UserFpEntity skillBusiV1UserFpEntity = skillBusiV1UserFpEntityRepository.findByUserKey(userKey);
+        try {
+            String userKey = skillPayload.getBot().getId();
+            SkillBusiV1UserFpEntity skillBusiV1UserFpEntity = skillBusiV1UserFpEntityRepository.findByUserKey(userKey);
 
+            String blockId = skillPayload.getIntent().getId();
+            BuilderV1BlockEntity builderV1BlockEntity = builderV1BlockEntityRepository.getReferenceById(blockId);
 
+            skillResponse = kakaoFPBlockService.retrieveScenarioServiceAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, "FP");
 
-        return null;
+            skillResponse.setVersion(ChatbotConstants.VERSION);
+            log.info("KakaoFPSkillController^^handleSkillRequest :: skillResponse : {}", skillResponse);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return skillResponse;
     }
 
     @PostMapping("/FP/kakao/skillResponseTest")

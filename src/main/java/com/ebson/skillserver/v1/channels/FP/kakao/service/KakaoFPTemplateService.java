@@ -72,11 +72,11 @@ public class KakaoFPTemplateService {
     private final ObjectMapper om = new ObjectMapper();
 
     @Transactional
-    public SkillResponse setTemplateAndReturn(SkillResponse skillResponse, UUID templateId, BuilderV1BlockEntity be) {
+    public SkillResponse setTemplateAndReturn(UUID templateId, BuilderV1BlockEntity be) {
         log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: templateId : {} blockId : {}", templateId, be.getBlockId());
+        SkillResponse skillResponse = new SkillResponse();
 
         try {
-
             SkillResV1TemplateEntity skillResV1TemplateEntity = skillResV1TemplateEntityRepository.getReferenceById(templateId);
 
             List<SkillResV1TemplateOutputEntity> skillResV1TemplateOutputEntityList = skillResV1TemplateOutputEntityRepository.findBySkillResV1TemplateEntity_TemplateId(templateId);

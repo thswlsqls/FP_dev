@@ -23,12 +23,11 @@ public class KakaoFPTemplateServiceTest {
 
     @Test
     public void simpleTextTest(){
-        SkillResponse sr = new SkillResponse();
-        sr.setVersion(ChatbotConstants.VERSION);
+        SkillResponse sr = null;
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("4144051BEDB711EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("simpleText"));
@@ -36,12 +35,12 @@ public class KakaoFPTemplateServiceTest {
 
     @Test
     public void simpleImageTest(){
-        SkillResponse sr = new SkillResponse();
-        sr.setVersion(ChatbotConstants.VERSION);
+        SkillResponse sr = null;
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("9C95C4E7EDB711EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
+        sr.setVersion(ChatbotConstants.VERSION);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("simpleImage"));
@@ -54,7 +53,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("CA3DA19DEDB711EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("textCard"));
@@ -67,7 +66,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("B4B715E3EDC611EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("basicCard"));
@@ -80,7 +79,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("64C3A144EE8511EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("commerceCard"));
@@ -93,7 +92,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("048B8952EE9211EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("listCard"));
@@ -106,7 +105,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("FF854FEBEF0A11EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("itemCard"));
@@ -119,7 +118,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("6C5D0ABBEF2511EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("carousel"));
@@ -132,7 +131,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("BC10E1FEF34211EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("carousel"));
@@ -145,7 +144,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("0F4C22C4F34811EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("carousel"));
@@ -158,7 +157,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("E4071279F3D611EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("carousel"));
@@ -171,7 +170,7 @@ public class KakaoFPTemplateServiceTest {
 
         UUID templateId = UUID.fromString(UUIDFormatter.formatToUUID("FF669F16F48D11EEB5380A48BC1A5EE1"));
         BuilderV1BlockEntity be = beRepository.getReferenceById("6590ab5b193392115b5a7ff8");
-        sr = kakaoFPTemplateService.setTemplateAndReturn(sr, templateId, be);
+        sr = kakaoFPTemplateService.setTemplateAndReturn(templateId, be);
 
         Assertions.assertNotNull(sr.getTemplate());
         Assertions.assertTrue(sr.getTemplate().getOutputs().get(0).containsKey("carousel"));

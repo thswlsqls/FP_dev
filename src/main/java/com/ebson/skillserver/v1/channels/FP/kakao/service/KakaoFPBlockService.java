@@ -1,6 +1,7 @@
 package com.ebson.skillserver.v1.channels.FP.kakao.service;
 
 import com.ebson.skillserver.common.SkillResponse;
+import com.ebson.skillserver.common.Template;
 import com.ebson.skillserver.component.ApplicationContextAwareImpl;
 import com.ebson.skillserver.component.ScenarioServiceBeanIdProvider;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockEntity;
@@ -23,12 +24,13 @@ public class KakaoFPBlockService {
     public SkillResponse retrieveScenarioServiceAndReturn(SkillBusiV1UserFpEntity skillBusiV1UserFpEntity
                                                         , BuilderV1BlockEntity builderV1BlockEntity
                                                         , String channelName){
+        SkillResponse skillResponse = null;
 
         BuilderV1ScenarioEntity builderV1ScenarioEntity = builderV1BlockEntity.getBuilderV1ScenarioEntity();
         String scenarioCode = builderV1ScenarioEntity.getScenarioCode();
 
         KakaoFPScenarioService kakaoFPScenarioService = (KakaoFPScenarioService) applicationContext.getBean(beanIdProvider.getBeanId(channelName, scenarioCode));
-        SkillResponse skillResponse = kakaoFPScenarioService.getTemplateAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, channelName);
+        skillResponse = kakaoFPScenarioService.getTemplateAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, channelName);
 
         return skillResponse;
     }
