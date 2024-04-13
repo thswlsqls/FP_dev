@@ -1,9 +1,9 @@
-package com.ebson.skillserver.v1.channels.FP.kakao.service;
+package com.ebson.skillserver.v1.channels.FP.kakao.service.scenario;
 
 import com.ebson.skillserver.common.SkillResponse;
-import com.ebson.skillserver.common.Template;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.SkillBusiV1UserFpEntity;
+import com.ebson.skillserver.v1.channels.FP.kakao.service.KakaoFPTemplateService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

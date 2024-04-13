@@ -1,12 +1,12 @@
 package com.ebson.skillserver.v1.channels.FP.kakao.service;
 
 import com.ebson.skillserver.common.SkillResponse;
-import com.ebson.skillserver.common.Template;
 import com.ebson.skillserver.component.ApplicationContextAwareImpl;
 import com.ebson.skillserver.component.ScenarioServiceBeanIdProvider;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1ScenarioEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.SkillBusiV1UserFpEntity;
+import com.ebson.skillserver.v1.channels.FP.kakao.service.scenario.KakaoFPScenarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
