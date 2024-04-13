@@ -232,11 +232,11 @@ public class KakaoFPTemplateService {
             try {
                 log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: skillResponse : {}", om.writeValueAsString(skillResponse));
             } catch (JsonProcessingException e) {
-                log.error(e.getMessage());
+                e.printStackTrace();
             }
             
         } catch (Exception e) {
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
 
         return skillResponse;
@@ -291,7 +291,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getSimpleImage() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -324,7 +324,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getTextCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -354,7 +354,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getCarouselTextCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -410,7 +410,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getBasicCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -464,7 +464,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getCarouselBasicCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -554,7 +554,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getCommerceCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -642,7 +642,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getCarouselCommerceCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -724,7 +724,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getListCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -804,7 +804,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getCarouselListCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -937,7 +937,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getItemCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -1068,7 +1068,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getCarouselItemCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -1096,7 +1096,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getCarousel() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return output;
     }
@@ -1140,7 +1140,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getButtonList() :: btnList : {}", om.writeValueAsString(btnMapList));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return btnMapList;
     }
@@ -1164,7 +1164,7 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getQrplList() :: qrplList : {}", om.writeValueAsString(qrplList));
         } catch (JsonProcessingException e){
-            log.error(e.getMessage());
+            e.printStackTrace();
         }
         return qrplList;
     }

@@ -31,6 +31,8 @@ public class KakaoFPSkillController {
     @Autowired
     KakaoFPBlockService kakaoFPBlockService;
 
+    static private String channelName = "FP";
+
     @PostMapping("/FP/kakao/mainSkill")
     public SkillResponse handleSkillRequest(@RequestBody SkillPayload skillPayload){
         SkillResponse skillResponse = null;
@@ -42,7 +44,7 @@ public class KakaoFPSkillController {
             String blockId = skillPayload.getIntent().getId();
             BuilderV1BlockEntity builderV1BlockEntity = builderV1BlockEntityRepository.getReferenceById(blockId);
 
-            skillResponse = kakaoFPBlockService.retrieveScenarioServiceAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, "FP");
+            skillResponse = kakaoFPBlockService.retrieveScenarioServiceAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, channelName);
 
             skillResponse.setVersion(ChatbotConstants.VERSION);
             log.info("KakaoFPSkillController^^handleSkillRequest :: skillResponse : {}", skillResponse);
