@@ -26,11 +26,15 @@ public class KakaoFPBlockService {
                                                         , String channelName){
         SkillResponse skillResponse = null;
 
-        BuilderV1ScenarioEntity builderV1ScenarioEntity = builderV1BlockEntity.getBuilderV1ScenarioEntity();
-        String scenarioCode = builderV1ScenarioEntity.getScenarioCode();
+        try {
+            BuilderV1ScenarioEntity builderV1ScenarioEntity = builderV1BlockEntity.getBuilderV1ScenarioEntity();
+            String scenarioCode = builderV1ScenarioEntity.getScenarioCode();
 
-        KakaoFPScenarioService kakaoFPScenarioService = (KakaoFPScenarioService) applicationContext.getBean(beanIdProvider.getBeanId(channelName, scenarioCode));
-        skillResponse = kakaoFPScenarioService.getTemplateAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, channelName);
+            KakaoFPScenarioService kakaoFPScenarioService = (KakaoFPScenarioService) applicationContext.getBean(beanIdProvider.getBeanId(channelName, scenarioCode));
+            skillResponse = kakaoFPScenarioService.getTemplateAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, channelName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return skillResponse;
     }

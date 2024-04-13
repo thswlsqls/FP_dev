@@ -24,7 +24,6 @@ public class KakaoFPScenarioS01Service implements KakaoFPScenarioService{
                                             , String channelName) {
 
         SkillResponse skillResponse = null;
-        Template template = null;
         try {
             // process 실행 결과 templateId 조회
             UUID templateId = UUID.randomUUID();
