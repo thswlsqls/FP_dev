@@ -20,8 +20,9 @@ public class BuilderV1BlockContextEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID contextId;
 
-    @Column(name = "BLOCK_ID", nullable = false, length = 45)
-    private String blockId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "BLOCK_ID", referencedColumnName = "BLOCK_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_CONTEXT_BLOCK_ID"))
+    private BuilderV1BlockEntity builderV1BlockEntity;
 
     @Column(name = "BLOCK_CODE", nullable = false, length = 45)
     private String blockCode;

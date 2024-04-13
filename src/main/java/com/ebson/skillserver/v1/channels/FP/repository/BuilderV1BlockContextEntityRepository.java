@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.UUID;
 
 public interface BuilderV1BlockContextEntityRepository extends JpaRepository<BuilderV1BlockContextEntity, UUID>  {
+    BuilderV1BlockContextEntity findByBuilderV1BlockEntity_BlockIdAndContextTypeAndContextName(String blockId, String contextType, String contextName);
 }

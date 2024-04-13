@@ -2,9 +2,11 @@ package com.ebson.skillserver.v1.channels.FP.kakao.controller;
 
 import com.ebson.skillserver.common.*;
 import com.ebson.skillserver.util.UUIDFormatter;
+import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockContextEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.SkillBusiV1UserFpEntity;
 import com.ebson.skillserver.v1.channels.FP.kakao.service.KakaoFPBlockService;
+import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1BlockContextEntityRepository;
 import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1BlockEntityRepository;
 import com.ebson.skillserver.v1.channels.FP.repository.SkillBusiV1UserFpEntityRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,6 +31,9 @@ public class KakaoFPSkillController {
     BuilderV1BlockEntityRepository builderV1BlockEntityRepository;
 
     @Autowired
+    BuilderV1BlockContextEntityRepository builderV1BlockContextEntityRepository;
+
+    @Autowired
     KakaoFPBlockService kakaoFPBlockService;
 
     static private String channelName = "FP";
@@ -38,13 +43,20 @@ public class KakaoFPSkillController {
         SkillResponse skillResponse = null;
 
         try {
+            /** 요청 사용자 데이터 추출 */
             String userKey = skillPayload.getBot().getId();
             SkillBusiV1UserFpEntity skillBusiV1UserFpEntity = skillBusiV1UserFpEntityRepository.findByUserKey(userKey);
 
+            /** 요청 블록 데이터 추출 */
             String blockId = skillPayload.getIntent().getId();
             BuilderV1BlockEntity builderV1BlockEntity = builderV1BlockEntityRepository.getReferenceById(blockId);
 
-            skillResponse = kakaoFPBlockService.retrieveScenarioServiceAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, channelName);
+            /** 요청 context 데이터 추출 */
+            List<Object> contextList = skillPayload.getContexts();
+            String inContext = contextList.get(0).toString();
+            BuilderV1BlockContextEntity builderV1BlockContextEntity = builderV1BlockContextEntityRepository.findByBuilderV1BlockEntity_BlockIdAndContextTypeAndContextName(blockId, "IN", inContext);
+
+            skillResponse = kakaoFPBlockService.retrieveScenarioServiceAndReturn(skillBusiV1UserFpEntity, builderV1BlockEntity, builderV1BlockContextEntity, channelName);
 
             skillResponse.setVersion(ChatbotConstants.VERSION);
             log.info("KakaoFPSkillController^^handleSkillRequest :: skillResponse : {}", skillResponse);
