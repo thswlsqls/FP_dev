@@ -1,0 +1,19 @@
+INSERT INTO BUILDER_V1_BLOCK_CONTEXT
+(
+	BLOCK_ID
+	, BLOCK_CODE
+	, CONTEXT_TYPE
+	, CONTEXT_NAME
+	, CREATOR
+	, LAST_UPDATER
+)
+VALUES
+(
+	'6590ab5b193392115b5a7ff8'
+	, 'FP_S01_B01'
+	, 'IN'
+	, 'S01_B01_테스트콘텍스트'
+	, 'admin'
+	, 'admin'
+)
+;
