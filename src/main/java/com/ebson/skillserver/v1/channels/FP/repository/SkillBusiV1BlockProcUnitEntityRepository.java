@@ -9,5 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface SkillBusiV1BlockProcUnitEntityRepository extends JpaRepository<SkillBusiV1BlockProcUnitEntity, UUID> {
-    List<SkillBusiV1BlockProcUnitEntity> findBySkillBusiV1BlockProcEntity_ProcId(UUID procId);
+    List<SkillBusiV1BlockProcUnitEntity> findBySkillBusiV1BlockProcEntity_ProcIdOrderByProcUnitNoAsc(UUID procId);
+    SkillBusiV1BlockProcUnitEntity findBySkillBusiV1BlockProcEntity_ProcIdAndProcUnitNo(UUID procId, Integer procUnitNo);
 }

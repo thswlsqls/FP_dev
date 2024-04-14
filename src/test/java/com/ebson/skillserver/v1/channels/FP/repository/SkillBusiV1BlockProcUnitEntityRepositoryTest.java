@@ -22,9 +22,19 @@ public class SkillBusiV1BlockProcUnitEntityRepositoryTest {
     @Test
     public void findBySkillBusiV1BlockProcEntity_ProcIdTest() {
         UUID procId = UUID.fromString(UUIDFormatter.formatToUUID("6DDA2A18F99111EEB5380A48BC1A5EE1"));
-        List<SkillBusiV1BlockProcUnitEntity> skillBusiV1BlockProcUnitEntityList = skillBusiV1BlockProcUnitEntityRepository.findBySkillBusiV1BlockProcEntity_ProcId(procId);
+        List<SkillBusiV1BlockProcUnitEntity> skillBusiV1BlockProcUnitEntityList = skillBusiV1BlockProcUnitEntityRepository.findBySkillBusiV1BlockProcEntity_ProcIdOrderByProcUnitNoAsc(procId);
 
         Assertions.assertNotNull(skillBusiV1BlockProcUnitEntityList);
         Assertions.assertEquals(skillBusiV1BlockProcUnitEntityList.get(0).getProcUnitName(), "FP_템플릿_01_테스트");
     }
+
+    @Test
+    public void findBySkillBusiV1BlockProcEntity_ProcIdAndProcUnitNoTest() {
+        UUID procId = UUID.fromString(UUIDFormatter.formatToUUID("6DDA2A18F99111EEB5380A48BC1A5EE1"));
+        SkillBusiV1BlockProcUnitEntity skillBusiV1BlockProcUnitEntity = skillBusiV1BlockProcUnitEntityRepository.findBySkillBusiV1BlockProcEntity_ProcIdAndProcUnitNo(procId, 2);
+
+        Assertions.assertNotNull(skillBusiV1BlockProcUnitEntity);
+        Assertions.assertEquals(skillBusiV1BlockProcUnitEntity.getProcUnitName(), "FP_템플릿_02_테스트");
+    }
+
 }
