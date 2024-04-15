@@ -49,20 +49,21 @@ public class KakaoFPScenarioS01Service implements KakaoFPScenarioService{
             while (nextProcNo > 0) {
                 SkillBusiV1BlockProcUnitEntity curProcUnit = skillBusiV1BlockProcUnitEntityRepository.findBySkillBusiV1BlockProcEntity_ProcIdAndProcUnitNo(procId, nextProcNo);
                 nextProcNo = switch (curProcUnit.getProcUnitType()) {
-                    case "a" -> {
-                        /** a타입 프로세스 유닛 메서드 실행 */
+                    case "DIV" -> {
+                        /** DIV 타입 프로세스 유닛 메서드 실행 */
+                        int condition = 1;
+                        yield condition == 1 ? curProcUnit.getNextProcUnitNo1() : condition == 2 ? curProcUnit.getNextProcUnitNo2() : curProcUnit.getNextProcUnitNo3();
+                    } case "VLD" -> {
+                        /** VLD 타입 프로세스 유닛 메서드 실행 */
                         yield curProcUnit.getNextProcUnitNo1();
-                    } case "b" -> {
-                        /** b타입 프로세스 유닛 메서드 실행 */
+                    } case "DBT" -> {
+                        /** DBT 타입 프로세스 유닛 메서드 실행 */
                         yield curProcUnit.getNextProcUnitNo1();
-                    } case "c" -> {
-                        /** c타입 프로세스 유닛 메서드 실행 */
+                    } case "ITF" -> {
+                        /** ITF 타입 프로세스 유닛 메서드 실행 */
                         yield curProcUnit.getNextProcUnitNo1();
-                    } case "d" -> {
-                        /** d타입 프로세스 유닛 메서드 실행 */
-                        yield curProcUnit.getNextProcUnitNo1();
-                    } case "e" -> {
-                        /** e타입 프로세스 유닛 메서드 실행 */
+                    } case "CAH" -> {
+                        /** CAH 타입 프로세스 유닛 메서드 실행 */
                         yield curProcUnit.getNextProcUnitNo1();
                     } case "TPL" -> {
                         /** TPL타입 프로세스 유닛 메서드 실행 */
