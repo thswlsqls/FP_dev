@@ -25,33 +25,57 @@ public class FPProcessService {
 
     public int executeDIVTypeProcUnit(SkillBusiV1UserFpEntity userEntity
                                     , BuilderV1BlockEntity blockEntity) {
+        try {
 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         return 0;
     }
 
     public void executeVLDTypeProcUnit(SkillBusiV1UserFpEntity userEntity
                                      , BuilderV1BlockEntity blockEntity) {
+        try {
 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void executeDBTTypeProcUnit(SkillBusiV1UserFpEntity userEntity
                                      , BuilderV1BlockEntity blockEntity) {
+        try {
 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void executeITFTypeProcUnit(SkillBusiV1UserFpEntity userEntity
                                      , BuilderV1BlockEntity blockEntity) {
+        try {
 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void executeCAHTypeProcUnit(SkillBusiV1UserFpEntity userEntity
                                      , BuilderV1BlockEntity blockEntity) {
+        try {
 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public UUID executeTPLTypeProcUnit(SkillBusiV1UserFpEntity userEntity
                                      , BuilderV1BlockEntity blockEntity) {
+        try {
 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
