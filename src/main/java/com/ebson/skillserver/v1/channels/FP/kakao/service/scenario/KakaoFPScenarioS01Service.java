@@ -69,6 +69,7 @@ public class KakaoFPScenarioS01Service implements KakaoFPScenarioService{
                         /** TPL타입 프로세스 유닛 메서드 실행 */
                         /** templateId 추출 */
                         templateId = UUID.randomUUID();
+                        log.info("KakaoFPScenarioS01Service^^getTemplateAndReturn() :: {}", templateId.toString());
                         yield 0;
                     }
                     default -> 0;
