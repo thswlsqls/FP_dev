@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.UUID;
 
 @Service
@@ -28,7 +30,9 @@ public class FPProcessService {
         try {
 
         } catch(Exception e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
         }
         return 0;
     }
@@ -38,7 +42,9 @@ public class FPProcessService {
         try {
 
         } catch(Exception e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
         }
     }
 
@@ -47,7 +53,9 @@ public class FPProcessService {
         try {
 
         } catch(Exception e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
         }
     }
 
@@ -56,7 +64,9 @@ public class FPProcessService {
         try {
 
         } catch(Exception e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
         }
     }
 
@@ -65,7 +75,9 @@ public class FPProcessService {
         try {
 
         } catch(Exception e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
         }
     }
 
@@ -74,7 +86,9 @@ public class FPProcessService {
         try {
 
         } catch(Exception e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
         }
         return null;
     }
