@@ -29,6 +29,13 @@ public class FPProcessService {
                                     , BuilderV1BlockEntity blockEntity) {
         try {
 
+            String status = switch (blockEntity.getBlockCode()) {
+                case "FP_S01_B01" -> {
+                  yield null;
+                }
+                default -> null;
+            };
+
         } catch(Exception e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
@@ -41,6 +48,13 @@ public class FPProcessService {
                                      , BuilderV1BlockEntity blockEntity) {
         try {
 
+            String status = switch (blockEntity.getBlockCode()) {
+                case "FP_S01_B01" -> {
+                    yield null;
+                }
+                default -> null;
+            };
+
         } catch(Exception e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
@@ -51,6 +65,13 @@ public class FPProcessService {
     public void executeDBTTypeProcUnit(SkillBusiV1UserFpEntity userEntity
                                      , BuilderV1BlockEntity blockEntity) {
         try {
+
+            String status = switch (blockEntity.getBlockCode()) {
+                case "FP_S01_B01" -> {
+                    yield null;
+                }
+                default -> null;
+            };
 
         } catch(Exception e) {
             StringWriter sw = new StringWriter();
@@ -63,6 +84,13 @@ public class FPProcessService {
                                      , BuilderV1BlockEntity blockEntity) {
         try {
 
+            String status = switch (blockEntity.getBlockCode()) {
+                case "FP_S01_B01" -> {
+                    yield null;
+                }
+                default -> null;
+            };
+
         } catch(Exception e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
@@ -74,6 +102,13 @@ public class FPProcessService {
                                      , BuilderV1BlockEntity blockEntity) {
         try {
 
+            String status = switch (blockEntity.getBlockCode()) {
+                case "FP_S01_B01" -> {
+                    yield null;
+                }
+                default -> null;
+            };
+
         } catch(Exception e) {
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
@@ -84,6 +119,13 @@ public class FPProcessService {
     public UUID executeTPLTypeProcUnit(SkillBusiV1UserFpEntity userEntity
                                      , BuilderV1BlockEntity blockEntity) {
         try {
+
+            String status = switch (blockEntity.getBlockCode()) {
+                case "FP_S01_B01" -> {
+                    yield null;
+                }
+                default -> null;
+            };
 
         } catch(Exception e) {
             StringWriter sw = new StringWriter();
