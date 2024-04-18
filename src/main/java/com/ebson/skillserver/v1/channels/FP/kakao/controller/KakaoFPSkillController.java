@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.*;
 
 @RestController
@@ -61,7 +63,9 @@ public class KakaoFPSkillController {
             skillResponse.setVersion(ChatbotConstants.VERSION);
             log.info("KakaoFPSkillController^^handleSkillRequest :: skillResponse : {}", skillResponse);
         } catch(Exception e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
         }
 
         return skillResponse;

@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.List;
 import java.util.UUID;
 
@@ -79,7 +81,9 @@ public class KakaoFPScenarioS01Service implements KakaoFPScenarioService{
             skillResponse = kakaoFPTemplateService.setTemplateAndReturn(templateId, builderV1BlockEntity);
             /** skillResponse 의 context 를 세팅 */
         } catch(Exception e) {
-            e.printStackTrace();
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
         }
         return skillResponse;
     }
