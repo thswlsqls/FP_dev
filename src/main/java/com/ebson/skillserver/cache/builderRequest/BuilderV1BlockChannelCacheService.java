@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -18,9 +19,10 @@ public class BuilderV1BlockChannelCacheService {
     BuilderV1ChannelEntityRepository builderV1ChannelEntityRepository;
 
     // 메소드의 실행 결과
-    @Cacheable(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
-    public BuilderV1ChannelDomain getBuilderV1ChannelDomainByIdAndName(UUID channelId, String channelName) {
-        BuilderV1ChannelEntity bvcde = builderV1ChannelEntityRepository.getReferenceById(channelId);
+    //@Cacheable(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
+    @Cacheable(value = "BuilderV1ChannelDomains", key = "#channelName")
+    public BuilderV1ChannelDomain getBuilderV1ChannelDomainByIdAndName(String channelId, String channelName) {
+        BuilderV1ChannelEntity bvcde = builderV1ChannelEntityRepository.getReferenceById(UUID.fromString(channelId));
         BuilderV1ChannelDomain bvcd = new BuilderV1ChannelDomain();
         bvcd.setChannelId(bvcde.getChannelId());
         bvcd.setChannelName(bvcde.getChannelName());
