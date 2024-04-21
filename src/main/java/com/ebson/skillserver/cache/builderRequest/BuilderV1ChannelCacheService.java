@@ -8,21 +8,19 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
 @Service
-public class BuilderV1BlockChannelCacheService {
+public class BuilderV1ChannelCacheService {
 
     @Autowired
-    BuilderV1ChannelEntityRepository builderV1ChannelEntityRepository;
+    BuilderV1ChannelEntityRepository repository;
 
-    // 메소드의 실행 결과
-    //@Cacheable(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
-    @Cacheable(value = "BuilderV1ChannelDomains", key = "#channelName")
-    public BuilderV1ChannelDomain getBuilderV1ChannelDomainByIdAndName(String channelId, String channelName) {
-        BuilderV1ChannelEntity bvcde = builderV1ChannelEntityRepository.getReferenceById(UUID.fromString(channelId));
+    // 케시를 조회 - 없으면 메서드 반환 값을 캐시에 저장
+    @Cacheable(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
+    public BuilderV1ChannelDomain getBuilderV1ChannelDomainCacheByIdAndName(String channelId, String channelName) {
+        BuilderV1ChannelEntity bvcde = repository.getReferenceById(UUID.fromString(channelId));
         BuilderV1ChannelDomain bvcd = new BuilderV1ChannelDomain();
         bvcd.setChannelId(bvcde.getChannelId());
         bvcd.setChannelName(bvcde.getChannelName());
@@ -33,8 +31,8 @@ public class BuilderV1BlockChannelCacheService {
 
     // 캐시를 저장
     @CachePut(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
-    public BuilderV1ChannelDomain setBuilderV1ChannelDomainByIdAndName(UUID channelId, String channelName) {
-        BuilderV1ChannelEntity bvcde = builderV1ChannelEntityRepository.getReferenceById(channelId);
+    public BuilderV1ChannelDomain setBuilderV1ChannelDomainCacheByIdAndName(String channelId, String channelName) {
+        BuilderV1ChannelEntity bvcde = repository.getReferenceById(UUID.fromString(channelId));
         BuilderV1ChannelDomain bvcd = new BuilderV1ChannelDomain();
         bvcd.setChannelId(bvcde.getChannelId());
         bvcd.setChannelName(bvcde.getChannelName());
@@ -43,6 +41,6 @@ public class BuilderV1BlockChannelCacheService {
 
     // 캐시를 제거
     @CacheEvict(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
-    public void deleteBuilderV1ChannelDomainByIdAndName(UUID channelId, String channelName) {}
+    public void deleteBuilderV1ChannelDomainCacheByIdAndName(String channelId, String channelName) {}
 
 }

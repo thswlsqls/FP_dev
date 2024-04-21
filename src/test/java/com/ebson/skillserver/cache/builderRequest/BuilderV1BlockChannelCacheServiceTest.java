@@ -15,19 +15,36 @@ import org.springframework.transaction.annotation.Transactional;
 public class BuilderV1BlockChannelCacheServiceTest {
 
     @Autowired
-    private BuilderV1BlockChannelCacheService service;
+    private BuilderV1ChannelCacheService service;
 
     @Autowired
     private BuilderV1ChannelEntityRepository repository;
 
     @Test
     @Transactional
-    public void getBuilderV1ChannelDomainByIdAndNameTest() {
+    public void getBuilderV1ChannelDomainCacheByIdAndNameTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
-        BuilderV1ChannelDomain domain = service.getBuilderV1ChannelDomainByIdAndName(channelId, "FP");
+        BuilderV1ChannelDomain domain = service.getBuilderV1ChannelDomainCacheByIdAndName(channelId, "FP");
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getChannelName(), "FP");
+    }
+
+    @Test
+    @Transactional
+    public void setBuilderV1ChannelDomainCacheByIdAndNameTest() {
+        String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
+        BuilderV1ChannelDomain domain = service.setBuilderV1ChannelDomainCacheByIdAndName(channelId, "FP");
+
+        Assertions.assertNotNull(domain);
+        Assertions.assertEquals(domain.getChannelName(), "FP");
+    }
+
+    @Test
+    @Transactional
+    public void deleteBuilderV1ChannelDomainCacheByIdAndNameTest() {
+        String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
+        service.deleteBuilderV1ChannelDomainCacheByIdAndName(channelId, "FP");
     }
 
 
