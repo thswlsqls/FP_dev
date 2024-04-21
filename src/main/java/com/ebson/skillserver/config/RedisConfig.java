@@ -52,18 +52,5 @@ public class RedisConfig {
                 .build();
     }
 
-    /** @Bean
-    public RedisCacheManager exampleCacheManager(RedisConnectionFactory redisConnectionFactory) {
-        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
-                .prefixCacheNameWith("exampleCache:")
-                .entryTtl(Duration.ofHours(1)) // 캐시 유효 시간 설정
-                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-
-        return RedisCacheManager.builder(redisConnectionFactory)
-                .cacheDefaults(config)
-                .build();
-    } */
-
 }
 
