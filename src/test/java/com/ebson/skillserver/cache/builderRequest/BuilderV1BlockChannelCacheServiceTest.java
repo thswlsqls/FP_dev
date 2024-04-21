@@ -24,7 +24,7 @@ public class BuilderV1BlockChannelCacheServiceTest {
     @Transactional
     public void getBuilderV1ChannelDomainCacheByIdAndNameTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
-        BuilderV1ChannelDomain domain = service.getBuilderV1ChannelDomainCacheByIdAndName(channelId, "FP");
+        BuilderV1ChannelDomain domain = service.getBuilderV1ChannelDomainCache(channelId, "FP");
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getChannelName(), "FP");
@@ -34,7 +34,7 @@ public class BuilderV1BlockChannelCacheServiceTest {
     @Transactional
     public void setBuilderV1ChannelDomainCacheByIdAndNameTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
-        BuilderV1ChannelDomain domain = service.setBuilderV1ChannelDomainCacheByIdAndName(channelId, "FP");
+        BuilderV1ChannelDomain domain = service.setBuilderV1ChannelDomainCache(channelId, "FP");
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getChannelName(), "FP");
@@ -44,7 +44,7 @@ public class BuilderV1BlockChannelCacheServiceTest {
     @Transactional
     public void deleteBuilderV1ChannelDomainCacheByIdAndNameTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
-        service.deleteBuilderV1ChannelDomainCacheByIdAndName(channelId, "FP");
+        service.deleteBuilderV1ChannelDomainCache(channelId, "FP");
     }
 
 

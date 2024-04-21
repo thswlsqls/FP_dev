@@ -16,7 +16,7 @@ public class BuilderV1ScenarioEntity {
     @Column(name = "SCENARIO_ID", nullable = false, length = 45)
     private String scenarioId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CHANNEL_ID", nullable = false, referencedColumnName = "CHANNEL_ID")
     private BuilderV1ChannelEntity builderV1ChannelEntity;
 
