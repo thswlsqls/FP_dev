@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class BuilderV1BlockChannelCacheServiceTest {
+public class BuilderV1ChannelCacheServiceTest {
 
     @Autowired
     private BuilderV1ChannelCacheService service;
@@ -41,7 +41,6 @@ public class BuilderV1BlockChannelCacheServiceTest {
     }
 
     @Test
-    @Transactional
     public void deleteBuilderV1ChannelDomainCacheByIdAndNameTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
         service.deleteBuilderV1ChannelDomainCache(channelId, "FP");
