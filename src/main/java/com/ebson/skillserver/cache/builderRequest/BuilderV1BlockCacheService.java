@@ -1,6 +1,12 @@
 package com.ebson.skillserver.cache.builderRequest;
 
 import com.ebson.skillserver.v1.channels.FP.domain.BuilderV1BlockDomain;
+import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockEntity;
+import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1BlockEntityRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -8,11 +14,36 @@ import org.springframework.stereotype.Service;
 @Service
 public class BuilderV1BlockCacheService {
 
-    @Cacheable(value = "BuilderV1BlockDomains", key = "'BuilderV1BlockDomain:' + #channelCode + ':' + #blockId + ':' + #blockCode")
-    public BuilderV1BlockDomain getBuilderV1BlockDomainByIdAndName(String channelCode, String blockId, String blockCode) {
-        // 이는 캐시 키를 "BuilderV1BlockDomain:[channelCode]:[id]:[name]" 형식으로 생성하도록 합니다.
-        // 캐시 조회 명령어는 $ GET BuilderV1BlockDomains::BuilderV1BlockDomain:[channelCode]:[blockId]:[blockCode] 와 같습니다.
-        return null; // 캐시 미스 시 DB 조회 코드 생략
+    private static final Logger logger = LoggerFactory.getLogger(BuilderV1BlockCacheService.class);
+
+    @Autowired
+    BuilderV1BlockEntityRepository repository;
+
+    @Cacheable(value = "BuilderV1BlockDomains", key = "'BuilderV1BlockDomain:' + #channelName + ':' + #blockId + ':' + #blockCode")
+    public BuilderV1BlockDomain getBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {
+        BuilderV1BlockEntity entity = repository.getReferenceById(blockId);
+        BuilderV1BlockDomain domain = new BuilderV1BlockDomain();
+        domain.setScenarioId(entity.getBuilderV1ScenarioEntity().getScenarioId());
+        domain.setBlockId(entity.getBlockId());
+        domain.setBlockCode(entity.getBlockCode());
+        domain.setBlockName(entity.getBlockName());
+        logger.info("getBuilderV1BlockDomainCache^^BuilderV1BlockDomain :: {}", domain.toString());
+        return domain;
     }
+
+    @CachePut(value = "BuilderV1BlockDomains", key = "'BuilderV1BlockDomain:' + #channelName + ':' + #blockId + ':' + #blockCode")
+    public BuilderV1BlockDomain setBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {
+        BuilderV1BlockEntity entity = repository.getReferenceById(blockId);
+        BuilderV1BlockDomain domain = new BuilderV1BlockDomain();
+        domain.setScenarioId(entity.getBuilderV1ScenarioEntity().getScenarioId());
+        domain.setBlockId(entity.getBlockId());
+        domain.setBlockCode(entity.getBlockCode());
+        domain.setBlockName(entity.getBlockName());
+        logger.info("getBuilderV1BlockDomainCache^^BuilderV1BlockDomain :: {}", domain.toString());
+        return domain;
+    }
+
+    @CacheEvict(value = "BuilderV1BlockDomains", key = "'BuilderV1BlockDomain:' + #channelName + ':' + #blockId + ':' + #blockCode")
+    public void deleteBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {}
 
 }

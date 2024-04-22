@@ -17,12 +17,9 @@ public class BuilderV1ChannelCacheServiceTest {
     @Autowired
     private BuilderV1ChannelCacheService service;
 
-    @Autowired
-    private BuilderV1ChannelEntityRepository repository;
-
     @Test
     @Transactional
-    public void getBuilderV1ChannelDomainCacheByIdAndNameTest() {
+    public void getBuilderV1ChannelDomainCacheTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
         BuilderV1ChannelDomain domain = service.getBuilderV1ChannelDomainCache(channelId, "FP");
 
@@ -32,7 +29,7 @@ public class BuilderV1ChannelCacheServiceTest {
 
     @Test
     @Transactional
-    public void setBuilderV1ChannelDomainCacheByIdAndNameTest() {
+    public void setBuilderV1ChannelDomainCacheTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
         BuilderV1ChannelDomain domain = service.setBuilderV1ChannelDomainCache(channelId, "FP");
 
@@ -41,7 +38,7 @@ public class BuilderV1ChannelCacheServiceTest {
     }
 
     @Test
-    public void deleteBuilderV1ChannelDomainCacheByIdAndNameTest() {
+    public void deleteBuilderV1ChannelDomainCacheTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
         service.deleteBuilderV1ChannelDomainCache(channelId, "FP");
     }
