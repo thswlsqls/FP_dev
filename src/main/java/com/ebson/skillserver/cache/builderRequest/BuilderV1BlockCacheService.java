@@ -19,7 +19,7 @@ public class BuilderV1BlockCacheService {
     @Autowired
     BuilderV1BlockEntityRepository repository;
 
-    @Cacheable(value = "BuilderV1BlockDomains", key = "'BuilderV1BlockDomain:' + #channelName + ':' + #blockId + ':' + #blockCode")
+    @Cacheable(value = "BuilderV1BlockDomain", key = "#channelName + ':' + #blockId + ':' + #blockCode")
     public BuilderV1BlockDomain getBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {
         BuilderV1BlockEntity entity = repository.getReferenceById(blockId);
         BuilderV1BlockDomain domain = new BuilderV1BlockDomain();
@@ -31,7 +31,7 @@ public class BuilderV1BlockCacheService {
         return domain;
     }
 
-    @CachePut(value = "BuilderV1BlockDomains", key = "'BuilderV1BlockDomain:' + #channelName + ':' + #blockId + ':' + #blockCode")
+    @CachePut(value = "BuilderV1BlockDomain", key = "#channelName + ':' + #blockId + ':' + #blockCode")
     public BuilderV1BlockDomain setBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {
         BuilderV1BlockEntity entity = repository.getReferenceById(blockId);
         BuilderV1BlockDomain domain = new BuilderV1BlockDomain();
@@ -43,7 +43,7 @@ public class BuilderV1BlockCacheService {
         return domain;
     }
 
-    @CacheEvict(value = "BuilderV1BlockDomains", key = "'BuilderV1BlockDomain:' + #channelName + ':' + #blockId + ':' + #blockCode")
+    @CacheEvict(value = "BuilderV1BlockDomain", key = "#channelName + ':' + #blockId + ':' + #blockCode")
     public void deleteBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {}
 
 }

@@ -21,7 +21,7 @@ public class BuilderV1ScenarioCacheServiceTest {
 
     @Test
     @Transactional
-    public void getBuilderV1ChannelDomainCacheTest() {
+    public void getBuilderV1ScenarioDomainCacheTest() {
         String channelName = "FP";
         String scenarioId = "6590ab21193392115b5a7ff5";
         String scenarioCode = "FP_S01";
@@ -33,7 +33,7 @@ public class BuilderV1ScenarioCacheServiceTest {
 
     @Test
     @Transactional
-    public void setBuilderV1ChannelDomainCacheTest() {
+    public void setBuilderV1ScenarioDomainCacheTest() {
         String channelName = "FP";
         String scenarioId = "6590ab21193392115b5a7ff5";
         String scenarioCode = "FP_S01";

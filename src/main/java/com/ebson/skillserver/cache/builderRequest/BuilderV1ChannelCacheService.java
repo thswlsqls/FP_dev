@@ -22,7 +22,7 @@ public class BuilderV1ChannelCacheService {
     BuilderV1ChannelEntityRepository repository;
 
     // 케시를 조회 - 없으면 메서드 반환 값을 캐시에 저장
-    @Cacheable(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
+    @Cacheable(value = "BuilderV1ChannelDomain", key = "#channelId + ':' + #channelName")
     public BuilderV1ChannelDomain getBuilderV1ChannelDomainCache(String channelId, String channelName) {
         BuilderV1ChannelEntity bvcde = repository.getReferenceById(UUID.fromString(channelId));
         BuilderV1ChannelDomain bvcd = new BuilderV1ChannelDomain();
@@ -33,7 +33,7 @@ public class BuilderV1ChannelCacheService {
     }
 
     // 캐시를 저장
-    @CachePut(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
+    @CachePut(value = "BuilderV1ChannelDomain", key = "#channelId + ':' + #channelName")
     public BuilderV1ChannelDomain setBuilderV1ChannelDomainCache(String channelId, String channelName) {
         BuilderV1ChannelEntity bvcde = repository.getReferenceById(UUID.fromString(channelId));
         BuilderV1ChannelDomain bvcd = new BuilderV1ChannelDomain();
@@ -44,7 +44,7 @@ public class BuilderV1ChannelCacheService {
     }
 
     // 캐시를 제거
-    @CacheEvict(value = "BuilderV1ChannelDomains", key = "'BuilderV1ChannelDomain:' + #channelId + ':' + #channelName")
+    @CacheEvict(value = "BuilderV1ChannelDomain", key = "#channelId + ':' + #channelName")
     public void deleteBuilderV1ChannelDomainCache(String channelId, String channelName) {}
 
 }

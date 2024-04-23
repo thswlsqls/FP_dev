@@ -19,7 +19,7 @@ public class BuilderV1ScenarioCacheService {
     @Autowired
     BuilderV1ScenarioEntityRepository repository;
 
-    @Cacheable(value = "BuilderV1ScenarioDomains", key = "'BuilderV1ScenarioDomain:' + #channelName + ':' + #scenarioId + ':' + #scenarioCode")
+    @Cacheable(value = "BuilderV1ScenarioDomain", key = "#channelName + ':' + #scenarioId + ':' + #scenarioCode")
     public BuilderV1ScenarioDomain getBuilderV1ScenarioDomainCache(String channelName
                                                                , String scenarioId
                                                                , String scenarioCode) {
@@ -33,7 +33,7 @@ public class BuilderV1ScenarioCacheService {
         return bvsd;
     }
 
-    @CachePut(value = "BuilderV1ScenarioDomains", key = "'BuilderV1ScenarioDomain:' + #channelName + ':' + #scenarioId + ':' + #scenarioCode")
+    @CachePut(value = "BuilderV1ScenarioDomain", key = "#channelName + ':' + #scenarioId + ':' + #scenarioCode")
     public BuilderV1ScenarioDomain setBuilderV1ScenarioDomainCache(String channelName
                                                                 , String scenarioId
                                                                 , String scenarioCode) {
@@ -47,7 +47,7 @@ public class BuilderV1ScenarioCacheService {
         return bvsd;
     }
 
-    @CacheEvict(value = "BuilderV1ScenarioDomains", key = "'BuilderV1ScenarioDomain:' + #channelName + ':' + #scenarioId + ':' + #scenarioCode")
+    @CacheEvict(value = "BuilderV1ScenarioDomain", key = "#channelName + ':' + #scenarioId + ':' + #scenarioCode")
     public void deleteBuilderV1ScenarioDomainCache(String channelName
                                                  , String scenarioId
                                                  , String scenarioCode) {}

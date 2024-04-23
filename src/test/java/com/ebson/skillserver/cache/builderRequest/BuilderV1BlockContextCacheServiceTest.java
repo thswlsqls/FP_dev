@@ -39,7 +39,7 @@ public class BuilderV1BlockContextCacheServiceTest {
     }
 
     @Test
-    public void deleteBuilderV1BlockContextDomainCacheTest(){
+    public void deleteBuilderV1BlockContextDomainCacheTest() {
         String blockCode = "FP_S01_B01";
         String contextId = UUIDFormatter.formatToUUID("0334AEA5F95111EEB5380A48BC1A5EE1");
         service.deleteBuilderV1BlockContextDomainCache(blockCode, contextId);
