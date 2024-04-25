@@ -14,6 +14,4 @@ public class SkillResV1ContextDomain {
     private String contextType;
     private Integer lifespan;
     private Integer ttl;
-    private UUID creator;
-    private UUID lastUpdater;
 }

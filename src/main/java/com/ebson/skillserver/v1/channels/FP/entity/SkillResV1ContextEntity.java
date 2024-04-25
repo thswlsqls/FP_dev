@@ -18,7 +18,7 @@ public class SkillResV1ContextEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID contextId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "CONTEXT_ID", referencedColumnName = "CONTEXT_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_RES_CONTEXT_CONTEXT_ID"))
     private BuilderV1BlockContextEntity builderV1BlockContextEntity;
 
