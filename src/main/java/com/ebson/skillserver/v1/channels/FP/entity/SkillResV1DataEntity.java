@@ -21,7 +21,7 @@ public class SkillResV1DataEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID dataId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BLOCK_ID", referencedColumnName = "BLOCK_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_RES_DATA_BLOCK_ID"))
     private BuilderV1BlockEntity builderV1BlockEntity;
 

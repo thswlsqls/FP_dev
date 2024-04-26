@@ -12,6 +12,4 @@ public class SkillResV1DataDomain {
     private String blockCode;
     private String key;
     private String value;
-    private UUID creator;
-    private UUID lastUpdater;
 }
