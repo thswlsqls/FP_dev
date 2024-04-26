@@ -1,8 +1,6 @@
 package com.ebson.skillserver.cache.skillResponse;
 
-import com.ebson.skillserver.v1.channels.FP.domain.SkillResV1ContextParamDomain;
 import com.ebson.skillserver.v1.channels.FP.domain.SkillResV1DataDomain;
-import com.ebson.skillserver.v1.channels.FP.entity.SkillResV1ContextParamEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.SkillResV1DataEntity;
 import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1DataEntityRepository;
 import org.slf4j.Logger;
