@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface SkillResV1ContextParamEntityRepository extends JpaRepository<SkillResV1ContextParamEntity, SkillResV1ContextParamEntity.PK> {
+    SkillResV1ContextParamEntity findByContextIdAndParamNo(UUID contextId, int paramNo);
 }

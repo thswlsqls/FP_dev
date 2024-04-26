@@ -11,6 +11,4 @@ public class SkillResV1ContextParamDomain {
     private UUID contextId;
     private String key;
     private String value;
-    private UUID creator;
-    private UUID lastUpdater;
 }
