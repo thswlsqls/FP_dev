@@ -21,7 +21,7 @@ public class SkillResV1VersionEntity {
     @Convert(converter = UUIDToBytesConverter.class)
     private UUID versionId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BLOCK_ID", referencedColumnName = "BLOCK_ID", nullable = false, foreignKey = @ForeignKey(name = "FK_VERSION_BLOCK_ID"))
     private BuilderV1BlockEntity builderV1BlockEntity;
 
