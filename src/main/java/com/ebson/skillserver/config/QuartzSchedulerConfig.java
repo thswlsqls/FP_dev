@@ -89,7 +89,7 @@ public class QuartzSchedulerConfig {
 
         scheduler.scheduleJob(jobDetail1(), cronTrigger1());
         scheduler.scheduleJob(jobDetail2(), cronTrigger2());
-        scheduler.start();
+        scheduler.standby();
 
         return scheduler;
     }

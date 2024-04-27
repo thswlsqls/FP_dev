@@ -10,6 +10,4 @@ public class SkillResV1TemplateSimpleImageDomain {
     private UUID componentId; // BINARY(16)을 UUID로 매핑
     private String imgUrl;
     private String altText;
-    private UUID creator;
-    private UUID lastUpdater;
 }
