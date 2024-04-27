@@ -10,10 +10,14 @@ public class SkillResV1TemplateBasicCardDomain {
     private UUID carouselId; // This field can be null if the basic card is not part of a carousel.
     private UUID componentId;
     private Integer cardOrd;
-    private Character dataType;
+    private String dataType;
     private String title;
     private String desc;
-    private String thumb; // This field is marked as NOT NULL in the DB schema.
-    private UUID creator;
-    private UUID lastUpdater;
+
+    private String thumbImgUrl;
+    private String thumbLinkWeb;
+    private String thumbLinkPc;
+
+    private String thumbLinkMobile;
+    private String thumbFixedRatio;
 }
