@@ -14,7 +14,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import java.io.IOException;
-import java.util.List;
 
 @Configuration
 public class QuartzSchedulerConfig {
@@ -66,7 +65,7 @@ public class QuartzSchedulerConfig {
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean() throws IOException, SchedulerException {
+    public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         schedulerFactoryBean.setGlobalJobListeners(customJobListener);
         schedulerFactoryBean.setGlobalTriggerListeners(customTriggerListener);
@@ -83,8 +82,7 @@ public class QuartzSchedulerConfig {
 
     @Bean
     public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) throws SchedulerException {
-        SchedulerFactory sf = new StdSchedulerFactory();
-        Scheduler scheduler = sf.getScheduler();
+        Scheduler scheduler = schedulerFactoryBean.getScheduler();
 
         if (scheduler.checkExists(jobDetail1().getKey())){ scheduler.deleteJob(jobDetail1().getKey()); }
         if (scheduler.checkExists(jobDetail2().getKey())){ scheduler.deleteJob(jobDetail2().getKey()); }

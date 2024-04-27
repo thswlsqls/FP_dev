@@ -14,5 +14,7 @@ public class MyJob1 implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         logger.info("MyJob1 executed ... ");
+        logger.info("Myjob1 context.getJobDetail().getJobDataMap().get(\"key1\") :: {}", context.getJobDetail().getJobDataMap().get("key1"));
+        logger.info("Myjob1 context.getJobDetail().getJobDataMap().get(\"key2\") :: {}", context.getJobDetail().getJobDataMap().get("key2"));
     }
 }
