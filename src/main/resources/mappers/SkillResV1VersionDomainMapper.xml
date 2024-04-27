@@ -8,10 +8,6 @@
         <result property="blockCode" column="BLOCK_CODE" />
         <result property="major" column="MAJOR"/>
         <result property="minor" column="MINOR"/>
-        <result property="createdDate" column="CREATED_DATE"/>
-        <result property="lastUpdatedDate" column="LAST_UPDATED_DATE"/>
-        <result property="creator" column="CREATOR" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
-        <result property="lastUpdater" column="LAST_UPDATER" javaType="java.util.UUID" jdbcType="BINARY" typeHandler="com.ebson.skillserver.typeHandler.UUIDTypeHandler"/>
     </resultMap>
 
     <!-- Select -->
@@ -21,10 +17,6 @@
                 , block_code
                 , major
                 , minor
-                , created_date
-                , last_updated_date
-                , creator
-                , last_updater
         FROM SKILL_RES_V1_VERSION
         WHERE version_id = #{versionId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
     </select>
@@ -36,10 +28,6 @@
                 , block_code
                 , major
                 , minor
-                , created_date
-                , last_updated_date
-                , creator
-                , last_updater
         FROM SKILL_RES_V1_VERSION
     </select>
 
@@ -49,20 +37,12 @@
                     , block_id
                     , block_code
                     , major
-                    , minor
-                    , created_date
-                    , last_updated_date
-                    , creator
-                    , last_updater)
+                    , minor)
         VALUES (#{versionId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
                 , #{blockId}
                 , #{blockCode}
                 , #{major}
-                , #{minor}
-                , #{createdDate}
-                , #{lastUpdatedDate}
-                , #{creator, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
-                , #{lastUpdater, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler})
+                , #{minor})
     </insert>
 
     <!-- Update -->
@@ -72,8 +52,6 @@
             , block_code = #{blockCode}
             , major = #{major}
             , minor = #{minor}
-            , last_updated_date = #{lastUpdatedDate}
-            , last_updater = #{lastUpdater, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
         WHERE version_id = #{versionId, typeHandler=com.ebson.skillserver.typeHandler.UUIDTypeHandler}
     </update>
 

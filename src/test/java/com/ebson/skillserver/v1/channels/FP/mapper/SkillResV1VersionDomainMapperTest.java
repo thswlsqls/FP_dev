@@ -50,6 +50,7 @@ public class SkillResV1VersionDomainMapperTest {
     public void insertSkillResV1VersionAndDeleteByVersionIdTest() {
         UUID versionId = UUID.randomUUID();
         String blockId = "blockIdTest";
+        String blockCode = "blockCodeTest";
         Integer major = 2;
         Integer minor = 0;
         LocalDateTime createDate = LocalDateTime.now();
@@ -61,6 +62,7 @@ public class SkillResV1VersionDomainMapperTest {
 
         skillResV1VersionDomain.setVersionId(versionId);
         skillResV1VersionDomain.setBlockId(blockId);
+        skillResV1VersionDomain.setBlockCode(blockCode);
         skillResV1VersionDomain.setMajor(major);
         skillResV1VersionDomain.setMinor(minor);
 
@@ -82,12 +84,14 @@ public class SkillResV1VersionDomainMapperTest {
         SkillResV1VersionDomain skillResV1VersionDomain = skillResV1VersionDomainMapper.selectByVersionId(versionId);
 
         String updateBlockId = "updateBlockIdTest";
+        String blockCode = "updateBlockCodeTest";
         Integer updateMajor = 2;
         Integer updateMinor = 0;
         LocalDateTime updateLastUpdatedDate = LocalDateTime.now();
         UUID updateLastUpdater = UUID.randomUUID();
 
         skillResV1VersionDomain.setBlockId(updateBlockId);
+        skillResV1VersionDomain.setBlockCode(blockCode);
         skillResV1VersionDomain.setMajor(updateMajor);
         skillResV1VersionDomain.setMinor(updateMinor);
 
