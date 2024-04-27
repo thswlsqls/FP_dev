@@ -28,7 +28,7 @@ public class SkillResV1TemplateSimpleTextCacheServiceTest {
 
     @Test
     @Transactional
-    public void gstSkillResV1TemplateSimpleTextDomainCacheTest() {
+    public void setSkillResV1TemplateSimpleTextDomainCacheTest() {
         String componentId = UUIDFormatter.formatToUUID("72135D7EEDB711EEB5380A48BC1A5EE1");
         SkillResV1TemplateSimpleTextDomain domain = service.setSkillResV1TemplateSimpleTextDomainCache(componentId);
 
