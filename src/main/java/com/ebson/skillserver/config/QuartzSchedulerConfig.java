@@ -5,6 +5,7 @@ import com.ebson.skillserver.quartz.CustomTriggerListener;
 import com.ebson.skillserver.quartz.Job.MyJob1;
 import com.ebson.skillserver.quartz.Job.MyJob2;
 import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -13,8 +14,6 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Configuration
@@ -32,6 +31,7 @@ public class QuartzSchedulerConfig {
                 .withIdentity("myJob1", "group1")
                 .usingJobData("key1", "value1")
                 .usingJobData("key2", "value2")
+                .storeDurably()
                 .build();
     }
 
@@ -41,6 +41,7 @@ public class QuartzSchedulerConfig {
                 .withIdentity("myJob2", "group1")
                 .usingJobData("key1", "value1")
                 .usingJobData("key2", "value2")
+                .storeDurably()
                 .build();
     }
 
@@ -49,8 +50,8 @@ public class QuartzSchedulerConfig {
         return TriggerBuilder
                 .newTrigger()
                 .withIdentity("trigger1", "group1")
-                .withSchedule(CronScheduleBuilder.cronSchedule("0/20 * * * * ?"))
-                .forJob("myJob1", "group1")
+                .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * * * ?"))
+//                .forJob(jobDetail1())
                 .build();
     }
 
@@ -59,13 +60,13 @@ public class QuartzSchedulerConfig {
         return TriggerBuilder
                 .newTrigger()
                 .withIdentity("trigger2", "group1")
-                .withSchedule(CronScheduleBuilder.cronSchedule("0/20 * * * * ?"))
-                .forJob("myJob2", "group1")
+                .withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * * * ?"))
+//                .forJob(jobDetail2())
                 .build();
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
+    public SchedulerFactoryBean schedulerFactoryBean() throws IOException, SchedulerException {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         schedulerFactoryBean.setGlobalJobListeners(customJobListener);
         schedulerFactoryBean.setGlobalTriggerListeners(customTriggerListener);
@@ -75,10 +76,24 @@ public class QuartzSchedulerConfig {
         propertiesFactoryBean.afterPropertiesSet();
         schedulerFactoryBean.setQuartzProperties(propertiesFactoryBean.getObject());
 
-        schedulerFactoryBean.setTriggers(cronTrigger1()
-                                        , cronTrigger2());
-
+//        schedulerFactoryBean.setTriggers(cronTrigger1()
+//                                        , cronTrigger2());
         return schedulerFactoryBean;
+    }
+
+    @Bean
+    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) throws SchedulerException {
+        SchedulerFactory sf = new StdSchedulerFactory();
+        Scheduler scheduler = sf.getScheduler();
+
+        if (scheduler.checkExists(jobDetail1().getKey())){ scheduler.deleteJob(jobDetail1().getKey()); }
+        if (scheduler.checkExists(jobDetail2().getKey())){ scheduler.deleteJob(jobDetail2().getKey()); }
+
+        scheduler.scheduleJob(jobDetail1(), cronTrigger1());
+        scheduler.scheduleJob(jobDetail2(), cronTrigger2());
+        scheduler.start();
+
+        return scheduler;
     }
 
 }

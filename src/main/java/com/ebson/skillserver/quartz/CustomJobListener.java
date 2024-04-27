@@ -5,7 +5,9 @@ import org.quartz.JobExecutionException;
 import org.quartz.JobListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomJobListener implements JobListener {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomJobListener.class);

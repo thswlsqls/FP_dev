@@ -46,6 +46,7 @@ dependencies {
 	testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3")
 
 	implementation("org.springframework.boot:spring-boot-starter-quartz")
+	implementation("com.mchange:c3p0:0.9.5.5")
 }
 
 tasks.withType<Test> {
