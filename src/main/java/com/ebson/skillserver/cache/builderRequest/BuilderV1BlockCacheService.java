@@ -44,6 +44,8 @@ public class BuilderV1BlockCacheService {
     }
 
     @CacheEvict(value = "BuilderV1BlockDomain", key = "#channelName + ':' + #blockId + ':' + #blockCode")
-    public void deleteBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {}
+    public void deleteBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {
+        logger.info("BuilderV1BlockDomain Cache is deleted ... blockId : {}, blockCode : {}", blockId, blockCode);
+    }
 
 }

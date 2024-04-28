@@ -50,6 +50,8 @@ public class BuilderV1ScenarioCacheService {
     @CacheEvict(value = "BuilderV1ScenarioDomain", key = "#channelName + ':' + #scenarioId + ':' + #scenarioCode")
     public void deleteBuilderV1ScenarioDomainCache(String channelName
                                                  , String scenarioId
-                                                 , String scenarioCode) {}
+                                                 , String scenarioCode) {
+        logger.info("BuilderV1ScenarioDomain Cache is deleted ... channelName : {}, scenarioId : {}, scenarioCode : {}", channelName, scenarioId, scenarioCode);
+    }
 
 }

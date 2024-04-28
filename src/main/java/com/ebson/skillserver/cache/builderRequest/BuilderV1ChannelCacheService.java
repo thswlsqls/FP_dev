@@ -45,6 +45,8 @@ public class BuilderV1ChannelCacheService {
 
     // 캐시를 제거
     @CacheEvict(value = "BuilderV1ChannelDomain", key = "#channelId + ':' + #channelName")
-    public void deleteBuilderV1ChannelDomainCache(String channelId, String channelName) {}
+    public void deleteBuilderV1ChannelDomainCache(String channelId, String channelName) {
+        logger.info("BuilderV1ChannelDomain Cache is deleted ... channelId : {}, channelName : {}", channelId, channelName);
+    }
 
 }
