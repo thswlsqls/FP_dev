@@ -11,7 +11,5 @@ public class SkillResV1TemplateComponentDomain {
     private UUID outputId;
     private String componentType;
     private String componentName;
-    private UUID creator;
-    private UUID lastUpdater;
 }
 
