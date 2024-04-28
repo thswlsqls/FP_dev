@@ -35,6 +35,7 @@ public class SkillResV1TemplateTextCardCacheService {
         if (Objects.nonNull(entity.getSkillResV1TemplateCarouselEntity()) && Objects.nonNull(entity.getSkillResV1TemplateCarouselEntity().getCarouselId())) {
             domain.setCarouselId(entity.getSkillResV1TemplateCarouselEntity().getCarouselId());
         }
+        logger.info("getSkillResV1TemplateTextCardDomainCache^^SkillResV1TemplateTextCardDomain :: {}", domain.toString());
         return domain;
     }
 
@@ -50,10 +51,13 @@ public class SkillResV1TemplateTextCardCacheService {
         if (Objects.nonNull(entity.getSkillResV1TemplateCarouselEntity()) && Objects.nonNull(entity.getSkillResV1TemplateCarouselEntity().getCarouselId())) {
             domain.setCarouselId(entity.getSkillResV1TemplateCarouselEntity().getCarouselId());
         }
+        logger.info("setSkillResV1TemplateTextCardDomainCache^^SkillResV1TemplateTextCardDomain :: {}", domain.toString());
         return domain;
     }
 
     @CacheEvict(value = "SkillResV1TemplateTextCardDomain", key = "#componentId")
-    public void deleteSkillResV1TemplateTextCardDomainCache(String componentId) {}
+    public void deleteSkillResV1TemplateTextCardDomainCache(String componentId) {
+        logger.info("SkillResV1TemplateTextCardDomain Cache is deleted ... componentId : {}", componentId);
+    }
 
 }

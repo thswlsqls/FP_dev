@@ -38,6 +38,7 @@ public class SkillResV1TemplateBasicCardCacheService {
         if (StringUtils.hasText(entity.getThumbLinkMobile())) { domain.setThumbLinkMobile(entity.getThumbLinkMobile()); }
         if (StringUtils.hasText(entity.getThumbFixedRatio())) { domain.setThumbFixedRatio(entity.getThumbFixedRatio()); }
         if (Objects.nonNull(entity.getSkillResV1TemplateCarouselEntity()) && Objects.nonNull(entity.getSkillResV1TemplateCarouselEntity().getCarouselId())) { domain.setCarouselId(entity.getSkillResV1TemplateCarouselEntity().getCarouselId()); }
+        logger.info("getSkillResV1TemplateBasicCardDomainCache^^SkillResV1TemplateBasicCardDomain :: {}", domain.toString());
         return domain;
     }
 
@@ -56,10 +57,13 @@ public class SkillResV1TemplateBasicCardCacheService {
         if (StringUtils.hasText(entity.getThumbLinkMobile())) { domain.setThumbLinkMobile(entity.getThumbLinkMobile()); }
         if (StringUtils.hasText(entity.getThumbFixedRatio())) { domain.setThumbFixedRatio(entity.getThumbFixedRatio()); }
         if (Objects.nonNull(entity.getSkillResV1TemplateCarouselEntity()) && Objects.nonNull(entity.getSkillResV1TemplateCarouselEntity().getCarouselId())) { domain.setCarouselId(entity.getSkillResV1TemplateCarouselEntity().getCarouselId()); }
+        logger.info("setSkillResV1TemplateBasicCardDomainCache^^SkillResV1TemplateBasicCardDomain :: {}", domain.toString());
         return domain;
     }
 
     @CacheEvict(value = "SkillResV1TemplateBasicCardDomain", key = "#componentId")
-    public void deleteSkillResV1TemplateBasicCardDomainCache(String componentId) {}
+    public void deleteSkillResV1TemplateBasicCardDomainCache(String componentId) {
+        logger.info("SkillResV1TemplateBasicCardDomain Cache is deleted ... componentId : {}", componentId);
+    }
 
 }

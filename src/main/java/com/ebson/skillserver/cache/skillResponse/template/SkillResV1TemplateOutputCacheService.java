@@ -33,6 +33,7 @@ public class SkillResV1TemplateOutputCacheService {
         if (Objects.nonNull(entity.getSkillResV1TemplateEntity()) && Objects.nonNull(entity.getSkillResV1TemplateEntity().getTemplateId())) {
             domain.setTemplateId(entity.getSkillResV1TemplateEntity().getTemplateId());
         }
+        logger.info("getSkillResV1TemplateOutputDomainCache^^SkillResV1TemplateOutputDomain :: {}", domain.toString());
         return domain;
     }
 
@@ -46,9 +47,12 @@ public class SkillResV1TemplateOutputCacheService {
         if (Objects.nonNull(entity.getSkillResV1TemplateEntity()) && Objects.nonNull(entity.getSkillResV1TemplateEntity().getTemplateId())) {
             domain.setTemplateId(entity.getSkillResV1TemplateEntity().getTemplateId());
         }
+        logger.info("setSkillResV1TemplateOutputDomainCache^^SkillResV1TemplateOutputDomain :: {}", domain.toString());
         return domain;
     }
 
     @CacheEvict(value = "SkillResV1TemplateOutputDomain", key = "#outputId + ':' + #templateId")
-    public void deleteSkillResV1TemplateOutputDomainCache(String outputId, String templateId) { }
+    public void deleteSkillResV1TemplateOutputDomainCache(String outputId, String templateId) {
+        logger.info("SkillResV1TemplateOutputDomain Cache is deleted ... outputId : {}, templateId : {}", outputId, templateId);
+    }
 }

@@ -28,6 +28,7 @@ public class SkillResV1TemplateSimpleImageCacheService {
         domain.setComponentId(UUID.fromString(componentId));
         domain.setImgUrl(entity.getImgUrl());
         domain.setAltText(entity.getAltText());
+        logger.info("getSkillResV1TemplateSimpleImageDomainCache^^SkillResV1TemplateSimpleImageDomain :: {}", domain.toString());
         return domain;
     }
 
@@ -38,10 +39,13 @@ public class SkillResV1TemplateSimpleImageCacheService {
         domain.setComponentId(UUID.fromString(componentId));
         domain.setImgUrl(entity.getImgUrl());
         domain.setAltText(entity.getAltText());
+        logger.info("setSkillResV1TemplateSimpleImageDomainCache^^SkillResV1TemplateSimpleImageDomain :: {}", domain.toString());
         return domain;
     }
 
     @CacheEvict(value = "SkillResV1TemplateSimpleImageDomain", key = "#componentId")
-    public void deleteSkillResV1TemplateSimpleImageDomainCache(String componentId) {}
+    public void deleteSkillResV1TemplateSimpleImageDomainCache(String componentId) {
+        logger.info("SkillResV1TemplateSimpleImageDomain Cache is deleted ... componentId : {}", componentId);
+    }
 
 }
