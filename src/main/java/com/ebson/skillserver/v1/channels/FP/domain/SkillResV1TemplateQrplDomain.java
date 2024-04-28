@@ -12,6 +12,4 @@ public class SkillResV1TemplateQrplDomain {
     private String label;
     private String action;
     private String messageText;
-    private UUID creator;
-    private UUID lastUpdater;
 }
