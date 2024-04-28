@@ -49,7 +49,7 @@ public class SkillResV1VersionCacheService {
 
     @CacheEvict(value = "SkillResV1VersionDomain", key = "#versionId + ':' + #blockCode")
     public void deleteSkillResV1VersionDomainCache(String versionId, String blockCode) {
-        logger.info("SkillResV1VersionDomainCache Cache is deleted ... versionId : {}, blockCode : {}", versionId, blockCode);
+        logger.info("SkillResV1VersionDomain Cache is deleted ... versionId : {}, blockCode : {}", versionId, blockCode);
     }
 
 }

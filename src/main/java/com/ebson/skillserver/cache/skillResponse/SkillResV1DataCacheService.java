@@ -49,6 +49,6 @@ public class SkillResV1DataCacheService {
 
     @CacheEvict(value = "SkillResV1DataDomain", key = "#dataId + ':' + #blockCode")
     public void deleteSkillResV1DataDomainCache(String dataId, String c){
-        logger.info("SkillResV1DataDomainCache Cache is deleted ... dataId : {}, blockCode : {}", dataId, dataId);
+        logger.info("SkillResV1DataDomain Cache is deleted ... dataId : {}, blockCode : {}", dataId, dataId);
     }
 }
