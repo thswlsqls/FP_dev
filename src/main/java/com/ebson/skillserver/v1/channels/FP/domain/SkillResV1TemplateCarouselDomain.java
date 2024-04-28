@@ -13,6 +13,4 @@ public class SkillResV1TemplateCarouselDomain {
     private String headerTitle;
     private String headerDesc;
     private String headerThumb;
-    private UUID creator;
-    private UUID lastUpdater;
 }
