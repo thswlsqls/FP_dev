@@ -2,7 +2,6 @@ package com.ebson.skillserver.v1.channels.FP.domain;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -14,7 +13,5 @@ public class SkillResV1TemplateComponentBtnDomain {
     private String webLinkUrl;
     private String messageText;
     private String phone;
-    private UUID blockId; // Optional, may be null if not linked to a block
-    private UUID creator;
-    private UUID lastUpdater;
+    private String blockId; // Optional, may be null if not linked to a block
 }
