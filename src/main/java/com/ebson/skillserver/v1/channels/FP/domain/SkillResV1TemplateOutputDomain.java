@@ -11,6 +11,4 @@ public class SkillResV1TemplateOutputDomain {
     private UUID templateId; // BINARY(16)을 UUID로 매핑
     private Integer outputOrd;
     private String outputName;
-    private UUID creator;
-    private UUID lastUpdater;
 }
