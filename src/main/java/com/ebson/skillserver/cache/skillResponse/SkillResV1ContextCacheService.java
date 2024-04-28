@@ -34,6 +34,7 @@ public class SkillResV1ContextCacheService {
         domain.setBlockId(entity.getBuilderV1BlockContextEntity().getBuilderV1BlockEntity().getBlockId());
         domain.setTtl(entity.getTtl());
         domain.setLifespan(entity.getLifespan());
+        logger.info("getSkillResV1ContextDomainCache^^SkillResV1ContextDomain :: {}", domain.toString());
         return domain;
     }
 
@@ -50,12 +51,15 @@ public class SkillResV1ContextCacheService {
         domain.setBlockId(entity.getBuilderV1BlockContextEntity().getBuilderV1BlockEntity().getBlockId());
         domain.setTtl(entity.getTtl());
         domain.setLifespan(entity.getLifespan());
+        logger.info("getSkillResV1ContextDomainCache^^SkillResV1ContextDomain :: {}", domain.toString());
         return domain;
     }
 
     @CacheEvict(value = "SkillResV1ContextDomain", key = "#blockCode + ':' + #contextId + ':' + #contextName")
     public void deleteSkillResV1ContextDomainCache(String blockCode
                                                  , String contextId
-                                                 , String contextName) {}
+                                                 , String contextName) {
+        logger.info("SkillResV1ContextDomain Cache is deleted ... blockCode : {}, contextId : {}, contextName : {}", blockCode, contextId, contextName);
+    }
 
 }

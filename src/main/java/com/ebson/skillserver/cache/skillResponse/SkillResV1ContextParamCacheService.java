@@ -29,6 +29,7 @@ public class SkillResV1ContextParamCacheService {
         domain.setParamNo(entity.getParamNo());
         domain.setKey(entity.getKey());
         domain.setValue(entity.getValue());
+        logger.info("getSkillResV1ContextParamDomainCache^^SkillResV1ContextParamDomain :: {}", domain.toString());
         return domain;
     }
 
@@ -40,10 +41,13 @@ public class SkillResV1ContextParamCacheService {
         domain.setParamNo(entity.getParamNo());
         domain.setKey(entity.getKey());
         domain.setValue(entity.getValue());
+        logger.info("setSkillResV1ContextParamDomainCache^^SkillResV1ContextParamDomain :: {}", domain.toString());
         return domain;
     }
 
     @CacheEvict(value = "SkillResV1ContextParamDomain", key = "#contextId + ':' + #paramNo")
-    public void deleteSkillResV1ContextParamDomainCache(String contextId, int paramNo) {}
+    public void deleteSkillResV1ContextParamDomainCache(String contextId, int paramNo) {
+        logger.info("SkillResV1ContextParamDomain Cache is deleted ... contextId : {}, paramNo : {}", contextId, paramNo);
+    }
 
 }

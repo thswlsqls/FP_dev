@@ -30,6 +30,7 @@ public class SkillResV1VersionCacheService {
         domain.setBlockCode(entity.getBlockCode());
         domain.setMajor(entity.getMajor());
         domain.setMinor(entity.getMinor());
+        logger.info("getSkillResV1VersionDomainCache^^SkillResV1VersionDomain :: {}", domain.toString());
         return domain;
     }
 
@@ -42,10 +43,13 @@ public class SkillResV1VersionCacheService {
         domain.setBlockCode(entity.getBlockCode());
         domain.setMajor(entity.getMajor());
         domain.setMinor(entity.getMinor());
+        logger.info("setSkillResV1VersionDomainCache^^SkillResV1VersionDomain :: {}", domain.toString());
         return domain;
     }
 
     @CacheEvict(value = "SkillResV1VersionDomain", key = "#versionId + ':' + #blockCode")
-    public void deleteSkillResV1VersionDomainCache(String versionId, String blockCode) {}
+    public void deleteSkillResV1VersionDomainCache(String versionId, String blockCode) {
+        logger.info("SkillResV1VersionDomainCache Cache is deleted ... versionId : {}, blockCode : {}", versionId, blockCode);
+    }
 
 }

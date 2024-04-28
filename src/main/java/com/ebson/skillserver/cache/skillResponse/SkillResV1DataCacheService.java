@@ -30,6 +30,7 @@ public class SkillResV1DataCacheService {
         domain.setBlockCode(entity.getBlockCode());
         domain.setKey(entity.getKey());
         domain.setValue(entity.getValue());
+        logger.info("getSkillResV1DataDomainCache^^SkillResV1DataDomain :: {}", domain.toString());
         return domain;
     }
 
@@ -42,9 +43,12 @@ public class SkillResV1DataCacheService {
         domain.setBlockCode(entity.getBlockCode());
         domain.setKey(entity.getKey());
         domain.setValue(entity.getValue());
+        logger.info("setSkillResV1DataDomainCache^^SkillResV1DataDomain :: {}", domain.toString());
         return domain;
     }
 
     @CacheEvict(value = "SkillResV1DataDomain", key = "#dataId + ':' + #blockCode")
-    public void deleteSkillResV1DataDomainCache(String dataId, String blockCode){}
+    public void deleteSkillResV1DataDomainCache(String dataId, String c){
+        logger.info("SkillResV1DataDomainCache Cache is deleted ... dataId : {}, blockCode : {}", dataId, dataId);
+    }
 }
