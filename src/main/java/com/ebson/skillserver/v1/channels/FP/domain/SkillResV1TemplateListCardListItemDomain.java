@@ -2,11 +2,12 @@ package com.ebson.skillserver.v1.channels.FP.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-public class SkillResV1TemplateListCardListItemDomain {
+public class SkillResV1TemplateListCardListItemDomain implements Serializable {
     private UUID listItemId; // BINARY(16)을 UUID로 매핑
     private Integer listItemOrd;
     private UUID componentId;

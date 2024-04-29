@@ -2,10 +2,11 @@ package com.ebson.skillserver.v1.channels.FP.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-public class SkillResV1TemplateComponentBtnDomain {
+public class SkillResV1TemplateComponentBtnDomain implements Serializable {
     private UUID btnId;
     private UUID componentId;
     private String label;

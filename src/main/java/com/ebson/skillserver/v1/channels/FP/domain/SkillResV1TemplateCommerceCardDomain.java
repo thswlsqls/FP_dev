@@ -2,10 +2,11 @@ package com.ebson.skillserver.v1.channels.FP.domain;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-public class SkillResV1TemplateCommerceCardDomain {
+public class SkillResV1TemplateCommerceCardDomain implements Serializable {
     private UUID carouselId; // May be null if not part of a carousel
     private UUID componentId;
     private Integer cardOrd;
