@@ -12,6 +12,4 @@ public class SkillResV1TemplateItemCardItemListDomain implements Serializable {
     private UUID componentId; // COMPONENT_ID 컬럼과 매핑, BINARY(16)을 UUID로 매핑
     private String title; // TITLE 컬럼과 매핑, VARCHAR(45)
     private String desc; // DESC 컬럼과 매핑, VARCHAR(255)
-    private UUID creator; // CREATOR 컬럼과 매핑, BINARY(16)을 UUID로 매핑, NULL 가능
-    private UUID lastUpdater; // LAST_UPDATER 컬럼과 매핑, BINARY(16)을 UUID로 매핑, NULL 가능
 }
