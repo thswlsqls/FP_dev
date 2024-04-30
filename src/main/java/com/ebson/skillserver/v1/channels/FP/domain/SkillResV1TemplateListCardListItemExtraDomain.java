@@ -13,6 +13,4 @@ public class SkillResV1TemplateListCardListItemExtraDomain implements Serializab
     private UUID listItemId;
     private String key;
     private String value;
-    private UUID creator; // Can be null
-    private UUID lastUpdater; // Can be null
 }
