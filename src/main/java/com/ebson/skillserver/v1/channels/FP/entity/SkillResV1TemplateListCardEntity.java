@@ -19,11 +19,11 @@ public class SkillResV1TemplateListCardEntity {
     private UUID componentId;
 
     @MapsId
-    @ManyToOne(fetch = FetchType.LAZY) // carousel item 인 경우 N:1
+    @ManyToOne(fetch = FetchType.EAGER) // carousel item 인 경우 N:1
     @JoinColumn(name = "COMPONENT_ID")
     private SkillResV1TemplateComponentEntity skillResV1TemplateComponentEntity;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @ManyToOne(fetch = FetchType.EAGER, optional = true)
     @JoinColumn(name = "CAROUSEL_ID", referencedColumnName = "CAROUSEL_ID", foreignKey = @ForeignKey(name = "FK_LISTCARD_CAROUSEL_ID"))
     private SkillResV1TemplateCarouselEntity skillResV1TemplateCarouselEntity;
 
