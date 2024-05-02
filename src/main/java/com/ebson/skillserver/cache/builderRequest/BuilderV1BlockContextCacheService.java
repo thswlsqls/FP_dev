@@ -1,5 +1,6 @@
 package com.ebson.skillserver.cache.builderRequest;
 
+import com.ebson.skillserver.util.UUIDFormatter;
 import com.ebson.skillserver.v1.channels.FP.domain.BuilderV1BlockContextDomain;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockContextEntity;
 import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1BlockContextEntityRepository;
@@ -11,7 +12,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -22,8 +25,8 @@ public class BuilderV1BlockContextCacheService {
     @Autowired
     BuilderV1BlockContextEntityRepository repository;
 
-    @Cacheable(value = "BuilderV1BlockContextDomain", key = "#blockCode + ':' + #contextId"  )
-    public BuilderV1BlockContextDomain getBuilderV1BlockContextDomainCache(String blockCode, String contextId) {
+    @Cacheable(value = "BuilderV1BlockContextDomain", key = "#contextId"  )
+    public BuilderV1BlockContextDomain getBuilderV1BlockContextDomainCache(String contextId) {
         BuilderV1BlockContextEntity entity = repository.getReferenceById(UUID.fromString(contextId));
         BuilderV1BlockContextDomain domain = new BuilderV1BlockContextDomain();
         domain.setContextId(entity.getContextId());
@@ -35,8 +38,8 @@ public class BuilderV1BlockContextCacheService {
         return domain;
     }
 
-    @CachePut(value = "BuilderV1BlockContextDomain", key = "#blockCode + ':' + #contextId"  )
-    public BuilderV1BlockContextDomain setBuilderV1BlockContextDomainCache(String blockCode, String contextId) {
+    @CachePut(value = "BuilderV1BlockContextDomain", key = "#contextId"  )
+    public BuilderV1BlockContextDomain setBuilderV1BlockContextDomainCache(String contextId) {
         BuilderV1BlockContextEntity entity = repository.getReferenceById(UUID.fromString(contextId));
         BuilderV1BlockContextDomain domain = new BuilderV1BlockContextDomain();
         domain.setContextId(entity.getContextId());
@@ -48,9 +51,18 @@ public class BuilderV1BlockContextCacheService {
         return domain;
     }
 
-    @CacheEvict(value = "BuilderV1BlockContextDomain", key = "#blockCode + ':' + #contextId"  )
-    public void deleteBuilderV1BlockContextDomainCache(String blockCode, String contextId) {
-        logger.info("BuilderV1BlockContextDomain Cache is deleted ... blockCode : {}, contextId : {}", blockCode, contextId);
+    @CacheEvict(value = "BuilderV1BlockContextDomain", key = "#contextId"  )
+    public void deleteBuilderV1BlockContextDomainCache(String contextId) {
+        logger.info("BuilderV1BlockContextDomain Cache is deleted ... contextId : {}", contextId);
+    }
+
+    @Transactional
+    public void setAllBuilderV1BlockContextDomainCache() {
+        List<BuilderV1BlockContextEntity> list4 = repository.findAll();
+        for (BuilderV1BlockContextEntity entity : list4) {
+            String contextId = UUIDFormatter.formatToUUID(entity.getContextId().toString());
+            setBuilderV1BlockContextDomainCache(contextId);
+        }
     }
 
 }

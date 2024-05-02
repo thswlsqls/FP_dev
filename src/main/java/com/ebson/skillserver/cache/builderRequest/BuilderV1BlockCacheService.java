@@ -10,6 +10,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class BuilderV1BlockCacheService {
@@ -19,8 +22,8 @@ public class BuilderV1BlockCacheService {
     @Autowired
     BuilderV1BlockEntityRepository repository;
 
-    @Cacheable(value = "BuilderV1BlockDomain", key = "#channelName + ':' + #blockId + ':' + #blockCode")
-    public BuilderV1BlockDomain getBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {
+    @Cacheable(value = "BuilderV1BlockDomain", key = "#blockId")
+    public BuilderV1BlockDomain getBuilderV1BlockDomainCache(String blockId) {
         BuilderV1BlockEntity entity = repository.getReferenceById(blockId);
         BuilderV1BlockDomain domain = new BuilderV1BlockDomain();
         domain.setScenarioId(entity.getBuilderV1ScenarioEntity().getScenarioId());
@@ -31,8 +34,8 @@ public class BuilderV1BlockCacheService {
         return domain;
     }
 
-    @CachePut(value = "BuilderV1BlockDomain", key = "#channelName + ':' + #blockId + ':' + #blockCode")
-    public BuilderV1BlockDomain setBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {
+    @CachePut(value = "BuilderV1BlockDomain", key = "#blockId")
+    public BuilderV1BlockDomain setBuilderV1BlockDomainCache(String blockId) {
         BuilderV1BlockEntity entity = repository.getReferenceById(blockId);
         BuilderV1BlockDomain domain = new BuilderV1BlockDomain();
         domain.setScenarioId(entity.getBuilderV1ScenarioEntity().getScenarioId());
@@ -43,9 +46,18 @@ public class BuilderV1BlockCacheService {
         return domain;
     }
 
-    @CacheEvict(value = "BuilderV1BlockDomain", key = "#channelName + ':' + #blockId + ':' + #blockCode")
-    public void deleteBuilderV1BlockDomainCache(String channelName, String blockId, String blockCode) {
-        logger.info("BuilderV1BlockDomain Cache is deleted ... blockId : {}, blockCode : {}", blockId, blockCode);
+    @CacheEvict(value = "BuilderV1BlockDomain", key = "#blockId")
+    public void deleteBuilderV1BlockDomainCache(String blockId) {
+        logger.info("BuilderV1BlockDomain Cache is deleted ... blockId : {}", blockId);
+    }
+
+    @Transactional
+    public void setAllBuilderV1BlockDomainCache() {
+        List<BuilderV1BlockEntity> list3 = repository.findAll();
+        for (BuilderV1BlockEntity entity : list3) {
+            String blockId = entity.getBlockId();
+            setBuilderV1BlockDomainCache(blockId);
+        }
     }
 
 }

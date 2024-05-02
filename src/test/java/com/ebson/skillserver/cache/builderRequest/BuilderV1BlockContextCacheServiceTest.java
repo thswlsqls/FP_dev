@@ -22,7 +22,7 @@ public class BuilderV1BlockContextCacheServiceTest {
         String blockCode = "FP_S01_B01";
         String contextId = UUIDFormatter.formatToUUID("0334AEA5F95111EEB5380A48BC1A5EE1");
 
-        BuilderV1BlockContextDomain domain = service.getBuilderV1BlockContextDomainCache(blockCode, contextId);
+        BuilderV1BlockContextDomain domain = service.getBuilderV1BlockContextDomainCache(contextId);
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getContextName(), "S01_B01_테스트콘텍스트");
     }
@@ -33,7 +33,7 @@ public class BuilderV1BlockContextCacheServiceTest {
         String blockCode = "FP_S01_B01";
         String contextId = UUIDFormatter.formatToUUID("0334AEA5F95111EEB5380A48BC1A5EE1");
 
-        BuilderV1BlockContextDomain domain = service.setBuilderV1BlockContextDomainCache(blockCode, contextId);
+        BuilderV1BlockContextDomain domain = service.setBuilderV1BlockContextDomainCache(contextId);
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getContextName(), "S01_B01_테스트콘텍스트");
     }
@@ -42,7 +42,7 @@ public class BuilderV1BlockContextCacheServiceTest {
     public void deleteBuilderV1BlockContextDomainCacheTest() {
         String blockCode = "FP_S01_B01";
         String contextId = UUIDFormatter.formatToUUID("0334AEA5F95111EEB5380A48BC1A5EE1");
-        service.deleteBuilderV1BlockContextDomainCache(blockCode, contextId);
+        service.deleteBuilderV1BlockContextDomainCache(contextId);
     }
 
 }

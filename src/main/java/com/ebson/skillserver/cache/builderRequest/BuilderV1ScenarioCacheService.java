@@ -10,6 +10,9 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class BuilderV1ScenarioCacheService {
@@ -19,10 +22,8 @@ public class BuilderV1ScenarioCacheService {
     @Autowired
     BuilderV1ScenarioEntityRepository repository;
 
-    @Cacheable(value = "BuilderV1ScenarioDomain", key = "#channelName + ':' + #scenarioId + ':' + #scenarioCode")
-    public BuilderV1ScenarioDomain getBuilderV1ScenarioDomainCache(String channelName
-                                                               , String scenarioId
-                                                               , String scenarioCode) {
+    @Cacheable(value = "BuilderV1ScenarioDomain", key = "#scenarioId")
+    public BuilderV1ScenarioDomain getBuilderV1ScenarioDomainCache(String scenarioId) {
         BuilderV1ScenarioEntity bvse = repository.getReferenceById(scenarioId);
         BuilderV1ScenarioDomain bvsd = new BuilderV1ScenarioDomain();
         bvsd.setChannelId(bvse.getBuilderV1ChannelEntity().getChannelId());
@@ -33,10 +34,8 @@ public class BuilderV1ScenarioCacheService {
         return bvsd;
     }
 
-    @CachePut(value = "BuilderV1ScenarioDomain", key = "#channelName + ':' + #scenarioId + ':' + #scenarioCode")
-    public BuilderV1ScenarioDomain setBuilderV1ScenarioDomainCache(String channelName
-                                                                , String scenarioId
-                                                                , String scenarioCode) {
+    @CachePut(value = "BuilderV1ScenarioDomain", key = "#scenarioId")
+    public BuilderV1ScenarioDomain setBuilderV1ScenarioDomainCache(String scenarioId) {
         BuilderV1ScenarioEntity bvse = repository.getReferenceById(scenarioId);
         BuilderV1ScenarioDomain bvsd = new BuilderV1ScenarioDomain();
         bvsd.setChannelId(bvse.getBuilderV1ChannelEntity().getChannelId());
@@ -47,11 +46,18 @@ public class BuilderV1ScenarioCacheService {
         return bvsd;
     }
 
-    @CacheEvict(value = "BuilderV1ScenarioDomain", key = "#channelName + ':' + #scenarioId + ':' + #scenarioCode")
-    public void deleteBuilderV1ScenarioDomainCache(String channelName
-                                                 , String scenarioId
-                                                 , String scenarioCode) {
-        logger.info("BuilderV1ScenarioDomain Cache is deleted ... channelName : {}, scenarioId : {}, scenarioCode : {}", channelName, scenarioId, scenarioCode);
+    @CacheEvict(value = "BuilderV1ScenarioDomain", key = "#scenarioId")
+    public void deleteBuilderV1ScenarioDomainCache(String scenarioId) {
+        logger.info("BuilderV1ScenarioDomain Cache is deleted ... scenarioId : {}", scenarioId);
+    }
+
+    @Transactional
+    public void setAllBuilderV1ScenarioDomainCache() {
+        List<BuilderV1ScenarioEntity> list2 = repository.findAll();
+        for (BuilderV1ScenarioEntity entity : list2) {
+            String scenarioId = entity.getScenarioId();
+            setBuilderV1ScenarioDomainCache(scenarioId);
+        }
     }
 
 }

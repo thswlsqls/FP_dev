@@ -22,7 +22,7 @@ public class BuilderV1BlockCacheServiceTest {
         String blockId = "6590ab5b193392115b5a7ff8";
         String blockCode = "FP_S01_B01";
 
-        BuilderV1BlockDomain domain =  service.getBuilderV1BlockDomainCache(channelName, blockId, blockCode);
+        BuilderV1BlockDomain domain =  service.getBuilderV1BlockDomainCache(blockId);
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getBlockName(), "테스트 블록");
     }
@@ -34,7 +34,7 @@ public class BuilderV1BlockCacheServiceTest {
         String blockId = "6590ab5b193392115b5a7ff8";
         String blockCode = "FP_S01_B01";
 
-        BuilderV1BlockDomain domain =  service.setBuilderV1BlockDomainCache(channelName, blockId, blockCode);
+        BuilderV1BlockDomain domain =  service.setBuilderV1BlockDomainCache(blockId);
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getBlockName(), "테스트 블록");
     }
@@ -44,7 +44,7 @@ public class BuilderV1BlockCacheServiceTest {
         String channelName = "FP";
         String blockId = "6590ab5b193392115b5a7ff8";
         String blockCode = "FP_S01_B01";
-        service.deleteBuilderV1BlockDomainCache(channelName, blockId, blockCode);
+        service.deleteBuilderV1BlockDomainCache(blockId);
     }
 
 }

@@ -26,7 +26,7 @@ public class BuilderV1ScenarioCacheServiceTest {
         String scenarioId = "6590ab21193392115b5a7ff5";
         String scenarioCode = "FP_S01";
 
-        BuilderV1ScenarioDomain domain = service.getBuilderV1ScenarioDomainCache(channelName, scenarioId, scenarioCode);
+        BuilderV1ScenarioDomain domain = service.getBuilderV1ScenarioDomainCache(scenarioId);
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getScenarioName(), "테스트 시나리오");
     }
@@ -38,7 +38,7 @@ public class BuilderV1ScenarioCacheServiceTest {
         String scenarioId = "6590ab21193392115b5a7ff5";
         String scenarioCode = "FP_S01";
 
-        BuilderV1ScenarioDomain domain = service.setBuilderV1ScenarioDomainCache(channelName, scenarioId, scenarioCode);
+        BuilderV1ScenarioDomain domain = service.setBuilderV1ScenarioDomainCache(scenarioId);
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getScenarioName(), "테스트 시나리오");
     }
@@ -48,7 +48,7 @@ public class BuilderV1ScenarioCacheServiceTest {
         String channelName = "FP";
         String scenarioId = "6590ab21193392115b5a7ff5";
         String scenarioCode = "FP_S01";
-        service.deleteBuilderV1ScenarioDomainCache(channelName, scenarioId, scenarioCode);
+        service.deleteBuilderV1ScenarioDomainCache(scenarioId);
     }
 
 }
