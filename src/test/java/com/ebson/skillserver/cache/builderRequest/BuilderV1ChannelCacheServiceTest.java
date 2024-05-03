@@ -10,6 +10,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class BuilderV1ChannelCacheServiceTest {
@@ -31,6 +34,13 @@ public class BuilderV1ChannelCacheServiceTest {
     @Transactional
     public void setBuilderV1ChannelDomainCacheTest() {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
+        String channelId2 = UUIDFormatter.formatToUUID("0AB4D8759506458D82E9671D1345F847");
+        List<String> idList = new ArrayList<>();
+        idList.add(channelId);
+        idList.add(channelId2);
+        for (String id : idList) {
+            service.setBuilderV1ChannelDomainCache(id);
+        }
         BuilderV1ChannelDomain domain = service.setBuilderV1ChannelDomainCache(channelId);
 
         Assertions.assertNotNull(domain);
@@ -42,6 +52,5 @@ public class BuilderV1ChannelCacheServiceTest {
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
         service.deleteBuilderV1ChannelDomainCache(channelId);
     }
-
 
 }

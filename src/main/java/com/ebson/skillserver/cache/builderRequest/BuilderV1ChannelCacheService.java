@@ -46,6 +46,17 @@ public class BuilderV1ChannelCacheService {
         return bvcd;
     }
 
+    @CachePut(value = "BuilderV1ChannelDomain", key = "#channelId")
+    public BuilderV1ChannelDomain setBuilderV1ChannelDomainCacheByEntity(String channelId
+                                                                        , BuilderV1ChannelEntity bvcde) {
+        BuilderV1ChannelDomain bvcd = new BuilderV1ChannelDomain();
+        bvcd.setChannelId(bvcde.getChannelId());
+        bvcd.setChannelName(bvcde.getChannelName());
+        logger.info("setBuilderV1ChannelDomainCache^^BuilderV1ChannelDomain :: {}", bvcd.toString());
+        return bvcd;
+    }
+
+
     // 캐시를 제거
     @CacheEvict(value = "BuilderV1ChannelDomain", key = "#channelId")
     public void deleteBuilderV1ChannelDomainCache(String channelId) {
@@ -57,7 +68,7 @@ public class BuilderV1ChannelCacheService {
         List<BuilderV1ChannelEntity> list = repository.findAll();
         for (BuilderV1ChannelEntity entity : list) {
             String channelId = UUIDFormatter.formatToUUID(entity.getChannelId().toString());
-            setBuilderV1ChannelDomainCache(channelId);
+            setBuilderV1ChannelDomainCacheByEntity(channelId, entity);
         }
     }
 

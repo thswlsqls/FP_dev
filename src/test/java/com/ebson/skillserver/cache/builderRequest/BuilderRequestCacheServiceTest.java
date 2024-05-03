@@ -18,5 +18,4 @@ public class BuilderRequestCacheServiceTest {
         service.initBuilderRequestCache();
     }
 
-
 }
