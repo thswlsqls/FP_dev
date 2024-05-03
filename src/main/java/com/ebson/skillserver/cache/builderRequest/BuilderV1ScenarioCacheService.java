@@ -53,8 +53,8 @@ public class BuilderV1ScenarioCacheService {
 
     @Transactional
     public void setAllBuilderV1ScenarioDomainCache() {
-        List<BuilderV1ScenarioEntity> list2 = repository.findAll();
-        for (BuilderV1ScenarioEntity entity : list2) {
+        List<BuilderV1ScenarioEntity> list = repository.findAll();
+        for (BuilderV1ScenarioEntity entity : list) {
             String scenarioId = entity.getScenarioId();
             setBuilderV1ScenarioDomainCache(scenarioId);
         }

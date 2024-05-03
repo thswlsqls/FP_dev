@@ -54,8 +54,8 @@ public class BuilderV1ChannelCacheService {
 
     @Transactional
     public void setAllBuilderV1ChannelDomainCache() {
-        List<BuilderV1ChannelEntity> list1 = repository.findAll();
-        for (BuilderV1ChannelEntity entity : list1) {
+        List<BuilderV1ChannelEntity> list = repository.findAll();
+        for (BuilderV1ChannelEntity entity : list) {
             String channelId = UUIDFormatter.formatToUUID(entity.getChannelId().toString());
             setBuilderV1ChannelDomainCache(channelId);
         }

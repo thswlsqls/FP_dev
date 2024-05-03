@@ -9,12 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@EnableCaching
+@EnableTransactionManagement
 public class BuilderV1BlockCacheService {
 
     private static final Logger logger = LoggerFactory.getLogger(BuilderV1BlockCacheService.class);
@@ -53,8 +57,8 @@ public class BuilderV1BlockCacheService {
 
     @Transactional
     public void setAllBuilderV1BlockDomainCache() {
-        List<BuilderV1BlockEntity> list3 = repository.findAll();
-        for (BuilderV1BlockEntity entity : list3) {
+        List<BuilderV1BlockEntity> list = repository.findAll();
+        for (BuilderV1BlockEntity entity : list) {
             String blockId = entity.getBlockId();
             setBuilderV1BlockDomainCache(blockId);
         }

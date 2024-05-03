@@ -58,8 +58,8 @@ public class BuilderV1BlockContextCacheService {
 
     @Transactional
     public void setAllBuilderV1BlockContextDomainCache() {
-        List<BuilderV1BlockContextEntity> list4 = repository.findAll();
-        for (BuilderV1BlockContextEntity entity : list4) {
+        List<BuilderV1BlockContextEntity> list = repository.findAll();
+        for (BuilderV1BlockContextEntity entity : list) {
             String contextId = UUIDFormatter.formatToUUID(entity.getContextId().toString());
             setBuilderV1BlockContextDomainCache(contextId);
         }
