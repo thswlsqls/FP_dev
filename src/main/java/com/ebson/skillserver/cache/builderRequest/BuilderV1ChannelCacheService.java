@@ -4,6 +4,7 @@ import com.ebson.skillserver.util.UUIDFormatter;
 import com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ChannelDomain;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1ChannelEntity;
 import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1ChannelEntityRepository;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,30 +47,10 @@ public class BuilderV1ChannelCacheService {
         return bvcd;
     }
 
-    @CachePut(value = "BuilderV1ChannelDomain", key = "#channelId")
-    public BuilderV1ChannelDomain setBuilderV1ChannelDomainCacheByEntity(String channelId
-                                                                        , BuilderV1ChannelEntity bvcde) {
-        BuilderV1ChannelDomain bvcd = new BuilderV1ChannelDomain();
-        bvcd.setChannelId(bvcde.getChannelId());
-        bvcd.setChannelName(bvcde.getChannelName());
-        logger.info("setBuilderV1ChannelDomainCache^^BuilderV1ChannelDomain :: {}", bvcd.toString());
-        return bvcd;
-    }
-
-
     // 캐시를 제거
     @CacheEvict(value = "BuilderV1ChannelDomain", key = "#channelId")
     public void deleteBuilderV1ChannelDomainCache(String channelId) {
         logger.info("BuilderV1ChannelDomain Cache is deleted ... channelId : {}", channelId);
-    }
-
-    @Transactional
-    public void setAllBuilderV1ChannelDomainCache() {
-        List<BuilderV1ChannelEntity> list = repository.findAll();
-        for (BuilderV1ChannelEntity entity : list) {
-            String channelId = UUIDFormatter.formatToUUID(entity.getChannelId().toString());
-            setBuilderV1ChannelDomainCacheByEntity(channelId, entity);
-        }
     }
 
 }

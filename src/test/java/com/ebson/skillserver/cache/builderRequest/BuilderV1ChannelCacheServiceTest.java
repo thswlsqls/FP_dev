@@ -2,6 +2,7 @@ package com.ebson.skillserver.cache.builderRequest;
 
 import com.ebson.skillserver.util.UUIDFormatter;
 import com.ebson.skillserver.v1.channels.FP.domain.BuilderV1ChannelDomain;
+import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1ChannelEntity;
 import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1ChannelEntityRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,9 @@ public class BuilderV1ChannelCacheServiceTest {
     @Autowired
     private BuilderV1ChannelCacheService service;
 
+    @Autowired
+    private BuilderV1ChannelEntityRepository repository;
+
     @Test
     @Transactional
     public void getBuilderV1ChannelDomainCacheTest() {
@@ -33,14 +37,8 @@ public class BuilderV1ChannelCacheServiceTest {
     @Test
     @Transactional
     public void setBuilderV1ChannelDomainCacheTest() {
+        List<BuilderV1ChannelEntity> list = repository.findAll();
         String channelId = UUIDFormatter.formatToUUID("DA05F8D6EC3611EEB5380A48BC1A5EE1");
-        String channelId2 = UUIDFormatter.formatToUUID("0AB4D8759506458D82E9671D1345F847");
-        List<String> idList = new ArrayList<>();
-        idList.add(channelId);
-        idList.add(channelId2);
-        for (String id : idList) {
-            service.setBuilderV1ChannelDomainCache(id);
-        }
         BuilderV1ChannelDomain domain = service.setBuilderV1ChannelDomainCache(channelId);
 
         Assertions.assertNotNull(domain);

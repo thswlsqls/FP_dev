@@ -65,7 +65,7 @@ public class QuartzSchedulerConfig {
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean() throws IOException {
+    public SchedulerFactoryBean schedulerFactoryBean() throws IOException, SchedulerException {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         schedulerFactoryBean.setGlobalJobListeners(customJobListener);
         schedulerFactoryBean.setGlobalTriggerListeners(customTriggerListener);
@@ -75,8 +75,11 @@ public class QuartzSchedulerConfig {
         propertiesFactoryBean.afterPropertiesSet();
         schedulerFactoryBean.setQuartzProperties(propertiesFactoryBean.getObject());
 
+        schedulerFactoryBean.setApplicationContextSchedulerContextKey("applicationContext");
+
 //        schedulerFactoryBean.setTriggers(cronTrigger1()
 //                                        , cronTrigger2());
+
         return schedulerFactoryBean;
     }
 
@@ -89,7 +92,7 @@ public class QuartzSchedulerConfig {
 
         scheduler.scheduleJob(jobDetail1(), cronTrigger1());
         scheduler.scheduleJob(jobDetail2(), cronTrigger2());
-        scheduler.standby();
+        scheduler.start();
 
         return scheduler;
     }

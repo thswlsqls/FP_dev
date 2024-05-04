@@ -18,4 +18,6 @@ public class BuilderRequestCacheServiceTest {
         service.initBuilderRequestCache();
     }
 
+    @Test
+    public void initTest() { service.init(); }
 }

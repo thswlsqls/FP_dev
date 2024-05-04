@@ -13,11 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
+@Service("BuilderRequestCacheService")
 public class BuilderRequestCacheService {
 
     @Autowired
     private BuilderV1ChannelCacheService builderV1ChannelCacheService;
+
+    @Autowired
+    private BuilderV1ChannelEntityRepository repository;
 
     @Autowired
     private BuilderV1ScenarioCacheService builderV1ScenarioCacheService;
@@ -30,10 +33,18 @@ public class BuilderRequestCacheService {
 
     @PostConstruct
     public void initBuilderRequestCache() {
-        builderV1ChannelCacheService.setAllBuilderV1ChannelDomainCache();
+//        builderV1ChannelCacheService.setAllBuilderV1ChannelDomainCache();
 //        builderV1ScenarioCacheService.setAllBuilderV1ScenarioDomainCache();
 //        builderV1BlockCacheService.setAllBuilderV1BlockDomainCache();
 //        builderV1BlockContextCacheService.setAllBuilderV1BlockContextDomainCache();
+    }
+
+    @Transactional
+    public void init() {
+        List<BuilderV1ChannelEntity> list1 = repository.findAll();
+        for (BuilderV1ChannelEntity entity : list1) {
+            builderV1ChannelCacheService.setBuilderV1ChannelDomainCache(UUIDFormatter.formatToUUID(entity.getChannelId().toString()));
+        }
     }
 
 }
