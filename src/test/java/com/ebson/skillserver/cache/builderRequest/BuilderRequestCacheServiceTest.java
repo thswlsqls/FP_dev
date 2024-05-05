@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -15,9 +14,9 @@ public class BuilderRequestCacheServiceTest {
 
     @Test
     public void initBuilderRequestCacheTest() {
-        service.initBuilderRequestCache();
+        service.init();
     }
 
     @Test
-    public void initTest() { service.init(); }
+    public void initTest() { service.initByQuartzJobTest(); }
 }

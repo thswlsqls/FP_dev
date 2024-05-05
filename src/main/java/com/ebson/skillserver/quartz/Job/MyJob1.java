@@ -23,12 +23,13 @@ public class MyJob1 implements Job {
         logger.info("MyJob1 executed ... ");
         logger.info("Myjob1 context.getJobDetail().getJobDataMap().get(\"key1\") :: {}", context.getJobDetail().getJobDataMap().get("key1"));
         logger.info("Myjob1 context.getJobDetail().getJobDataMap().get(\"key2\") :: {}", context.getJobDetail().getJobDataMap().get("key2"));
+        /**
         try {
             ApplicationContext applicationContext = (ApplicationContext) context.getScheduler().getContext().get("applicationContext");
             BuilderRequestCacheService service = applicationContext.getBean(BuilderRequestCacheService.class);
             service.init();
         } catch (SchedulerException e) {
             throw new RuntimeException(e);
-        }
+        }*/
     }
 }
