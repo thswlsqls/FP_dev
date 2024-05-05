@@ -104,7 +104,7 @@ public class LoggingConfig {
             rollingPolicy.setParent(rollingFileAppender);
             rollingPolicy.start();
 
-            // context.getLogger("ERROR_LOGGER").setLevel(ch.qos.logback.classic.Level.DEBUG);
+            // context.getLogger("TRACE_LOGGER").setLevel(ch.qos.logback.classic.Level.DEBUG);
             context.getLogger("TRACE_LOGGER").addAppender(rollingFileAppender);
         }
 
@@ -129,7 +129,7 @@ public class LoggingConfig {
             rollingPolicy.setParent(rollingFileAppender);
             rollingPolicy.start();
 
-            // context.getLogger("ERROR_LOGGER").setLevel(ch.qos.logback.classic.Level.DEBUG);
+            // context.getLogger("DEBUG_LOGGER").setLevel(ch.qos.logback.classic.Level.DEBUG);
             context.getLogger("DEBUG_LOGGER").addAppender(rollingFileAppender);
         }
 
@@ -154,7 +154,7 @@ public class LoggingConfig {
             rollingPolicy.setParent(rollingFileAppender);
             rollingPolicy.start();
 
-            // context.getLogger("ERROR_LOGGER").setLevel(ch.qos.logback.classic.Level.DEBUG);
+            // context.getLogger("INFO_LOGGER").setLevel(ch.qos.logback.classic.Level.DEBUG);
             context.getLogger("INFO_LOGGER").addAppender(rollingFileAppender);
         }
 
@@ -179,7 +179,7 @@ public class LoggingConfig {
             rollingPolicy.setParent(rollingFileAppender);
             rollingPolicy.start();
 
-            // context.getLogger("ERROR_LOGGER").setLevel(ch.qos.logback.classic.Level.DEBUG);
+            // context.getLogger("WARN_LOGGER").setLevel(ch.qos.logback.classic.Level.DEBUG);
             context.getLogger("WARN_LOGGER").addAppender(rollingFileAppender);
         }
 
