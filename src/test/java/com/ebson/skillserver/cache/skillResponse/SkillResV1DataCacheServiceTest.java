@@ -21,7 +21,7 @@ public class SkillResV1DataCacheServiceTest {
     public void getSkillResV1DataDomainCache() {
         String dataId = UUIDFormatter.formatToUUID("4A972B25037511EFB5380A48BC1A5EE1");
         String blockCode = "FP_S01_B01";
-        SkillResV1DataDomain domain = service.getSkillResV1DataDomainCache(dataId, blockCode);
+        SkillResV1DataDomain domain = service.getSkillResV1DataDomainCache(dataId);
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getKey(), "test res data key");
@@ -33,7 +33,7 @@ public class SkillResV1DataCacheServiceTest {
     public void setSkillResV1DataDomainCache() {
         String dataId = UUIDFormatter.formatToUUID("4A972B25037511EFB5380A48BC1A5EE1");
         String blockCode = "FP_S01_B01";
-        SkillResV1DataDomain domain = service.setSkillResV1DataDomainCache(dataId, blockCode);
+        SkillResV1DataDomain domain = service.setSkillResV1DataDomainCache(dataId);
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getKey(), "test res data key");
@@ -45,7 +45,7 @@ public class SkillResV1DataCacheServiceTest {
         String dataId = UUIDFormatter.formatToUUID("4A972B25037511EFB5380A48BC1A5EE1");
         String blockCode = "FP_S01_B01";
 
-        service.deleteSkillResV1DataDomainCache(dataId, blockCode);
+        service.deleteSkillResV1DataDomainCache(dataId);
     }
 
 }

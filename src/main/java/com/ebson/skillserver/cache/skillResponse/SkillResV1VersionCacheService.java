@@ -21,8 +21,8 @@ public class SkillResV1VersionCacheService {
     @Autowired
     SkillResV1VersionEntityRepository repository;
 
-    @Cacheable(value = "SkillResV1VersionDomain", key = "#versionId + ':' + #blockCode")
-    public SkillResV1VersionDomain getSkillResV1VersionDomainCache(String versionId, String blockCode) {
+    @Cacheable(value = "SkillResV1VersionDomain", key = "#versionId")
+    public SkillResV1VersionDomain getSkillResV1VersionDomainCache(String versionId) {
         SkillResV1VersionEntity entity = repository.getReferenceById(UUID.fromString(versionId));
         SkillResV1VersionDomain domain = new SkillResV1VersionDomain();
         domain.setVersionId(entity.getVersionId());
@@ -34,8 +34,8 @@ public class SkillResV1VersionCacheService {
         return domain;
     }
 
-    @CachePut(value = "SkillResV1VersionDomain", key = "#versionId + ':' + #blockCode")
-    public SkillResV1VersionDomain setSkillResV1VersionDomainCache(String versionId, String blockCode) {
+    @CachePut(value = "SkillResV1VersionDomain", key = "#versionId")
+    public SkillResV1VersionDomain setSkillResV1VersionDomainCache(String versionId) {
         SkillResV1VersionEntity entity = repository.getReferenceById(UUID.fromString(versionId));
         SkillResV1VersionDomain domain = new SkillResV1VersionDomain();
         domain.setVersionId(entity.getVersionId());
@@ -47,9 +47,9 @@ public class SkillResV1VersionCacheService {
         return domain;
     }
 
-    @CacheEvict(value = "SkillResV1VersionDomain", key = "#versionId + ':' + #blockCode")
-    public void deleteSkillResV1VersionDomainCache(String versionId, String blockCode) {
-        logger.info("SkillResV1VersionDomain Cache is deleted ... versionId : {}, blockCode : {}", versionId, blockCode);
+    @CacheEvict(value = "SkillResV1VersionDomain", key = "#versionId")
+    public void deleteSkillResV1VersionDomainCache(String versionId) {
+        logger.info("SkillResV1VersionDomain Cache is deleted ... versionId : {}, blockCode : {}", versionId);
     }
 
 }

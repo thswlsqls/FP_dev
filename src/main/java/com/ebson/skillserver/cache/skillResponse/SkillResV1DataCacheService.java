@@ -21,8 +21,8 @@ public class SkillResV1DataCacheService {
     @Autowired
     SkillResV1DataEntityRepository repository;
 
-    @Cacheable(value = "SkillResV1DataDomain", key = "#dataId + ':' + #blockCode")
-    public SkillResV1DataDomain getSkillResV1DataDomainCache(String dataId, String blockCode){
+    @Cacheable(value = "SkillResV1DataDomain", key = "#dataId")
+    public SkillResV1DataDomain getSkillResV1DataDomainCache(String dataId){
         SkillResV1DataEntity entity = repository.getReferenceById(UUID.fromString(dataId));
         SkillResV1DataDomain domain = new SkillResV1DataDomain();
         domain.setDataId(entity.getDataId());
@@ -34,8 +34,8 @@ public class SkillResV1DataCacheService {
         return domain;
     }
 
-    @CachePut(value = "SkillResV1DataDomain", key = "#dataId + ':' + #blockCode")
-    public SkillResV1DataDomain setSkillResV1DataDomainCache(String dataId, String blockCode){
+    @CachePut(value = "SkillResV1DataDomain", key = "#dataId")
+    public SkillResV1DataDomain setSkillResV1DataDomainCache(String dataId){
         SkillResV1DataEntity entity = repository.getReferenceById(UUID.fromString(dataId));
         SkillResV1DataDomain domain = new SkillResV1DataDomain();
         domain.setDataId(entity.getDataId());
@@ -47,8 +47,8 @@ public class SkillResV1DataCacheService {
         return domain;
     }
 
-    @CacheEvict(value = "SkillResV1DataDomain", key = "#dataId + ':' + #blockCode")
-    public void deleteSkillResV1DataDomainCache(String dataId, String c){
-        logger.info("SkillResV1DataDomain Cache is deleted ... dataId : {}, blockCode : {}", dataId, dataId);
+    @CacheEvict(value = "SkillResV1DataDomain", key = "#dataId")
+    public void deleteSkillResV1DataDomainCache(String dataId){
+        logger.info("SkillResV1DataDomain Cache is deleted ... dataId : {}", dataId);
     }
 }

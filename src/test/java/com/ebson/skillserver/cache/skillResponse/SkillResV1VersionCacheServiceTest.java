@@ -21,7 +21,7 @@ public class SkillResV1VersionCacheServiceTest {
     public void getSkillResV1VersionDomainCacheTest() {
         String versionId = UUIDFormatter.formatToUUID("EC26D695038D11EFB5380A48BC1A5EE1");
         String blockCode = "FP_S01_B01";
-        SkillResV1VersionDomain domain = service.getSkillResV1VersionDomainCache(versionId, blockCode);
+        SkillResV1VersionDomain domain = service.getSkillResV1VersionDomainCache(versionId);
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getMajor(), 2);
@@ -33,7 +33,7 @@ public class SkillResV1VersionCacheServiceTest {
     public void setSkillResV1VersionDomainCacheTest() {
         String versionId = UUIDFormatter.formatToUUID("EC26D695038D11EFB5380A48BC1A5EE1");
         String blockCode = "FP_S01_B01";
-        SkillResV1VersionDomain domain = service.setSkillResV1VersionDomainCache(versionId, blockCode);
+        SkillResV1VersionDomain domain = service.setSkillResV1VersionDomainCache(versionId);
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getMajor(), 2);
@@ -45,7 +45,7 @@ public class SkillResV1VersionCacheServiceTest {
         String versionId = UUIDFormatter.formatToUUID("EC26D695038D11EFB5380A48BC1A5EE1");
         String blockCode = "FP_S01_B01";
 
-        service.deleteSkillResV1VersionDomainCache(versionId, blockCode);
+        service.deleteSkillResV1VersionDomainCache(versionId);
     }
 
 

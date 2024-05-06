@@ -21,10 +21,8 @@ public class SkillResV1ContextCacheService {
     @Autowired
     SkillResV1ContextEntityRepository repository;
 
-    @Cacheable(value = "SkillResV1ContextDomain", key = "#blockCode + ':' + #contextId + ':' + #contextName")
-    public SkillResV1ContextDomain getSkillResV1ContextDomainCache(String blockCode
-                                                                 , String contextId
-                                                                 , String contextName) {
+    @Cacheable(value = "SkillResV1ContextDomain", key = "#contextId")
+    public SkillResV1ContextDomain getSkillResV1ContextDomainCache(String contextId) {
         SkillResV1ContextEntity entity = repository.getReferenceById(UUID.fromString(contextId));
         SkillResV1ContextDomain domain = new SkillResV1ContextDomain();
         domain.setContextId(entity.getContextId());
@@ -38,10 +36,8 @@ public class SkillResV1ContextCacheService {
         return domain;
     }
 
-    @CachePut(value = "SkillResV1ContextDomain", key = "#blockCode + ':' + #contextId + ':' + #contextName")
-    public SkillResV1ContextDomain setSkillResV1ContextDomainCache(String blockCode
-                                                                 , String contextId
-                                                                 , String contextName) {
+    @CachePut(value = "SkillResV1ContextDomain", key = "#contextId")
+    public SkillResV1ContextDomain setSkillResV1ContextDomainCache(String contextId) {
         SkillResV1ContextEntity entity = repository.getReferenceById(UUID.fromString(contextId));
         SkillResV1ContextDomain domain = new SkillResV1ContextDomain();
         domain.setContextId(entity.getContextId());
@@ -55,11 +51,9 @@ public class SkillResV1ContextCacheService {
         return domain;
     }
 
-    @CacheEvict(value = "SkillResV1ContextDomain", key = "#blockCode + ':' + #contextId + ':' + #contextName")
-    public void deleteSkillResV1ContextDomainCache(String blockCode
-                                                 , String contextId
-                                                 , String contextName) {
-        logger.info("SkillResV1ContextDomain Cache is deleted ... blockCode : {}, contextId : {}, contextName : {}", blockCode, contextId, contextName);
+    @CacheEvict(value = "SkillResV1ContextDomain", key = "#contextId")
+    public void deleteSkillResV1ContextDomainCache(String contextId) {
+        logger.info("SkillResV1ContextDomain Cache is deleted ...  contextId : {}", contextId);
     }
 
 }

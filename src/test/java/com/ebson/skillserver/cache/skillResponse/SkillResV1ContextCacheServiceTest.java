@@ -23,7 +23,7 @@ public class SkillResV1ContextCacheServiceTest {
         String contextId = UUIDFormatter.formatToUUID("0334AEA5F95111EEB5380A48BC1A5EE1");
         String contextName = "S01_B01_테스트콘텍스트";
 
-        SkillResV1ContextDomain domain = service.getSkillResV1ContextDomainCache(blockCode, contextId, contextName);
+        SkillResV1ContextDomain domain = service.getSkillResV1ContextDomainCache(contextId);
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getContextName(), "S01_B01_테스트콘텍스트");
     }
@@ -35,7 +35,7 @@ public class SkillResV1ContextCacheServiceTest {
         String contextId = UUIDFormatter.formatToUUID("0334AEA5F95111EEB5380A48BC1A5EE1");
         String contextName = "S01_B01_테스트콘텍스트";
 
-        SkillResV1ContextDomain domain = service.setSkillResV1ContextDomainCache(blockCode, contextId, contextName);
+        SkillResV1ContextDomain domain = service.setSkillResV1ContextDomainCache(contextId);
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getContextName(), "S01_B01_테스트콘텍스트");
     }
@@ -46,6 +46,6 @@ public class SkillResV1ContextCacheServiceTest {
         String contextId = UUIDFormatter.formatToUUID("0334AEA5F95111EEB5380A48BC1A5EE1");
         String contextName = "S01_B01_테스트콘텍스트";
 
-        service.deleteSkillResV1ContextDomainCache(blockCode, contextId, contextName);
+        service.deleteSkillResV1ContextDomainCache(contextId);
     }
 }
