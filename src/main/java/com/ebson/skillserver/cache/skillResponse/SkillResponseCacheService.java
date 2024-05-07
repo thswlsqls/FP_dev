@@ -8,6 +8,8 @@ import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1ContextEntityRe
 import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1ContextParamEntityRepository;
 import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1DataEntityRepository;
 import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1VersionEntityRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -18,6 +20,8 @@ import java.util.List;
 
 @Service
 public class SkillResponseCacheService {
+
+    private static final Logger logger = LoggerFactory.getLogger(SkillResponseCacheService.class);
 
     @Autowired
     private SkillResV1ContextCacheService skillResV1ContextCacheService;
