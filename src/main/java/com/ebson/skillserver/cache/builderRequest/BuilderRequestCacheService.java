@@ -66,7 +66,7 @@ public class BuilderRequestCacheService {
     }
 
     @Transactional
-    public void initByQuartzJobTest() {
+    public void initByQuartzJob() {
         List<BuilderV1ChannelEntity> list1 = bilderV1ChannelEntityRepository.findAll();
         for (BuilderV1ChannelEntity entity : list1) {
             builderV1ChannelCacheService.setBuilderV1ChannelDomainCache(UUIDFormatter.formatToUUID(entity.getChannelId().toString()));

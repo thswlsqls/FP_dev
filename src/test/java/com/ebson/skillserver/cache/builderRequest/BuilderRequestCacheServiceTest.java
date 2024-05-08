@@ -13,10 +13,10 @@ public class BuilderRequestCacheServiceTest {
     private BuilderRequestCacheService service;
 
     @Test
-    public void initBuilderRequestCacheTest() {
+    public void initTest() {
         service.init();
     }
 
     @Test
-    public void initTest() { service.initByQuartzJobTest(); }
+    public void initByQuartzJobTest() { service.initByQuartzJob(); }
 }

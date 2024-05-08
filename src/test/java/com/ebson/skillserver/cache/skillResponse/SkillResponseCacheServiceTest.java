@@ -16,4 +16,5 @@ public class SkillResponseCacheServiceTest {
     public void initTest() {
         service.init();
     }
+
 }
