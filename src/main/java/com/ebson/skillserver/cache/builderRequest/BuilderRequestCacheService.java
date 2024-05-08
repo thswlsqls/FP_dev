@@ -1,5 +1,6 @@
 package com.ebson.skillserver.cache.builderRequest;
 
+import com.ebson.skillserver.cache.skillResponse.SkillResponseCacheService;
 import com.ebson.skillserver.util.UUIDFormatter;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockContextEntity;
 import com.ebson.skillserver.v1.channels.FP.entity.BuilderV1BlockEntity;
@@ -9,6 +10,8 @@ import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1BlockContextEnti
 import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1BlockEntityRepository;
 import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1ChannelEntityRepository;
 import com.ebson.skillserver.v1.channels.FP.repository.BuilderV1ScenarioEntityRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -19,6 +22,8 @@ import java.util.List;
 
 @Service
 public class BuilderRequestCacheService {
+
+    private static final Logger logger = LoggerFactory.getLogger(BuilderRequestCacheService.class);
 
     @Autowired
     private BuilderV1ChannelCacheService builderV1ChannelCacheService;
@@ -47,6 +52,7 @@ public class BuilderRequestCacheService {
     @Transactional
     @EventListener(value=ApplicationReadyEvent.class)
     public void init() {
+        logger.info("BuilderRequestCache initialized ... ");
         List<BuilderV1ChannelEntity> list1 = bilderV1ChannelEntityRepository.findAll();
         for (BuilderV1ChannelEntity entity : list1) {
             builderV1ChannelCacheService.setBuilderV1ChannelDomainCache(UUIDFormatter.formatToUUID(entity.getChannelId().toString()));

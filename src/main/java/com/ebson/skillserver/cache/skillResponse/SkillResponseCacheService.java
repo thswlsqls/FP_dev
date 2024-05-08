@@ -51,6 +51,7 @@ public class SkillResponseCacheService {
     @Transactional
     @EventListener(value= ApplicationReadyEvent.class)
     public void init() {
+        logger.info("SkillResponseCache initialized ... ");
         List<SkillResV1ContextEntity> list1 = skillResV1ContextEntityRepository.findAll();
         for (SkillResV1ContextEntity entity : list1) {
             skillResV1ContextCacheService.setSkillResV1ContextDomainCache(UUIDFormatter.formatToUUID(entity.getContextId().toString()));
