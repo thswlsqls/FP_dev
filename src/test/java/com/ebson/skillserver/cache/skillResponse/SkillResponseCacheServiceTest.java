@@ -1,4 +1,4 @@
-package com.ebson.skillserver.cache.builderRequest;
+package com.ebson.skillserver.cache.skillResponse;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,16 +7,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class BuilderRequestCacheServiceTest {
+public class SkillResponseCacheServiceTest {
 
     @Autowired
-    private BuilderRequestCacheService service;
+    private SkillResponseCacheService service;
 
     @Test
-    public void initBuilderRequestCacheTest() {
+    public void initTest() {
         service.init();
     }
-
-    @Test
-    public void initTest() { service.initByQuartzJobTest(); }
 }

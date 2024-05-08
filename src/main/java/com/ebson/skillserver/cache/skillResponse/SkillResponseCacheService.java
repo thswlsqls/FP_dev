@@ -68,6 +68,7 @@ public class SkillResponseCacheService {
             skillResV1VersionCacheService.setSkillResV1VersionDomainCache(UUIDFormatter.formatToUUID(entity.getVersionId().toString()));
         }
     }
+
 }
 
 
