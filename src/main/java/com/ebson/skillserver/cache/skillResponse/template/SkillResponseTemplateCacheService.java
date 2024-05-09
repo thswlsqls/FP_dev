@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class SkillResV1TemplateCacheService {
+public class SkillResponseTemplateCacheService {
 
-    private static final Logger logger = LoggerFactory.getLogger(SkillResV1TemplateCacheService.class);
+    private static final Logger logger = LoggerFactory.getLogger(SkillResponseTemplateCacheService.class);
 
     @Autowired
     private SkillResV1TemplateOutputCacheService skillResV1TemplateOutputCacheService;
