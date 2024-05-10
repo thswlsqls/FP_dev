@@ -1,5 +1,6 @@
 package com.ebson.skillserver.cache.skillResponse.template;
 
+import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1TemplateComponentEntityRepository;
 import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1TemplateOutputEntityRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,12 @@ public class SkillResponseTemplateCacheService {
 
     @Autowired
     private SkillResV1TemplateOutputEntityRepository skillResV1TemplateOutputEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateComponentCacheService skillResV1TemplateComponentCacheService;
+    @Autowired
+    private SkillResV1TemplateComponentEntityRepository skillResV1TemplateComponentEntityRepository;
+
 
     @Transactional
     @EventListener(value= ApplicationReadyEvent.class)

@@ -12,6 +12,4 @@ public class SkillResV1TemplateDomain implements Serializable {
     private String blockId; // UUID -> String
     private String blockCode;
     private String templateName;
-    private UUID creator;
-    private UUID lastUpdater;
 }
