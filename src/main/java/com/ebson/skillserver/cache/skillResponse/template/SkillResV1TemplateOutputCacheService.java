@@ -23,8 +23,8 @@ public class SkillResV1TemplateOutputCacheService {
     @Autowired
     SkillResV1TemplateOutputEntityRepository repository;
 
-    @Cacheable(value = "SkillResV1TemplateOutputDomain", key = "#outputId + ':' + #templateId")
-    public SkillResV1TemplateOutputDomain getSkillResV1TemplateOutputDomainCache(String outputId, String templateId) {
+    @Cacheable(value = "SkillResV1TemplateOutputDomain", key = "#outputId")
+    public SkillResV1TemplateOutputDomain getSkillResV1TemplateOutputDomainCache(String outputId) {
         SkillResV1TemplateOutputEntity entity = repository.getReferenceById(UUID.fromString(outputId));
         SkillResV1TemplateOutputDomain domain = new SkillResV1TemplateOutputDomain();
         if (Objects.nonNull(entity.getOutputId())) { domain.setOutputId(entity.getOutputId()); }
@@ -37,8 +37,8 @@ public class SkillResV1TemplateOutputCacheService {
         return domain;
     }
 
-    @CachePut(value = "SkillResV1TemplateOutputDomain", key = "#outputId + ':' + #templateId")
-    public SkillResV1TemplateOutputDomain setSkillResV1TemplateOutputDomainCache(String outputId, String templateId) {
+    @CachePut(value = "SkillResV1TemplateOutputDomain", key = "#outputId")
+    public SkillResV1TemplateOutputDomain setSkillResV1TemplateOutputDomainCache(String outputId) {
         SkillResV1TemplateOutputEntity entity = repository.getReferenceById(UUID.fromString(outputId));
         SkillResV1TemplateOutputDomain domain = new SkillResV1TemplateOutputDomain();
         if (Objects.nonNull(entity.getOutputId())) { domain.setOutputId(entity.getOutputId()); }
@@ -51,8 +51,8 @@ public class SkillResV1TemplateOutputCacheService {
         return domain;
     }
 
-    @CacheEvict(value = "SkillResV1TemplateOutputDomain", key = "#outputId + ':' + #templateId")
-    public void deleteSkillResV1TemplateOutputDomainCache(String outputId, String templateId) {
-        logger.info("SkillResV1TemplateOutputDomain Cache is deleted ... outputId : {}, templateId : {}", outputId, templateId);
+    @CacheEvict(value = "SkillResV1TemplateOutputDomain", key = "#outputId")
+    public void deleteSkillResV1TemplateOutputDomainCache(String outputId) {
+        logger.info("SkillResV1TemplateOutputDomain Cache is deleted ... outputId : {}", outputId);
     }
 }

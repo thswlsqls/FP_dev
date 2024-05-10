@@ -21,7 +21,7 @@ public class SkillResV1TemplateOutputCacheServiceTest {
     public void getSkillResV1TemplateOutputDomainCacheTest() {
         String outputId = UUIDFormatter.formatToUUID("6BDD5A89EDB711EEB5380A48BC1A5EE1");
         String templateId = UUIDFormatter.formatToUUID("4144051BEDB711EEB5380A48BC1A5EE1");
-        SkillResV1TemplateOutputDomain domain = service.getSkillResV1TemplateOutputDomainCache(outputId, templateId);
+        SkillResV1TemplateOutputDomain domain = service.getSkillResV1TemplateOutputDomainCache(outputId);
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getOutputName(), "테스트 아웃풋(single simpleText)");
@@ -32,7 +32,7 @@ public class SkillResV1TemplateOutputCacheServiceTest {
     public void setSkillResV1TemplateOutputDomainCacheTest() {
         String outputId = UUIDFormatter.formatToUUID("6BDD5A89EDB711EEB5380A48BC1A5EE1");
         String templateId = UUIDFormatter.formatToUUID("4144051BEDB711EEB5380A48BC1A5EE1");
-        SkillResV1TemplateOutputDomain domain = service.setSkillResV1TemplateOutputDomainCache(outputId, templateId);
+        SkillResV1TemplateOutputDomain domain = service.setSkillResV1TemplateOutputDomainCache(outputId);
 
         Assertions.assertNotNull(domain);
         Assertions.assertEquals(domain.getOutputName(), "테스트 아웃풋(single simpleText)");
@@ -42,7 +42,7 @@ public class SkillResV1TemplateOutputCacheServiceTest {
     public void deleteSkillResV1TemplateOutputDomainCache() {
         String outputId = UUIDFormatter.formatToUUID("6BDD5A89EDB711EEB5380A48BC1A5EE1");
         String templateId = UUIDFormatter.formatToUUID("4144051BEDB711EEB5380A48BC1A5EE1");
-        service.deleteSkillResV1TemplateOutputDomainCache(outputId, templateId);
+        service.deleteSkillResV1TemplateOutputDomainCache(outputId);
     }
 
 }
