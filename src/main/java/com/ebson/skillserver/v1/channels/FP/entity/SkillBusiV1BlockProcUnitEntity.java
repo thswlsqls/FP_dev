@@ -3,7 +3,9 @@ package com.ebson.skillserver.v1.channels.FP.entity;
 import com.ebson.skillserver.converter.UUIDToBytesConverter;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -48,9 +50,11 @@ public class SkillBusiV1BlockProcUnitEntity {
     private String interfaceCode;
 
     @Column(name = "CREATED_DATE", nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdDate;
 
     @Column(name = "LAST_UPDATED_DATE", nullable = false)
+    @UpdateTimestamp
     private LocalDateTime lastUpdatedDate;
 
     @Column(name = "CREATOR", length = 45)
@@ -61,14 +65,20 @@ public class SkillBusiV1BlockProcUnitEntity {
 
     @PrePersist
     protected void onCreate() {
-        LocalDateTime now = LocalDateTime.now();
-        this.createdDate = now;
-        this.lastUpdatedDate = now;
+        /**
+         * 저장 전 검증 로직 수행
+         * LocalDateTime now = LocalDateTime.now();
+         * this.createdDate = now;
+         * this.lastUpdatedDate = now;
+         */
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.lastUpdatedDate = LocalDateTime.now();
+        /**
+         * 업데이트 전 검증 로직 수행
+         * this.lastUpdatedDate = LocalDateTime.now();
+         * */
     }
 }
 

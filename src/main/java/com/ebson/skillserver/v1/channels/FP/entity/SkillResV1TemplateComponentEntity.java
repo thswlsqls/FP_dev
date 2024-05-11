@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.ibatis.annotations.Many;
 import org.apache.ibatis.annotations.One;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -33,9 +35,11 @@ public class SkillResV1TemplateComponentEntity {
     private String componentName;
 
     @Column(name = "CREATED_DATE", nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdDate;
 
     @Column(name = "LAST_UPDATED_DATE", nullable = false)
+    @UpdateTimestamp
     private LocalDateTime lastUpdatedDate;
 
     @Column(name = "CREATOR", length = 45)
@@ -46,13 +50,19 @@ public class SkillResV1TemplateComponentEntity {
 
     @PrePersist
     protected void onCreate() {
-        LocalDateTime now = LocalDateTime.now();
-        this.createdDate = now;
-        this.lastUpdatedDate = now;
+        /**
+         * 저장 전 검증 로직 수행
+         * LocalDateTime now = LocalDateTime.now();
+         * this.createdDate = now;
+         * this.lastUpdatedDate = now;
+         */
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.lastUpdatedDate = LocalDateTime.now();
+        /**
+         * 업데이트 전 검증 로직 수행
+         * this.lastUpdatedDate = LocalDateTime.now();
+         * */
     }
 }

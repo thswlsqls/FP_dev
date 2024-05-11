@@ -4,7 +4,9 @@ import com.ebson.skillserver.converter.UUIDToBytesConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -34,9 +36,11 @@ public class BuilderV1BlockContextEntity {
     private String contextName;
 
     @Column(name = "CREATED_DATE", nullable = false)
+    @CreationTimestamp
     private LocalDateTime createdDate;
 
     @Column(name = "LAST_UPDATE_DATE", nullable = false)
+    @UpdateTimestamp
     private LocalDateTime lastUpdateDate;
 
     @Column(name = "CREATOR", length = 45)
@@ -47,13 +51,19 @@ public class BuilderV1BlockContextEntity {
 
     @PrePersist
     protected void onCreate() {
-        LocalDateTime now = LocalDateTime.now();
-        this.createdDate = now;
-        this.lastUpdateDate = now;
+        /**
+         * 저장 전 검증 로직 수행
+         * LocalDateTime now = LocalDateTime.now();
+         * this.createdDate = now;
+         * this.lastUpdatedDate = now;
+         */
     }
 
     @PreUpdate
     protected void onUpdate() {
-        this.lastUpdateDate = LocalDateTime.now();
+        /**
+         * 업데이트 전 검증 로직 수행
+         * this.lastUpdatedDate = LocalDateTime.now();
+         * */
     }
 }
