@@ -1,14 +1,8 @@
 package com.ebson.skillserver.cache.skillResponse.template;
 
 import com.ebson.skillserver.util.UUIDFormatter;
-import com.ebson.skillserver.v1.channels.FP.entity.SkillResV1TemplateCarouselEntity;
-import com.ebson.skillserver.v1.channels.FP.entity.SkillResV1TemplateComponentEntity;
-import com.ebson.skillserver.v1.channels.FP.entity.SkillResV1TemplateEntity;
-import com.ebson.skillserver.v1.channels.FP.entity.SkillResV1TemplateOutputEntity;
-import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1TemplateCarouselEntityRepository;
-import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1TemplateComponentEntityRepository;
-import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1TemplateEntityRepository;
-import com.ebson.skillserver.v1.channels.FP.repository.SkillResV1TemplateOutputEntityRepository;
+import com.ebson.skillserver.v1.channels.FP.entity.*;
+import com.ebson.skillserver.v1.channels.FP.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +45,8 @@ public class SkillResponseTemplateCacheService {
 
     @Transactional
     @EventListener(value= ApplicationReadyEvent.class)
-    public void init() {
-        logger.info("SkillResV1TemplateCacheService initialized ... ");
+    public void init1() {
+        logger.info("SkillResV1TemplateCacheService initialized : no 1 ... ");
         List<SkillResV1TemplateEntity> list1 = skillResV1TemplateEntityRepository.findAll();
         for (SkillResV1TemplateEntity entity : list1) {
             skillResV1TemplateCacheService.setSkillResV1TemplateDomainCache(UUIDFormatter.formatToUUID(entity.getTemplateId().toString()));
@@ -71,5 +65,50 @@ public class SkillResponseTemplateCacheService {
         }
     }
 
+    @Autowired
+    private SkillResV1TemplateSimpleTextEntityRepository skillResV1TemplateSimpleTextEntityRepository;
 
+    @Autowired
+    private SkillResV1TemplateSimpleTextCacheService skillResV1TemplateSimpleTextCacheService;
+
+    @Autowired
+    private SkillResV1TemplateSimpleImageEntityRepository skillResV1TemplateSimpleImageEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateSimpleImageCacheService skillResV1TemplateSimpleImageCacheService;
+
+    @Autowired
+    private SkillResV1TemplateTextCardEntityRepository skillResV1TemplateTextCardEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateTextCardCacheService skillResV1TemplateTextCardCacheService;
+
+    @Autowired
+    private SkillResV1TemplateBasicCardEntityRepository skillResV1TemplateBasicCardEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateBasicCardCacheService skillResV1TemplateBasicCardCacheService;
+
+    @Transactional
+    @EventListener(value= ApplicationReadyEvent.class)
+    public void init2() {
+        logger.info("SkillResV1TemplateCacheService initialized : no 2 ... ");
+        List<SkillResV1TemplateSimpleTextEntity> list1 = skillResV1TemplateSimpleTextEntityRepository.findAll();
+        for (SkillResV1TemplateSimpleTextEntity entity : list1) {
+            skillResV1TemplateSimpleTextCacheService.setSkillResV1TemplateSimpleTextDomainCache(UUIDFormatter.formatToUUID(entity.getComponentId().toString()));
+        }
+        List<SkillResV1TemplateSimpleImageEntity> list2 = skillResV1TemplateSimpleImageEntityRepository.findAll();
+        for (SkillResV1TemplateSimpleImageEntity entity : list2) {
+            skillResV1TemplateSimpleImageCacheService.setSkillResV1TemplateSimpleImageDomainCache(UUIDFormatter.formatToUUID(entity.getComponentId().toString()));
+        }
+        List<SkillResV1TemplateTextCardEntity> list3 = skillResV1TemplateTextCardEntityRepository.findAll();
+        for (SkillResV1TemplateTextCardEntity entity : list3) {
+            skillResV1TemplateTextCardCacheService.setSkillResV1TemplateTextCardDomainCache(UUIDFormatter.formatToUUID(entity.getComponentId().toString()));
+        }
+        List<SkillResV1TemplateBasicCardEntity> list4 = skillResV1TemplateBasicCardEntityRepository.findAll();
+        for (SkillResV1TemplateBasicCardEntity entity : list4) {
+            skillResV1TemplateBasicCardCacheService.setSkillResV1TemplateBasicCardDomainCache(UUIDFormatter.formatToUUID(entity.getComponentId().toString()));
+        }
+    }
 }
+
