@@ -110,5 +110,31 @@ public class SkillResponseTemplateCacheService {
             skillResV1TemplateBasicCardCacheService.setSkillResV1TemplateBasicCardDomainCache(UUIDFormatter.formatToUUID(entity.getComponentId().toString()));
         }
     }
+
+    @Autowired
+    private SkillResV1TemplateCommerceCardEntityRepository skillResV1TemplateCommerceCardEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateCommerceCardCacheService skillResV1TemplateCommerceCardCacheService;
+
+    @Autowired
+    private SkillResV1TemplateItemCardEntityRepository skillResV1TemplateItemCardEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateItemCardCacheService skillResV1TemplateItemCardCacheService;
+
+    @Autowired
+    private SkillResV1TemplateItemCardItemListEntityRepository skillResV1TemplateItemCardItemListEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateItemCardItemListCacheService skillResV1TemplateItemCardItemListCacheService;
+
+    @Transactional
+    @EventListener(value= ApplicationReadyEvent.class)
+    public void init3() {
+        logger.info("SkillResV1TemplateCacheService initialized : no 3 ... ");
+    }
+
+
 }
 
