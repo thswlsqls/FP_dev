@@ -133,6 +133,18 @@ public class SkillResponseTemplateCacheService {
     @EventListener(value= ApplicationReadyEvent.class)
     public void init3() {
         logger.info("SkillResV1TemplateCacheService initialized : no 3 ... ");
+        List<SkillResV1TemplateCommerceCardEntity> list1 = skillResV1TemplateCommerceCardEntityRepository.findAll();
+        for (SkillResV1TemplateCommerceCardEntity entity : list1) {
+            skillResV1TemplateCommerceCardCacheService.setSkillResV1TemplateCommerceCardDomainCache(UUIDFormatter.formatToUUID(entity.getComponentId().toString()));
+        }
+        List<SkillResV1TemplateItemCardEntity> list2 = skillResV1TemplateItemCardEntityRepository.findAll();
+        for (SkillResV1TemplateItemCardEntity entity : list2) {
+            skillResV1TemplateItemCardCacheService.setSkillResV1TemplateItemCardDomainCache(UUIDFormatter.formatToUUID(entity.getComponentId().toString()));
+        }
+        List<SkillResV1TemplateItemCardItemListEntity> list3 = skillResV1TemplateItemCardItemListEntityRepository.findAll();
+        for (SkillResV1TemplateItemCardItemListEntity entity : list3) {
+            skillResV1TemplateItemCardItemListCacheService.setSkillResV1TemplateItemCardItemListDomainCache(UUIDFormatter.formatToUUID(entity.getItemlistId().toString()));
+        }
     }
 
 
