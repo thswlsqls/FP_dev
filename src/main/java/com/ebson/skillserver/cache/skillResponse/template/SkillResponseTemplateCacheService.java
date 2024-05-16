@@ -11,6 +11,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -147,6 +148,61 @@ public class SkillResponseTemplateCacheService {
         }
     }
 
+    @Autowired
+    private SkillResV1TemplateListCardCacheService skillResV1TemplateListCardCacheService;
+
+    @Autowired
+    private SkillResV1TemplateListCardEntityRepository skillResV1TemplateListCardEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateListCardListItemCacheService skillResV1TemplateListCardListItemCacheService;
+
+    @Autowired
+    private SkillResV1TemplateListCardListItemEntityRepository skillResV1TemplateListCardListItemEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateListCardListItemExtraCacheService skillResV1TemplateListCardListItemExtraCacheService;
+
+    @Autowired
+    private SkillResV1TemplateListCardListItemExtraEntityRepository skillResV1TemplateListCardListItemExtraEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateQrplCacheService skillResV1TemplateQrplCacheService;
+
+    @Autowired
+    private SkillResV1TemplateQrplEntityRepository skillResV1TemplateQrplEntityRepository;
+
+    @Autowired
+    private SkillResV1TemplateQrplExtraCacheService skillResV1TemplateQrplExtraCacheService;
+
+    @Autowired
+    private SkillResV1TemplateQrplExtraEntityRepository skillResV1TemplateQrplExtraEntityRepository;
+
+    @Transactional
+    @EventListener(value= ApplicationReadyEvent.class)
+    public void init4() {
+        logger.info("SkillResV1TemplateCacheService initialized : no 4 ... ");
+        List<SkillResV1TemplateListCardEntity> list1 = skillResV1TemplateListCardEntityRepository.findAll();
+        for (SkillResV1TemplateListCardEntity entity : list1) {
+            skillResV1TemplateListCardCacheService.setSkillResV1TemplateListCardDomainCache(UUIDFormatter.formatToUUID(entity.getComponentId().toString()));
+        }
+        List<SkillResV1TemplateListCardListItemEntity> list2 = skillResV1TemplateListCardListItemEntityRepository.findAll();
+        for (SkillResV1TemplateListCardListItemEntity entity : list2) {
+            skillResV1TemplateListCardListItemCacheService.setSkillResV1TemplateListCardListItemDomainCache(UUIDFormatter.formatToUUID(entity.getListItemId().toString()));
+        }
+        List<SkillResV1TemplateListCardListItemExtraEntity> list3 = skillResV1TemplateListCardListItemExtraEntityRepository.findAll();
+        for (SkillResV1TemplateListCardListItemExtraEntity entity : list3) {
+            skillResV1TemplateListCardListItemExtraCacheService.setSkillResV1TemplateListCardListItemExtraDomainCache(UUIDFormatter.formatToUUID(entity.getExtraId().toString()));
+        }
+        List<SkillResV1TemplateQrplEntity> list4 = skillResV1TemplateQrplEntityRepository.findAll();
+        for (SkillResV1TemplateQrplEntity entity : list4) {
+            skillResV1TemplateQrplCacheService.setSkillResV1TemplateQrplDomainCache(UUIDFormatter.formatToUUID(entity.getQrplId().toString()));
+        }
+        List<SkillResV1TemplateQrplExtraEntity> list5 = skillResV1TemplateQrplExtraEntityRepository.findAll();
+        for (SkillResV1TemplateQrplExtraEntity entity : list5) {
+            skillResV1TemplateQrplExtraCacheService.setSkillResV1TemplateQrplExtraDomainCache(UUIDFormatter.formatToUUID(entity.getExtraId().toString()));
+        }
+    }
 
 }
 
