@@ -47,6 +47,8 @@ dependencies {
 
 	implementation("org.springframework.boot:spring-boot-starter-quartz")
 	implementation("com.mchange:c3p0:0.9.5.5")
+
+	implementation("org.springframework.boot:spring-boot-starter-batch")
 }
 
 tasks.withType<Test> {

@@ -1,5 +1,6 @@
 package com.ebson.skillserver.config;
 
+import com.ebson.skillserver.quartz.AutowiringSpringBeanJobFactory;
 import com.ebson.skillserver.quartz.CustomJobListener;
 import com.ebson.skillserver.quartz.CustomTriggerListener;
 import com.ebson.skillserver.quartz.Job.MyJob1;
@@ -7,6 +8,7 @@ import com.ebson.skillserver.quartz.Job.MyJob2;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -67,6 +69,10 @@ public class QuartzSchedulerConfig {
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean() throws IOException, SchedulerException {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
+
+        AutowiringSpringBeanJobFactory jobFactory = new AutowiringSpringBeanJobFactory();
+        schedulerFactoryBean.setJobFactory(jobFactory);
+
         schedulerFactoryBean.setGlobalJobListeners(customJobListener);
         schedulerFactoryBean.setGlobalTriggerListeners(customTriggerListener);
 
