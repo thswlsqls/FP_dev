@@ -28,7 +28,7 @@ public class MyJob2 implements Job {
 
         try {
             JobParameters jobParameters = new JobParametersBuilder()
-                    .addString("param1", "value1") // 문자열 파라미터 설정
+                    .addString("param1", "this is chunk job") // 문자열 파라미터 설정
                     .addLong("param2", System.currentTimeMillis()) // Long 형 파라미터 설정 (예: 현재 시간)
                     .toJobParameters();
 
