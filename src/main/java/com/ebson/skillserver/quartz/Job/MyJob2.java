@@ -18,7 +18,7 @@ public class MyJob2 implements Job {
     private JobLauncher jobLauncher;
 
     @Autowired
-    private org.springframework.batch.core.Job myJob;
+    private org.springframework.batch.core.Job myChunkJob; // bean name 으로 검색
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
@@ -32,7 +32,7 @@ public class MyJob2 implements Job {
                     .addLong("param2", System.currentTimeMillis()) // Long 형 파라미터 설정 (예: 현재 시간)
                     .toJobParameters();
 
-            jobLauncher.run(myJob, jobParameters);
+            jobLauncher.run(myChunkJob, jobParameters);
         } catch (Exception e) {
             e.printStackTrace();
         }
