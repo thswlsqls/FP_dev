@@ -3,7 +3,6 @@ package com.ebson.skillserver.batch.config;
 
 import com.ebson.skillserver.batch.processor.MyItemProcessor;
 import com.ebson.skillserver.batch.reader.MyItemReader;
-import com.ebson.skillserver.batch.tasklet.MyTasklet;
 import com.ebson.skillserver.batch.writer.MyItemWriter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -13,7 +12,6 @@ import org.springframework.batch.core.Step;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -44,7 +42,7 @@ public class MyChunkJobConfig {
                             , ItemWriter myItemWriter){
         logger.info("MyJobConfig^^myChunkStep :: started ... ");
         return new StepBuilder("myChunkStep", jobRepository)
-                .<String, String>chunk(10, platformTransactionManager)
+                .<String, String>chunk(2, platformTransactionManager)
                 .reader(myItemReader)
                 .processor(myItemProcessor)
                 .writer(myItemWriter)
