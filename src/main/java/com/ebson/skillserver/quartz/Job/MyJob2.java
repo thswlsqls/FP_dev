@@ -10,6 +10,8 @@ import org.springframework.batch.core.JobParametersBuilder;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
+
 public class MyJob2 implements Job {
 
     private static final Logger logger = LoggerFactory.getLogger(MyJob2.class);
@@ -28,8 +30,9 @@ public class MyJob2 implements Job {
 
         try {
             JobParameters jobParameters = new JobParametersBuilder()
-                    .addString("param1", "this is chunk job") // 문자열 파라미터 설정
+                    .addString("param1", "this is my chunk job") // 문자열 파라미터 설정
                     .addLong("param2", System.currentTimeMillis()) // Long 형 파라미터 설정 (예: 현재 시간)
+                    .addLocalDate("param3", LocalDate.now())
                     .toJobParameters();
 
             jobLauncher.run(myChunkJob, jobParameters);

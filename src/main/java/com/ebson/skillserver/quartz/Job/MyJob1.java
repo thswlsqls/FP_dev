@@ -16,6 +16,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component
 public class MyJob1 implements Job {
 
@@ -35,8 +37,9 @@ public class MyJob1 implements Job {
 
         try {
             JobParameters jobParameters = new JobParametersBuilder()
-                    .addString("param1", "this is tasklet job") // 문자열 파라미터 설정
+                    .addString("param1", "this is my tasklet job") // 문자열 파라미터 설정
                     .addLong("param2", System.currentTimeMillis()) // Long 형 파라미터 설정 (예: 현재 시간)
+                    .addLocalDate("param3", LocalDate.now())
                     .toJobParameters();
 
             jobLauncher.run(myTaskletJob, jobParameters);
