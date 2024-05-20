@@ -32,7 +32,7 @@ public class MyJob2 implements Job {
             JobParameters jobParameters = new JobParametersBuilder()
                     .addString("param1", "this is my chunk job") // 문자열 파라미터 설정
                     .addLong("param2", System.currentTimeMillis()) // Long 형 파라미터 설정 (예: 현재 시간)
-                    .addLocalDate("param3", LocalDate.now())
+                    .addLocalDate("param3", LocalDate.now()) // 유니크한 파라미터 값을 부여
                     .toJobParameters();
 
             jobLauncher.run(myChunkJob, jobParameters);
