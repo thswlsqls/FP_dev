@@ -16,10 +16,10 @@ import java.io.StringWriter;
 import java.util.List;
 import java.util.UUID;
 
-@Service("KakaoFPScenarioS01Service")
-public class KakaoFPScenarioS01Service implements KakaoFPScenarioService {
+@Service("KakaoFPScenarioTE01Service")
+public class KakaoFPScenarioTE01Service implements KakaoFPScenarioService {
 
-    private static final Logger log = LoggerFactory.getLogger(KakaoFPScenarioS01Service.class);
+    private static final Logger log = LoggerFactory.getLogger(KakaoFPScenarioTE01Service.class);
     @Autowired
     KakaoFPTemplateService kakaoFPTemplateService;
 
@@ -38,7 +38,6 @@ public class KakaoFPScenarioS01Service implements KakaoFPScenarioService {
                                             , BuilderV1BlockEntity builderV1BlockEntity
                                             , BuilderV1BlockContextEntity builderV1BlockContextEntity
                                             , String channelName) {
-
         SkillResponse skillResponse = null;
         try {
             UUID contextId = builderV1BlockContextEntity.getContextId();

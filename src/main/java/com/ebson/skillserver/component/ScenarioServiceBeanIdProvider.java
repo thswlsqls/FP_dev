@@ -15,10 +15,13 @@ public class ScenarioServiceBeanIdProvider {
     private void FPinit() {
         // 여기에 서비스 빈의 아이디를 key-value 형태로 추가합니다.
         FPBeanIdMap.put("S01", "KakaoFPScenarioS01Service");
-        FPBeanIdMap.put("S02", "KakaoFPScenarioS02Service");
-        FPBeanIdMap.put("S03", "KakaoFPScenarioS03Service");
-        FPBeanIdMap.put("S04", "KakaoFPScenarioS04Service");
-        FPBeanIdMap.put("S05", "KakaoFPScenarioS05Service");
+
+//        FPBeanIdMap.put("S02", "KakaoFPScenarioS02Service");
+//        FPBeanIdMap.put("S03", "KakaoFPScenarioS03Service");
+//        FPBeanIdMap.put("S04", "KakaoFPScenarioS04Service");
+//        FPBeanIdMap.put("S05", "KakaoFPScenarioS05Service");
+
+        FPBeanIdMap.put("TE01", "KakaoFPScenarioTE01Service");
     }
 
     public String getBeanId(String ChannelName, String ScenarioCode) {
