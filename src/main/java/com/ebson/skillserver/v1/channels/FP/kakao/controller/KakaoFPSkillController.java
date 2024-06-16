@@ -63,9 +63,18 @@ public class KakaoFPSkillController {
             skillResponse.setVersion(ChatbotConstants.VERSION);
             log.info("KakaoFPSkillController^^handleSkillRequest :: skillResponse : {}", skillResponse);
         } catch(Exception e) {
+            StackTraceElement[] ste = e.getStackTrace();
+            String className = ste[0].getClassName();
+            String metodName = ste[0].getMethodName();
+            int lineNum = ste[0].getLineNumber();
+            String fileNeme = ste[0].getFileName();
+            log.error("Exception : {}, classNeme : {} , methodName : {}, fileName : {}, lineNum : {}",
+                    e.getMessage(), className, metodName, fileNeme, lineNum);
+            /**
             StringWriter sw = new StringWriter();
             PrintWriter pw = new PrintWriter(sw);
             e.printStackTrace(pw);
+            */
         }
 
         return skillResponse;
