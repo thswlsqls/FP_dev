@@ -68,7 +68,7 @@ public class KakaoFPSkillController {
             String metodName = ste[0].getMethodName();
             int lineNum = ste[0].getLineNumber();
             String fileNeme = ste[0].getFileName();
-            log.error("Exception : {}, classNeme : {} , methodName : {}, fileName : {}, lineNum : {}",
+            log.error("Exception : {}, className : {} , methodName : {}, fileName : {}, lineNum : {}",
                     e.getMessage(), className, metodName, fileNeme, lineNum);
             /**
             StringWriter sw = new StringWriter();
