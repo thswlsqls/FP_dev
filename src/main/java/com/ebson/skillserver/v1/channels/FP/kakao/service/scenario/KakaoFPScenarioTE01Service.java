@@ -80,9 +80,13 @@ public class KakaoFPScenarioTE01Service implements KakaoFPScenarioService {
             skillResponse = kakaoFPTemplateService.setTemplateAndReturn(templateId, builderV1BlockEntity);
             /** skillResponse 의 context 를 세팅 */
         } catch(Exception e) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
+            StackTraceElement[] ste = e.getStackTrace();
+            String className = ste[0].getClassName();
+            String metodName = ste[0].getMethodName();
+            int lineNum = ste[0].getLineNumber();
+            String fileNeme = ste[0].getFileName();
+            log.error("Exception : {}, className : {} , methodName : {}, fileName : {}, lineNum : {}",
+                    e.getMessage(), className, metodName, fileNeme, lineNum);
         }
         return skillResponse;
     }
