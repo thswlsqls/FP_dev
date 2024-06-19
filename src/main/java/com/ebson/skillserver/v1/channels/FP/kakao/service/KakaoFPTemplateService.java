@@ -232,11 +232,23 @@ public class KakaoFPTemplateService {
             try {
                 log.info("KakaoFPTemplateService^^setTemplateAndReturn() :: skillResponse : {}", om.writeValueAsString(skillResponse));
             } catch (JsonProcessingException e) {
-                e.printStackTrace();
+                StackTraceElement[] ste = e.getStackTrace();
+                String className = ste[0].getClassName();
+                String metodName = ste[0].getMethodName();
+                int lineNum = ste[0].getLineNumber();
+                String fileNeme = ste[0].getFileName();
+                log.error("Exception : {}, className : {} , methodName : {}, fileName : {}, lineNum : {}",
+                        e.getMessage(), className, metodName, fileNeme, lineNum);
             }
             
         } catch (Exception e) {
-            e.printStackTrace();
+            StackTraceElement[] ste = e.getStackTrace();
+            String className = ste[0].getClassName();
+            String metodName = ste[0].getMethodName();
+            int lineNum = ste[0].getLineNumber();
+            String fileNeme = ste[0].getFileName();
+            log.error("Exception : {}, className : {} , methodName : {}, fileName : {}, lineNum : {}",
+                    e.getMessage(), className, metodName, fileNeme, lineNum);
         }
 
         return skillResponse;
