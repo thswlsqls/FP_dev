@@ -1146,7 +1146,13 @@ public class KakaoFPTemplateService {
         try {
             log.info("KakaoFPTemplateService^^getCarouselItemCard() :: output : {}", om.writeValueAsString(output));
         } catch (JsonProcessingException e){
-            e.printStackTrace();
+            StackTraceElement[] stet = e.getStackTrace();
+            String className = stet[0].getClassName();
+            String metodName = stet[0].getMethodName();
+            int lineNum = stet[0].getLineNumber();
+            String fileNeme = stet[0].getFileName();
+            log.error("Exception : {}, className : {} , methodName : {}, fileName : {}, lineNum : {}",
+                    e.getMessage(), className, metodName, fileNeme, lineNum);
         }
         return output;
     }
