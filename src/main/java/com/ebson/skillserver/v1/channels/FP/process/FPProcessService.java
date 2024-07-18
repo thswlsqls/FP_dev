@@ -82,9 +82,13 @@ public class FPProcessService {
             };
 
         } catch(Exception e) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
+            StackTraceElement[] stet = e.getStackTrace();
+            String className = stet[0].getClassName();
+            String metodName = stet[0].getMethodName();
+            int lineNum = stet[0].getLineNumber();
+            String fileNeme = stet[0].getFileName();
+            log.error("Exception : {}, className : {} , methodName : {}, fileName : {}, lineNum : {}",
+                    e.getMessage(), className, metodName, fileNeme, lineNum);
         }
     }
 
